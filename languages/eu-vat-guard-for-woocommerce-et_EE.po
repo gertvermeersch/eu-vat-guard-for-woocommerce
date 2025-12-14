@@ -30,16 +30,20 @@ msgid ""
 "exempts VAT (reverse charge) where applicable and provides admin tools for "
 "VAT management."
 msgstr ""
+"Halda EL käibemaksunumbreid ja ettevõtte teavet WooCommerce klientide ja B2B "
+"jaoks. Lisab ettevõtte ja käibemaksu väljad registreerimisele, kontole ja "
+"kassasse, vabastab käibemaksust (pöördmaks) vajaduse korral ja pakub "
+"administraatori tööriistu käibemaksu haldamiseks."
 
 #. Author of the plugin
 #: vat-guard-woocommerce.php
 msgid "Stormlabs"
-msgstr ""
+msgstr "Stormlabs"
 
 #. Author URI of the plugin
 #: vat-guard-woocommerce.php
 msgid "https://stormlabs.be/"
-msgstr ""
+msgstr "https://stormlabs.be/"
 
 #: includes/class-vat-guard-account.php:112
 #: includes/class-vat-guard-account.php:149
@@ -55,7 +59,7 @@ msgstr "Palun sisestage oma käibemaksunumber."
 
 #: includes/class-vat-guard-admin-ui.php:207
 msgid "or"
-msgstr ""
+msgstr "või"
 
 #: includes/class-vat-guard-admin.php:99
 msgid "Enter VAT number"
@@ -85,72 +89,77 @@ msgstr "VAT Guard"
 #: includes/class-vat-guard-admin.php:275
 #: includes/class-vat-guard-admin.php:315
 msgid "Settings"
-msgstr ""
+msgstr "Seaded"
 
 #: includes/class-vat-guard-admin.php:299
 msgid ""
 "Thank you for using VAT Guard for WooCommerce! Your support helps us keep "
 "improving."
 msgstr ""
+"Täname teid VAT Guard for WooCommerce kasutamise eest! Teie tugi aitab meil "
+"jätkuvalt paremaks muutuda."
 
 #: includes/class-vat-guard-admin.php:303
 #: includes/class-vat-guard-admin.php:635
 #: includes/class-vat-guard-admin.php:755
 msgid "Get Support"
-msgstr ""
+msgstr "Saa tuge"
 
 #: includes/class-vat-guard-admin.php:308
 #: includes/class-vat-guard-admin.php:663
 #: includes/class-vat-guard-admin.php:761
 msgid "Leave a Review"
-msgstr ""
+msgstr "Jäta arvustus"
 
 #: includes/class-vat-guard-admin.php:316
 msgid "Advanced"
-msgstr ""
+msgstr "Täpsemad"
 
 #: includes/class-vat-guard-admin.php:317
 msgid "How It Works"
-msgstr ""
+msgstr "Kuidas see töötab"
 
 #: includes/class-vat-guard-admin.php:318
 msgid "Help"
-msgstr ""
+msgstr "Abi"
 
 #: includes/class-vat-guard-admin.php:344
 msgid "Enable Block-based Checkout Support"
-msgstr ""
+msgstr "Luba plokipõhise kassa tugi"
 
 #: includes/class-vat-guard-admin.php:349
 msgid ""
 "Enable support for WooCommerce Block-based Checkout (Cart & Checkout Blocks)"
 msgstr ""
+"Luba WooCommerce plokipõhise kassa tugi (ostukorvi ja kassa plokid)"
 
 #: includes/class-vat-guard-admin.php:351
 msgid "Disable when using classic checkout or Cartflows"
-msgstr ""
+msgstr "Keela klassikalise kassa või Cartflows kasutamisel"
 
 #: includes/class-vat-guard-admin.php:356
 msgid "Require Company Name"
-msgstr ""
+msgstr "Nõua ettevõtte nime"
 
 #: includes/class-vat-guard-admin.php:360
 msgid "Make company name a required field"
-msgstr ""
+msgstr "Muuda ettevõtte nimi kohustuslikuks väljaks"
 
 #: includes/class-vat-guard-admin.php:362
 msgid ""
 "Warning: This does not have effect on the block based checkout. You need to "
 "manually enable the Company name field in the block editor."
 msgstr ""
+"Hoiatus: See ei mõjuta plokipõhist kassat. Peate käsitsi lubama ettevõtte "
+"nime välja plokiredaktoris."
 
 #: includes/class-vat-guard-admin.php:367
 msgid "Require VAT Number - only sell B2B"
-msgstr ""
+msgstr "Nõua käibemaksunumbrit - müü ainult B2B"
 
 #: includes/class-vat-guard-admin.php:372
 msgid "Make VAT number a required field"
-msgstr ""
+msgstr "Muuda käibemaksunumber kohustuslikuks väljaks"
 
 #: includes/class-vat-guard-admin.php:376
 #, fuzzy
@@ -167,32 +176,36 @@ msgid ""
 "VIES (VAT Information Exchange System) is a search engine (not a database) "
 "owned by the European Commission"
 msgstr ""
+"VIES (käibemaksuteabe vahetussüsteem) on Euroopa Komisjoni otsimootor (mitte "
+"andmebaas)"
 
 #: includes/class-vat-guard-admin.php:387
 msgid "Ignore VIES errors"
-msgstr ""
+msgstr "Ignoreeri VIES vigu"
 
 #: includes/class-vat-guard-admin.php:391
 msgid "Allow checkout if VIES is unavailable or returns an error"
-msgstr ""
+msgstr "Luba kassa, kui VIES ei ole saadaval või tagastab vea"
 
 #: includes/class-vat-guard-admin.php:406
 msgid "Exemption Rules"
-msgstr ""
+msgstr "Vabastuse reeglid"
 
 #: includes/class-vat-guard-admin.php:409
 msgid "Disable VAT Exemption"
-msgstr ""
+msgstr "Keela käibemaksuvabastus"
 
 #: includes/class-vat-guard-admin.php:413
 msgid "Skip VAT exemption entirely and just register VAT numbers"
-msgstr ""
+msgstr "Jäta käibemaksuvabastus täielikult vahele ja registreeri ainult käibemaksunumbrid"
 
 #: includes/class-vat-guard-admin.php:415
 msgid ""
 "When enabled, VAT numbers will be collected and validated but no tax "
 "exemption will be applied."
 msgstr ""
+"Kui see on lubatud, kogutakse ja kontrollitakse käibemaksunumbreid, kuid "
+"maksuvabastust ei rakendata."
 
 #: includes/class-vat-guard-admin.php:421
 msgid "Pricing Options"
@@ -218,32 +231,34 @@ msgstr ""
 
 #: includes/class-vat-guard-admin.php:436
 msgid "Custom Labels & Messages"
-msgstr ""
+msgstr "Kohandatud sildid ja sõnumid"
 
 #: includes/class-vat-guard-admin.php:437
 msgid ""
 "These labels and messages will be displayed on the checkout page. Can be "
 "translated (e.g. WPML String Translations)"
 msgstr ""
+"Need sildid ja sõnumid kuvatakse kassa lehel. Saab tõlkida (nt WPML "
+"stringide tõlked)"
 
 #: includes/class-vat-guard-admin.php:443
 msgid "Company Name Label"
-msgstr ""
+msgstr "Ettevõtte nime silt"
 
 #: includes/class-vat-guard-admin.php:448
 #: includes/class-vat-guard-helper.php:139
 msgid "Company Name"
-msgstr ""
+msgstr "Ettevõtte nimi"
 
 #: includes/class-vat-guard-admin.php:450
 msgid "Custom label for the company name field. Leave empty to use default."
-msgstr ""
+msgstr "Kohandatud silt ettevõtte nime väljale. Jäta tühjaks vaikimisi kasutamiseks."
 
 #: includes/class-vat-guard-admin.php:452
 #: includes/class-vat-guard-admin.php:469
 #: includes/class-vat-guard-admin.php:487
 msgid "This string will be registered with WPML for translation."
-msgstr ""
+msgstr "See string registreeritakse WPML-is tõlkimiseks."
 
 #: includes/class-vat-guard-admin.php:460
 #, fuzzy
@@ -257,7 +272,7 @@ msgstr "Käibemaksunumber"
 
 #: includes/class-vat-guard-admin.php:467
 msgid "Custom label for the VAT number field. Leave empty to use default."
-msgstr ""
+msgstr "Kohandatud silt käibemaksunumbri väljale. Jäta tühjaks vaikimisi kasutamiseks."
 
 #: includes/class-vat-guard-admin.php:477
 #, fuzzy
@@ -274,68 +289,80 @@ msgid ""
 "Custom message shown when VAT exemption is applied. Leave empty to use "
 "default."
 msgstr ""
+"Kohandatud sõnum, mis kuvatakse käibemaksuvabastuse rakendamisel. Jäta "
+"tühjaks vaikimisi kasutamiseks."
 
 #: includes/class-vat-guard-admin.php:501
 msgid "Disable VAT Exemption:"
-msgstr ""
+msgstr "Keela käibemaksuvabastus:"
 
 #: includes/class-vat-guard-admin.php:502
 msgid ""
 "Useful if you only want to collect VAT numbers for record-keeping without "
 "applying tax exemptions."
 msgstr ""
+"Kasulik, kui soovite ainult käibemaksunumbreid koguda arvestuse pidamiseks "
+"ilma maksuvabastusi rakendamata."
 
 #: includes/class-vat-guard-admin.php:503
 msgid "Fixed Prices Including VAT:"
-msgstr ""
+msgstr "Fikseeritud hinnad koos käibemaksuga:"
 
 #: includes/class-vat-guard-admin.php:504
 msgid ""
 "Prevents WooCommerce from adjusting prices based on customer location. All "
 "customers see the same prices including VAT."
 msgstr ""
+"Takistab WooCommerce'il hindu kliendi asukoha põhjal kohandamast. Kõik "
+"kliendid näevad samu hindu koos käibemaksuga."
 
 #: includes/class-vat-guard-admin.php:505
 msgid "Custom Labels:"
-msgstr ""
+msgstr "Kohandatud sildid:"
 
 #: includes/class-vat-guard-admin.php:506
 msgid ""
 "Override default field labels to match your store's terminology or language "
 "preferences."
 msgstr ""
+"Asenda vaikimisi väljasildid, et need vastaksid teie poe terminoloogiale või "
+"keeleeelistustele."
 
 #: includes/class-vat-guard-admin.php:507
 msgid "Custom Messages:"
-msgstr ""
+msgstr "Kohandatud sõnumid:"
 
 #: includes/class-vat-guard-admin.php:508
 msgid "Customize the VAT exemption message shown to customers during checkout."
-msgstr ""
+msgstr "Kohanda käibemaksuvabastuse sõnumit, mida klientidele kassa ajal kuvatakse."
 
 #: includes/class-vat-guard-admin.php:509
 msgid "WPML Compatibility:"
-msgstr ""
+msgstr "WPML ühilduvus:"
 
 #: includes/class-vat-guard-admin.php:510
 msgid ""
 "Custom strings are automatically registered with WPML for translation when "
 "saved."
 msgstr ""
+"Kohandatud stringid registreeritakse automaatselt WPML-is tõlkimiseks "
+"salvestamisel."
 
 #: includes/class-vat-guard-admin.php:512
 msgid "⚙️ Advanced Settings Info"
-msgstr ""
+msgstr "⚙️ Täpsemad seadete info"
 
 #: includes/class-vat-guard-admin.php:518
 msgid ""
 "WPML is active! Custom strings will be automatically registered for "
 "translation when you save them. You can translate them in:"
 msgstr ""
+"WPML on aktiivne! Kohandatud stringid registreeritakse automaatselt "
+"tõlkimiseks nende salvestamisel. Saate neid tõlkida:"
 
 #: includes/class-vat-guard-admin.php:520
 msgid "🌍 WPML Translation"
-msgstr ""
+msgstr "🌍 WPML tõlge"
 
 #: includes/class-vat-guard-admin.php:529
 #, fuzzy
@@ -344,23 +371,27 @@ msgstr "VAT Guard"
 
 #: includes/class-vat-guard-admin.php:532
 msgid "🎯 Purpose"
-msgstr ""
+msgstr "🎯 Eesmärk"
 
 #: includes/class-vat-guard-admin.php:533
 msgid ""
 "VAT Guard helps you comply with EU VAT regulations by automatically managing "
 "VAT exemptions for valid B2B transactions between EU member states."
 msgstr ""
+"VAT Guard aitab teil järgida EL käibemaksuseadusi, hallates automaatselt "
+"käibemaksuvabastusi kehtivate B2B tehingute puhul EL liikmesriikide vahel."
 
 #: includes/class-vat-guard-admin.php:538
 msgid "⚖️ VAT Exemption Rules"
-msgstr ""
+msgstr "⚖️ Käibemaksuvabastuse reeglid"
 
 #: includes/class-vat-guard-admin.php:539
 msgid ""
 "VAT exemption is automatically applied when ALL of the following conditions "
 "are met:"
 msgstr ""
+"Käibemaksuvabastus rakendatakse automaatselt, kui KÕIK järgmised tingimused "
+"on täidetud:"
 
 #: includes/class-vat-guard-admin.php:542
 #, fuzzy
@@ -369,11 +400,11 @@ msgstr "Palun sisestage kehtiv EL käibemaksunumber."
 
 #: includes/class-vat-guard-admin.php:543
 msgid "VAT number country is different from your store's base country"
-msgstr ""
+msgstr "Käibemaksunumbri riik erineb teie poe baasriigist"
 
 #: includes/class-vat-guard-admin.php:545
 msgid "Shipping method is NOT local pickup"
-msgstr ""
+msgstr "Tarneviis EI OLE kohalik kättesaamine"
 
 #: includes/class-vat-guard-admin.php:546
 #, fuzzy
@@ -382,13 +413,15 @@ msgstr "Tarnemaa peab vastama käibemaksunumbri riigile."
 
 #: includes/class-vat-guard-admin.php:549
 msgid "Important:"
-msgstr ""
+msgstr "Oluline:"
 
 #: includes/class-vat-guard-admin.php:550
 msgid ""
 "If local pickup is selected, VAT is always charged regardless of the VAT "
 "number."
 msgstr ""
+"Kui valitud on kohalik kättesaamine, arvestatakse käibemaks alati sõltumata "
+"käibemaksunumbrist."
 
 #: includes/class-vat-guard-admin.php:555
 #, fuzzy
@@ -397,27 +430,27 @@ msgstr "Käibemaksunumber on kehtiv"
 
 #: includes/class-vat-guard-admin.php:556
 msgid "The plugin validates VAT numbers in two stages:"
-msgstr ""
+msgstr "Plugin kontrollib käibemaksunumbreid kahes etapis:"
 
 #: includes/class-vat-guard-admin.php:558
 msgid "Format Validation:"
-msgstr ""
+msgstr "Formaadi kontrollimine:"
 
 #: includes/class-vat-guard-admin.php:559
 msgid "Checks if the VAT number matches the correct format for each EU country"
-msgstr ""
+msgstr "Kontrollib, kas käibemaksunumber vastab iga EL riigi õigele formaadile"
 
 #: includes/class-vat-guard-admin.php:561
 msgid "VIES Validation (Optional):"
-msgstr ""
+msgstr "VIES kontrollimine (valikuline):"
 
 #: includes/class-vat-guard-admin.php:562
 msgid "Verifies the VAT number exists in the official EU VIES database"
-msgstr ""
+msgstr "Kontrollib, kas käibemaksunumber eksisteerib ametlikus EL VIES andmebaasis"
 
 #: includes/class-vat-guard-admin.php:568
 msgid "🚫 When VAT is NOT Exempted"
-msgstr ""
+msgstr "🚫 Millal käibemaksu EI vabastatata"
 
 #: includes/class-vat-guard-admin.php:571
 #, fuzzy
@@ -431,11 +464,11 @@ msgstr "Kehtetu käibemaksunumber"
 
 #: includes/class-vat-guard-admin.php:573
 msgid "VAT number country same as store base country"
-msgstr ""
+msgstr "Käibemaksunumbri riik sama mis poe baasriik"
 
 #: includes/class-vat-guard-admin.php:575
 msgid "Local pickup shipping method selected"
-msgstr ""
+msgstr "Valitud kohalik kättesaamise tarneviis"
 
 #: includes/class-vat-guard-admin.php:576
 #, fuzzy
@@ -444,69 +477,71 @@ msgstr "Tarnemaa peab vastama käibemaksunumbri riigile."
 
 #: includes/class-vat-guard-admin.php:578
 msgid "VIES validation fails (if enabled)"
-msgstr ""
+msgstr "VIES kontrollimine ebaõnnestub (kui lubatud)"
 
 #: includes/class-vat-guard-admin.php:583
 msgid "📋 Supported Features"
-msgstr ""
+msgstr "📋 Toetatud funktsioonid"
 
 #: includes/class-vat-guard-admin.php:585
 msgid "Classic WooCommerce checkout"
-msgstr ""
+msgstr "Klassikaline WooCommerce kassa"
 
 #: includes/class-vat-guard-admin.php:586
 msgid "Block-based checkout (Cart & Checkout blocks)"
-msgstr ""
+msgstr "Plokipõhine kassa (ostukorvi ja kassa plokid)"
 
 #: includes/class-vat-guard-admin.php:588
 msgid "Customer registration and account pages"
-msgstr ""
+msgstr "Kliendi registreerimise ja konto lehed"
 
 #: includes/class-vat-guard-admin.php:589
 msgid "Admin order management"
-msgstr ""
+msgstr "Administraatori tellimuste haldus"
 
 #: includes/class-vat-guard-admin.php:590
 msgid "Email notifications"
-msgstr ""
+msgstr "E-posti teavitused"
 
 #: includes/class-vat-guard-admin.php:591
 msgid "All 27 EU member states VAT formats"
-msgstr ""
+msgstr "Kõigi 27 EL liikmesriigi käibemaksu formaadid"
 
 #: includes/class-vat-guard-admin.php:596
 msgid "⚙️ Configuration Tips"
-msgstr ""
+msgstr "⚙️ Seadistamise nõuanded"
 
 #: includes/class-vat-guard-admin.php:598
 msgid "B2B Only:"
-msgstr ""
+msgstr "Ainult B2B:"
 
 #: includes/class-vat-guard-admin.php:599
 msgid "Enable \"Require VAT Number\" to sell only to businesses"
-msgstr ""
+msgstr "Luba \"Nõua käibemaksunumbrit\", et müüa ainult ettevõtetele"
 
 #: includes/class-vat-guard-admin.php:601
 msgid "VIES Validation:"
-msgstr ""
+msgstr "VIES kontrollimine:"
 
 #: includes/class-vat-guard-admin.php:602
 msgid ""
 "Enable for stricter validation, but consider enabling \"Ignore VIES errors\" "
 "for better user experience when the service is down"
 msgstr ""
+"Luba rangemaks kontrollimiseks, kuid kaaluge \"Ignoreeri VIES vigu\" "
+"lubamist parema kasutajakogemuse jaoks, kui teenus ei tööta"
 
 #: includes/class-vat-guard-admin.php:604
 msgid "Block Checkout:"
-msgstr ""
+msgstr "Ploki kassa:"
 
 #: includes/class-vat-guard-admin.php:605
 msgid "Enable if you're using WooCommerce's new block-based checkout"
-msgstr ""
+msgstr "Luba, kui kasutate WooCommerce uut plokipõhist kassat"
 
 #: includes/class-vat-guard-admin.php:611
 msgid "📞 Need Help?"
-msgstr ""
+msgstr "📞 Vajate abi?"
 
 #: includes/class-vat-guard-admin.php:612
 msgid ""
@@ -514,44 +549,53 @@ msgid ""
 "contact our support team. We're here to help ensure your store meets all EU "
 "VAT requirements."
 msgstr ""
+"Kui teil tekib probleeme või vajate abi käibemaksu nõuetele vastavuse "
+"tagamisel, võtke ühendust meie tugimeeskonnaga. Oleme siin, et aidata "
+"tagada, et teie pood vastab kõigile EL käibemaksu nõuetele."
 
 #: includes/class-vat-guard-admin.php:614
 msgid "Email:"
-msgstr ""
+msgstr "E-post:"
 
 #: includes/class-vat-guard-admin.php:617
 msgid "Website:"
-msgstr ""
+msgstr "Veebileht:"
 
 #: includes/class-vat-guard-admin.php:630
 msgid "Help & Support"
-msgstr ""
+msgstr "Abi ja tugi"
 
 #: includes/class-vat-guard-admin.php:637
 msgid ""
 "Need help with the plugin? Have questions about VAT compliance or "
 "configuration?"
 msgstr ""
+"Vajate abi pluginaga? On küsimusi käibemaksu nõuetele vastavuse või "
+"seadistamise kohta?"
 
 #: includes/class-vat-guard-admin.php:638
 msgid ""
 "Visit our support forum on WordPress.org where our team and community can "
 "help you:"
 msgstr ""
+"Külastage meie tugifoorumit WordPress.org-is, kus meie meeskond ja kogukond "
+"saavad teid aidata:"
 
 #: includes/class-vat-guard-admin.php:644
 msgid "Visit Support Forum"
-msgstr ""
+msgstr "Külasta tugifoorumit"
 
 #: includes/class-vat-guard-admin.php:648
 msgid ""
 "Before posting, please search existing topics - your question might already "
 "be answered!"
 msgstr ""
+"Enne postitamist otsige olemasolevaid teemasid - teie küsimusele võib juba "
+"vastatud olla!"
 
 #: includes/class-vat-guard-admin.php:655
 msgid "Love This Plugin?"
-msgstr ""
+msgstr "Meeldib see plugin?"
 
 #: includes/class-vat-guard-admin.php:657
 msgid ""
@@ -559,45 +603,52 @@ msgid ""
 "Your feedback helps us improve and helps other store owners discover the "
 "plugin."
 msgstr ""
+"Kui EU VAT Guard on teie äri aidanud, kaaluge arvustuse jätmist. Teie "
+"tagasiside aitab meil paremaks muutuda ja aitab teistel poeomanikkel "
+"pluginat avastada."
 
 #: includes/class-vat-guard-admin.php:667
 msgid "It only takes a minute and means the world to us! 🙏"
-msgstr ""
+msgstr "See võtab ainult minuti aega ja tähendab meile väga palju! 🙏"
 
 #: includes/class-vat-guard-admin.php:674
 msgid "Documentation"
-msgstr ""
+msgstr "Dokumentatsioon"
 
 #: includes/class-vat-guard-admin.php:676
 msgid ""
 "Learn more about how VAT Guard works and how to configure it for your store:"
 msgstr ""
+"Õppige rohkem selle kohta, kuidas VAT Guard töötab ja kuidas seda oma poe "
+"jaoks seadistada:"
 
 #: includes/class-vat-guard-admin.php:680
 msgid "How It Works - VAT Exemption Rules"
-msgstr ""
+msgstr "Kuidas see töötab - käibemaksuvabastuse reeglid"
 
 #: includes/class-vat-guard-admin.php:685
 msgid "Basic Settings - Configure Required Fields"
-msgstr ""
+msgstr "Põhiseaded - seadista kohustuslikud väljad"
 
 #: includes/class-vat-guard-admin.php:690
 msgid "Advanced Settings - Custom Labels & Exemption Rules"
-msgstr ""
+msgstr "Täpsemad seaded - kohandatud sildid ja vabastuse reeglid"
 
 #: includes/class-vat-guard-admin.php:699
 msgid "Common Questions"
-msgstr ""
+msgstr "Sagedased küsimused"
 
 #: includes/class-vat-guard-admin.php:702
 msgid "Does this work with WooCommerce blocks?"
-msgstr ""
+msgstr "Kas see töötab WooCommerce plokkidega?"
 
 #: includes/class-vat-guard-admin.php:703
 msgid ""
 "Yes! The plugin fully supports both classic checkout and the new block-based "
 "checkout. Enable \"Block-based Checkout Support\" in Settings."
 msgstr ""
+"Jah! Plugin toetab täielikult nii klassikalist kassat kui ka uut "
+"plokipõhist kassat. Luba \"Plokipõhise kassa tugi\" seadetes."
 
 #: includes/class-vat-guard-admin.php:705
 #, fuzzy
@@ -609,20 +660,24 @@ msgid ""
 "All 27 EU member states VAT number formats are supported with proper "
 "validation."
 msgstr ""
+"Kõigi 27 EL liikmesriigi käibemaksunumbri formaadid on toetatud koos "
+"õige kontrollimisega."
 
 #: includes/class-vat-guard-admin.php:708
 msgid "Is VIES validation required?"
-msgstr ""
+msgstr "Kas VIES kontrollimine on nõutav?"
 
 #: includes/class-vat-guard-admin.php:709
 msgid ""
 "No, VIES validation is optional. You can use format-only validation or "
 "enable real-time VIES checking in Settings."
 msgstr ""
+"Ei, VIES kontrollimine on valikuline. Saate kasutada ainult formaadi "
+"kontrollimist või lubada reaalajas VIES kontrollimise seadetes."
 
 #: includes/class-vat-guard-admin.php:711
 msgid "Does this handle VAT exemptions automatically?"
-msgstr ""
+msgstr "Kas see käsitleb käibemaksuvabastusi automaatselt?"
 
 #: includes/class-vat-guard-admin.php:712
 msgid ""
@@ -630,22 +685,25 @@ msgid ""
 "transactions between different EU countries. See the How It Works tab for "
 "details."
 msgstr ""
+"Jah, plugin rakendab automaatselt käibemaksuvabastusi kehtivate B2B "
+"tehingute puhul erinevate EL riikide vahel. Üksikasju vaata \"Kuidas see "
+"töötab\" vahekaardilt."
 
 #: includes/class-vat-guard-admin.php:719
 msgid "Useful Links"
-msgstr ""
+msgstr "Kasulikud lingid"
 
 #: includes/class-vat-guard-admin.php:724
 msgid "Plugin Page on WordPress.org"
-msgstr ""
+msgstr "Plugina leht WordPress.org-is"
 
 #: includes/class-vat-guard-admin.php:729
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Korduma kippuvad küsimused"
 
 #: includes/class-vat-guard-admin.php:734
 msgid "Stormlabs Website"
-msgstr ""
+msgstr "Stormlabs veebileht"
 
 #: includes/class-vat-guard-admin.php:739
 #, fuzzy
@@ -654,13 +712,15 @@ msgstr "Käibemaksunumber on kehtiv"
 
 #: includes/class-vat-guard-admin.php:747
 msgid "Thank You for Using EU VAT Guard!"
-msgstr ""
+msgstr "Täname teid EU VAT Guard kasutamise eest!"
 
 #: includes/class-vat-guard-admin.php:749
 msgid ""
 "We're committed to helping your business comply with EU VAT regulations. If "
 "you have any suggestions for improvements, we'd love to hear from you."
 msgstr ""
+"Oleme pühendunud teie äri aitamisele EL käibemaksuseaduste järgimisel. Kui "
+"teil on parandusettepanekuid, kuuleksime neid hea meelega."
 
 #: includes/class-vat-guard-block-integration.php:99
 #: includes/class-vat-guard-block-integration.php:585
@@ -716,7 +776,7 @@ msgstr ""
 #: includes/class-vat-guard-pdf-integration.php:200
 #: includes/class-vat-guard.php:707 includes/pdf-template-helpers.php:61
 msgid "VAT Status"
-msgstr ""
+msgstr "Käibemaksu staatus"
 
 #: includes/class-vat-guard-pdf-integration.php:253
 msgid "VAT Number:"
@@ -724,100 +784,105 @@ msgstr "Käibemaksukohustuslase number:"
 
 #: includes/class-vat-guard-pdf-integration.php:277
 msgid "VAT exempt"
-msgstr ""
+msgstr "Käibemaksuvaba"
 
 #: includes/class-vat-guard-rate-importer.php:180
 #: includes/class-vat-guard-rate-importer.php:181
 msgid "VAT Rate Importer"
-msgstr ""
+msgstr "Käibemaksumäärade importija"
 
 #: includes/class-vat-guard-rate-importer.php:226
 msgid "You do not have sufficient permissions to access this page."
-msgstr ""
+msgstr "Teil ei ole piisavalt õigusi sellele lehele juurdepääsuks."
 
 #: includes/class-vat-guard-rate-importer.php:234
 msgid "Please select at least one country to import."
-msgstr ""
+msgstr "Palun valige vähemalt üks riik importimiseks."
 
 #. translators: %d: number of VAT rates imported
 #: includes/class-vat-guard-rate-importer.php:244
 #, php-format
 msgid "Successfully imported %d VAT rates."
-msgstr ""
+msgstr "Edukalt imporditud %d käibemaksumäära."
 
 #: includes/class-vat-guard-rate-importer.php:303
 msgid "Reduced tax class not found. make sure this class exists in Woocommerce"
-msgstr ""
+msgstr "Vähendatud maksuklass ei leitud. Veenduge, et see klass eksisteerib WooCommerce'is"
 
 #: includes/class-vat-guard-rate-importer.php:413
 msgid "EU VAT Rate Importer"
-msgstr ""
+msgstr "EL käibemaksumäärade importija"
 
 #: includes/class-vat-guard-rate-importer.php:416
 msgid ""
 "Import current EU VAT rates into your WooCommerce tax settings. This tool "
 "will create or update tax rates for the selected countries."
 msgstr ""
+"Impordi praegused EL käibemaksumäärad oma WooCommerce maksuseadetesse. See "
+"tööriist loob või uuendab valitud riikide maksumäärasid."
 
 #: includes/class-vat-guard-rate-importer.php:426
 msgid "Select Countries"
-msgstr ""
+msgstr "Vali riigid"
 
 #: includes/class-vat-guard-rate-importer.php:433
 msgid "Select All"
-msgstr ""
+msgstr "Vali kõik"
 
 #: includes/class-vat-guard-rate-importer.php:445
 msgid "standard"
-msgstr ""
+msgstr "standardne"
 
 #: includes/class-vat-guard-rate-importer.php:448
 msgid "reduced"
-msgstr ""
+msgstr "vähendatud"
 
 #: includes/class-vat-guard-rate-importer.php:456
 msgid ""
 "Only countries that are enabled in your WooCommerce selling locations are "
 "shown."
 msgstr ""
+"Kuvatakse ainult riigid, mis on lubatud teie WooCommerce müügikohtades."
 
 #: includes/class-vat-guard-rate-importer.php:464
 msgid "Include Reduced Rates"
-msgstr ""
+msgstr "Kaasa vähendatud määrad"
 
 #: includes/class-vat-guard-rate-importer.php:469
 msgid "Import reduced VAT rates (lower rates for specific goods)"
-msgstr ""
+msgstr "Impordi vähendatud käibemaksumäärad (madalamad määrad konkreetsetele kaupadele)"
 
 #: includes/class-vat-guard-rate-importer.php:472
 msgid ""
 "Reduced rates will be imported as separate tax classes that you can assign "
 "to specific products."
 msgstr ""
+"Vähendatud määrad imporditakse eraldi maksuklassidena, mida saate määrata "
+"konkreetsetele toodetele."
 
 #: includes/class-vat-guard-rate-importer.php:480
 msgid "Import Selected VAT Rates"
-msgstr ""
+msgstr "Impordi valitud käibemaksumäärad"
 
 #: includes/class-vat-guard-rate-importer.php:485
 msgid "Current EU VAT Rates Overview"
-msgstr ""
+msgstr "Praeguste EL käibemaksumäärade ülevaade"
 
 #: includes/class-vat-guard-rate-importer.php:490
 msgid "Country"
-msgstr ""
+msgstr "Riik"
 
 #: includes/class-vat-guard-rate-importer.php:491
 msgid "Standard Rate"
-msgstr ""
+msgstr "Standardmäär"
 
 #: includes/class-vat-guard-rate-importer.php:492
 msgid "Reduced Rates"
-msgstr ""
+msgstr "Vähendatud määrad"
 
 #: includes/class-vat-guard-rate-importer.php:505
 msgid "None"
-msgstr ""
+msgstr "Puudub"
 
 #: includes/class-vat-guard.php:480
 msgid "The shipping country must match the country of the VAT number."
@@ -825,4 +890,4 @@ msgstr "Tarnemaa peab vastama käibemaksunumbri riigile."
 
 #: includes/class-vat-guard.php:697 includes/class-vat-guard.php:744
 msgid "VAT Information"
-msgstr ""
+msgstr "Käibemaksu teave"

@@ -18,9 +18,8 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: vat-guard-woocommerce.php includes/class-vat-guard-admin.php:294
-#, fuzzy
 msgid "EU VAT Guard for WooCommerce"
-msgstr "VAT Guard para WooCommerce"
+msgstr "EU VAT Guard para WooCommerce"
 
 #. Description of the plugin
 #: vat-guard-woocommerce.php
@@ -30,16 +29,20 @@ msgid ""
 "exempts VAT (reverse charge) where applicable and provides admin tools for "
 "VAT management."
 msgstr ""
+"Gestiona números de IVA de la UE e información de empresas para clientes de "
+"WooCommerce y B2B. Añade campos de empresa e IVA al registro, cuenta y "
+"checkout, exime del IVA (inversión del sujeto pasivo) cuando corresponda y "
+"proporciona herramientas de administración para la gestión del IVA."
 
 #. Author of the plugin
 #: vat-guard-woocommerce.php
 msgid "Stormlabs"
-msgstr ""
+msgstr "Stormlabs"
 
 #. Author URI of the plugin
 #: vat-guard-woocommerce.php
 msgid "https://stormlabs.be/"
-msgstr ""
+msgstr "https://stormlabs.be/"
 
 #: includes/class-vat-guard-account.php:112
 #: includes/class-vat-guard-account.php:149
@@ -55,7 +58,7 @@ msgstr "Por favor, introduzca su número de IVA."
 
 #: includes/class-vat-guard-admin-ui.php:207
 msgid "or"
-msgstr ""
+msgstr "o"
 
 #: includes/class-vat-guard-admin.php:99
 msgid "Enter VAT number"
@@ -73,126 +76,132 @@ msgstr "Número de IVA eliminado desde el admin."
 
 #: includes/class-vat-guard-admin.php:262
 #: includes/class-vat-guard-admin.php:263
-#, fuzzy
 msgid "EU VAT Guard"
-msgstr "VAT Guard"
+msgstr "EU VAT Guard"
 
 #: includes/class-vat-guard-admin.php:274
-#, fuzzy
 msgid "VAT Guard Settings"
-msgstr "VAT Guard"
+msgstr "Configuración de VAT Guard"
 
 #: includes/class-vat-guard-admin.php:275
 #: includes/class-vat-guard-admin.php:315
 msgid "Settings"
-msgstr ""
+msgstr "Configuración"
 
 #: includes/class-vat-guard-admin.php:299
 msgid ""
 "Thank you for using VAT Guard for WooCommerce! Your support helps us keep "
 "improving."
 msgstr ""
+"¡Gracias por usar VAT Guard para WooCommerce! Su apoyo nos ayuda a seguir "
+"mejorando."
 
 #: includes/class-vat-guard-admin.php:303
 #: includes/class-vat-guard-admin.php:635
 #: includes/class-vat-guard-admin.php:755
 msgid "Get Support"
-msgstr ""
+msgstr "Obtener Soporte"
 
 #: includes/class-vat-guard-admin.php:308
 #: includes/class-vat-guard-admin.php:663
 #: includes/class-vat-guard-admin.php:761
 msgid "Leave a Review"
-msgstr ""
+msgstr "Dejar una Reseña"
 
 #: includes/class-vat-guard-admin.php:316
 msgid "Advanced"
-msgstr ""
+msgstr "Avanzado"
 
 #: includes/class-vat-guard-admin.php:317
 msgid "How It Works"
-msgstr ""
+msgstr "Cómo Funciona"
 
 #: includes/class-vat-guard-admin.php:318
 msgid "Help"
-msgstr ""
+msgstr "Ayuda"
 
 #: includes/class-vat-guard-admin.php:344
 msgid "Enable Block-based Checkout Support"
-msgstr ""
+msgstr "Habilitar Soporte para Checkout Basado en Bloques"
 
 #: includes/class-vat-guard-admin.php:349
 msgid ""
 "Enable support for WooCommerce Block-based Checkout (Cart & Checkout Blocks)"
 msgstr ""
+"Habilitar soporte para Checkout Basado en Bloques de WooCommerce (Bloques de "
+"Carrito y Checkout)"
 
 #: includes/class-vat-guard-admin.php:351
 msgid "Disable when using classic checkout or Cartflows"
-msgstr ""
+msgstr "Deshabilitar cuando use checkout clásico o Cartflows"
 
 #: includes/class-vat-guard-admin.php:356
 msgid "Require Company Name"
-msgstr ""
+msgstr "Requerir Nombre de Empresa"
 
 #: includes/class-vat-guard-admin.php:360
 msgid "Make company name a required field"
-msgstr ""
+msgstr "Hacer el nombre de empresa un campo obligatorio"
 
 #: includes/class-vat-guard-admin.php:362
 msgid ""
 "Warning: This does not have effect on the block based checkout. You need to "
 "manually enable the Company name field in the block editor."
 msgstr ""
+"Advertencia: Esto no tiene efecto en el checkout basado en bloques. Necesita "
+"habilitar manualmente el campo Nombre de empresa en el editor de bloques."
 
 #: includes/class-vat-guard-admin.php:367
 msgid "Require VAT Number - only sell B2B"
-msgstr ""
+msgstr "Requerir Número de IVA - solo venta B2B"
 
 #: includes/class-vat-guard-admin.php:372
 msgid "Make VAT number a required field"
-msgstr ""
+msgstr "Hacer el número de IVA un campo obligatorio"
 
 #: includes/class-vat-guard-admin.php:376
-#, fuzzy
 msgid "Validate VAT Number with VIES"
-msgstr "Validando número de IVA..."
+msgstr "Validar Número de IVA con VIES"
 
 #: includes/class-vat-guard-admin.php:380
-#, fuzzy
 msgid "Check VAT number validity with the official VIES service"
-msgstr "Este número de IVA no es válido según el servicio VIES."
+msgstr "Verificar la validez del número de IVA con el servicio oficial VIES"
 
 #: includes/class-vat-guard-admin.php:382
 msgid ""
 "VIES (VAT Information Exchange System) is a search engine (not a database) "
 "owned by the European Commission"
 msgstr ""
+"VIES (Sistema de Intercambio de Información sobre el IVA) es un motor de "
+"búsqueda (no una base de datos) propiedad de la Comisión Europea"
 
 #: includes/class-vat-guard-admin.php:387
 msgid "Ignore VIES errors"
-msgstr ""
+msgstr "Ignorar errores de VIES"
 
 #: includes/class-vat-guard-admin.php:391
 msgid "Allow checkout if VIES is unavailable or returns an error"
-msgstr ""
+msgstr "Permitir checkout si VIES no está disponible o devuelve un error"
 
 #: includes/class-vat-guard-admin.php:406
 msgid "Exemption Rules"
-msgstr ""
+msgstr "Reglas de Exención"
 
 #: includes/class-vat-guard-admin.php:409
 msgid "Disable VAT Exemption"
-msgstr ""
+msgstr "Deshabilitar Exención de IVA"
 
 #: includes/class-vat-guard-admin.php:413
 msgid "Skip VAT exemption entirely and just register VAT numbers"
-msgstr ""
+msgstr "Omitir completamente la exención de IVA y solo registrar números de IVA"
 
 #: includes/class-vat-guard-admin.php:415
 msgid ""
 "When enabled, VAT numbers will be collected and validated but no tax "
 "exemption will be applied."
 msgstr ""
+"Cuando esté habilitado, se recopilarán y validarán los números de IVA pero "
+"no se aplicará ninguna exención fiscal."
 
 #: includes/class-vat-guard-admin.php:421
 msgid "Pricing Options"
@@ -220,37 +229,40 @@ msgstr ""
 
 #: includes/class-vat-guard-admin.php:436
 msgid "Custom Labels & Messages"
-msgstr ""
+msgstr "Etiquetas y Mensajes Personalizados"
 
 #: includes/class-vat-guard-admin.php:437
 msgid ""
 "These labels and messages will be displayed on the checkout page. Can be "
 "translated (e.g. WPML String Translations)"
 msgstr ""
+"Estas etiquetas y mensajes se mostrarán en la página de checkout. Pueden ser "
+"traducidos (ej. WPML String Translations)"
 
 #: includes/class-vat-guard-admin.php:443
 msgid "Company Name Label"
-msgstr ""
+msgstr "Etiqueta de Nombre de Empresa"
 
 #: includes/class-vat-guard-admin.php:448
 #: includes/class-vat-guard-helper.php:139
 msgid "Company Name"
-msgstr ""
+msgstr "Nombre de Empresa"
 
 #: includes/class-vat-guard-admin.php:450
 msgid "Custom label for the company name field. Leave empty to use default."
 msgstr ""
+"Etiqueta personalizada para el campo nombre de empresa. Dejar vacío para "
+"usar el predeterminado."
 
 #: includes/class-vat-guard-admin.php:452
 #: includes/class-vat-guard-admin.php:469
 #: includes/class-vat-guard-admin.php:487
 msgid "This string will be registered with WPML for translation."
-msgstr ""
+msgstr "Esta cadena se registrará con WPML para traducción."
 
 #: includes/class-vat-guard-admin.php:460
-#, fuzzy
 msgid "VAT Number Label"
-msgstr "Número de IVA"
+msgstr "Etiqueta de Número de IVA"
 
 #: includes/class-vat-guard-admin.php:465
 #: includes/class-vat-guard-helper.php:152 includes/class-vat-guard.php:602
@@ -260,11 +272,12 @@ msgstr "Número de IVA"
 #: includes/class-vat-guard-admin.php:467
 msgid "Custom label for the VAT number field. Leave empty to use default."
 msgstr ""
+"Etiqueta personalizada para el campo número de IVA. Dejar vacío para usar el "
+"predeterminado."
 
 #: includes/class-vat-guard-admin.php:477
-#, fuzzy
 msgid "VAT Exemption Message"
-msgstr "Mensaje de exención de IVA a mostrar"
+msgstr "Mensaje de Exención de IVA"
 
 #: includes/class-vat-guard-admin.php:483
 #: includes/class-vat-guard-helper.php:165
@@ -276,239 +289,255 @@ msgid ""
 "Custom message shown when VAT exemption is applied. Leave empty to use "
 "default."
 msgstr ""
+"Mensaje personalizado mostrado cuando se aplica la exención de IVA. Dejar "
+"vacío para usar el predeterminado."
 
 #: includes/class-vat-guard-admin.php:501
 msgid "Disable VAT Exemption:"
-msgstr ""
+msgstr "Deshabilitar Exención de IVA:"
 
 #: includes/class-vat-guard-admin.php:502
 msgid ""
 "Useful if you only want to collect VAT numbers for record-keeping without "
 "applying tax exemptions."
 msgstr ""
+"Útil si solo desea recopilar números de IVA para mantenimiento de registros "
+"sin aplicar exenciones fiscales."
 
 #: includes/class-vat-guard-admin.php:503
 msgid "Fixed Prices Including VAT:"
-msgstr ""
+msgstr "Precios Fijos Incluyendo IVA:"
 
 #: includes/class-vat-guard-admin.php:504
 msgid ""
 "Prevents WooCommerce from adjusting prices based on customer location. All "
 "customers see the same prices including VAT."
 msgstr ""
+"Evita que WooCommerce ajuste los precios según la ubicación del cliente. "
+"Todos los clientes ven los mismos precios incluyendo IVA."
 
 #: includes/class-vat-guard-admin.php:505
 msgid "Custom Labels:"
-msgstr ""
+msgstr "Etiquetas Personalizadas:"
 
 #: includes/class-vat-guard-admin.php:506
 msgid ""
 "Override default field labels to match your store's terminology or language "
 "preferences."
 msgstr ""
+"Anular las etiquetas de campo predeterminadas para coincidir con la "
+"terminología o preferencias de idioma de su tienda."
 
 #: includes/class-vat-guard-admin.php:507
 msgid "Custom Messages:"
-msgstr ""
+msgstr "Mensajes Personalizados:"
 
 #: includes/class-vat-guard-admin.php:508
 msgid "Customize the VAT exemption message shown to customers during checkout."
 msgstr ""
+"Personalizar el mensaje de exención de IVA mostrado a los clientes durante "
+"el checkout."
 
 #: includes/class-vat-guard-admin.php:509
 msgid "WPML Compatibility:"
-msgstr ""
+msgstr "Compatibilidad con WPML:"
 
 #: includes/class-vat-guard-admin.php:510
 msgid ""
 "Custom strings are automatically registered with WPML for translation when "
 "saved."
 msgstr ""
+"Las cadenas personalizadas se registran automáticamente con WPML para "
+"traducción al guardar."
 
 #: includes/class-vat-guard-admin.php:512
 msgid "⚙️ Advanced Settings Info"
-msgstr ""
+msgstr "⚙️ Información de Configuración Avanzada"
 
 #: includes/class-vat-guard-admin.php:518
 msgid ""
 "WPML is active! Custom strings will be automatically registered for "
 "translation when you save them. You can translate them in:"
 msgstr ""
+"¡WPML está activo! Las cadenas personalizadas se registrarán automáticamente "
+"para traducción al guardarlas. Puede traducirlas en:"
 
 #: includes/class-vat-guard-admin.php:520
 msgid "🌍 WPML Translation"
-msgstr ""
+msgstr "🌍 Traducción WPML"
 
 #: includes/class-vat-guard-admin.php:529
-#, fuzzy
 msgid "How VAT Guard Works"
-msgstr "VAT Guard"
+msgstr "Cómo Funciona VAT Guard"
 
 #: includes/class-vat-guard-admin.php:532
 msgid "🎯 Purpose"
-msgstr ""
+msgstr "🎯 Propósito"
 
 #: includes/class-vat-guard-admin.php:533
 msgid ""
 "VAT Guard helps you comply with EU VAT regulations by automatically managing "
 "VAT exemptions for valid B2B transactions between EU member states."
 msgstr ""
+"VAT Guard le ayuda a cumplir con las regulaciones de IVA de la UE gestionando "
+"automáticamente las exenciones de IVA para transacciones B2B válidas entre "
+"estados miembros de la UE."
 
 #: includes/class-vat-guard-admin.php:538
 msgid "⚖️ VAT Exemption Rules"
-msgstr ""
+msgstr "⚖️ Reglas de Exención de IVA"
 
 #: includes/class-vat-guard-admin.php:539
 msgid ""
 "VAT exemption is automatically applied when ALL of the following conditions "
 "are met:"
 msgstr ""
+"La exención de IVA se aplica automáticamente cuando se cumplen TODAS las "
+"siguientes condiciones:"
 
 #: includes/class-vat-guard-admin.php:542
-#, fuzzy
 msgid "Customer provides a valid EU VAT number"
-msgstr "Por favor, introduzca un número de IVA de la UE válido."
+msgstr "El cliente proporciona un número de IVA de la UE válido"
 
 #: includes/class-vat-guard-admin.php:543
 msgid "VAT number country is different from your store's base country"
-msgstr ""
+msgstr "El país del número de IVA es diferente del país base de su tienda"
 
 #: includes/class-vat-guard-admin.php:545
 msgid "Shipping method is NOT local pickup"
-msgstr ""
+msgstr "El método de envío NO es recogida local"
 
 #: includes/class-vat-guard-admin.php:546
-#, fuzzy
 msgid "Billing and shipping countries match the VAT number country"
-msgstr "El país de envío debe coincidir con el país del número de IVA."
+msgstr "Los países de facturación y envío coinciden con el país del número de IVA"
 
 #: includes/class-vat-guard-admin.php:549
 msgid "Important:"
-msgstr ""
+msgstr "Importante:"
 
 #: includes/class-vat-guard-admin.php:550
 msgid ""
 "If local pickup is selected, VAT is always charged regardless of the VAT "
 "number."
 msgstr ""
+"Si se selecciona recogida local, siempre se cobra IVA independientemente del "
+"número de IVA."
 
 #: includes/class-vat-guard-admin.php:555
-#, fuzzy
 msgid "🔍 VAT Number Validation"
-msgstr "El número de IVA es válido"
+msgstr "🔍 Validación de Número de IVA"
 
 #: includes/class-vat-guard-admin.php:556
 msgid "The plugin validates VAT numbers in two stages:"
-msgstr ""
+msgstr "El plugin valida los números de IVA en dos etapas:"
 
 #: includes/class-vat-guard-admin.php:558
 msgid "Format Validation:"
-msgstr ""
+msgstr "Validación de Formato:"
 
 #: includes/class-vat-guard-admin.php:559
 msgid "Checks if the VAT number matches the correct format for each EU country"
-msgstr ""
+msgstr "Verifica si el número de IVA coincide con el formato correcto para cada país de la UE"
 
 #: includes/class-vat-guard-admin.php:561
 msgid "VIES Validation (Optional):"
-msgstr ""
+msgstr "Validación VIES (Opcional):"
 
 #: includes/class-vat-guard-admin.php:562
 msgid "Verifies the VAT number exists in the official EU VIES database"
-msgstr ""
+msgstr "Verifica que el número de IVA existe en la base de datos oficial VIES de la UE"
 
 #: includes/class-vat-guard-admin.php:568
 msgid "🚫 When VAT is NOT Exempted"
-msgstr ""
+msgstr "🚫 Cuándo el IVA NO está Exento"
 
 #: includes/class-vat-guard-admin.php:571
-#, fuzzy
 msgid "No VAT number provided"
-msgstr "El número de IVA es válido"
+msgstr "No se proporcionó número de IVA"
 
 #: includes/class-vat-guard-admin.php:572
-#, fuzzy
 msgid "Invalid VAT number format"
-msgstr "Número de IVA inválido"
+msgstr "Formato de número de IVA inválido"
 
 #: includes/class-vat-guard-admin.php:573
 msgid "VAT number country same as store base country"
-msgstr ""
+msgstr "El país del número de IVA es el mismo que el país base de la tienda"
 
 #: includes/class-vat-guard-admin.php:575
 msgid "Local pickup shipping method selected"
-msgstr ""
+msgstr "Método de envío de recogida local seleccionado"
 
 #: includes/class-vat-guard-admin.php:576
-#, fuzzy
 msgid "Billing/shipping country doesn't match VAT number country"
-msgstr "El país de envío debe coincidir con el país del número de IVA."
+msgstr "El país de facturación/envío no coincide con el país del número de IVA"
 
 #: includes/class-vat-guard-admin.php:578
 msgid "VIES validation fails (if enabled)"
-msgstr ""
+msgstr "La validación VIES falla (si está habilitada)"
 
 #: includes/class-vat-guard-admin.php:583
 msgid "📋 Supported Features"
-msgstr ""
+msgstr "📋 Características Soportadas"
 
 #: includes/class-vat-guard-admin.php:585
 msgid "Classic WooCommerce checkout"
-msgstr ""
+msgstr "Checkout clásico de WooCommerce"
 
 #: includes/class-vat-guard-admin.php:586
 msgid "Block-based checkout (Cart & Checkout blocks)"
-msgstr ""
+msgstr "Checkout basado en bloques (Bloques de Carrito y Checkout)"
 
 #: includes/class-vat-guard-admin.php:588
 msgid "Customer registration and account pages"
-msgstr ""
+msgstr "Registro de clientes y páginas de cuenta"
 
 #: includes/class-vat-guard-admin.php:589
 msgid "Admin order management"
-msgstr ""
+msgstr "Gestión de pedidos del administrador"
 
 #: includes/class-vat-guard-admin.php:590
 msgid "Email notifications"
-msgstr ""
+msgstr "Notificaciones por correo electrónico"
 
 #: includes/class-vat-guard-admin.php:591
 msgid "All 27 EU member states VAT formats"
-msgstr ""
+msgstr "Todos los formatos de IVA de los 27 estados miembros de la UE"
 
 #: includes/class-vat-guard-admin.php:596
 msgid "⚙️ Configuration Tips"
-msgstr ""
+msgstr "⚙️ Consejos de Configuración"
 
 #: includes/class-vat-guard-admin.php:598
 msgid "B2B Only:"
-msgstr ""
+msgstr "Solo B2B:"
 
 #: includes/class-vat-guard-admin.php:599
 msgid "Enable \"Require VAT Number\" to sell only to businesses"
-msgstr ""
+msgstr "Habilite \"Requerir Número de IVA\" para vender solo a empresas"
 
 #: includes/class-vat-guard-admin.php:601
 msgid "VIES Validation:"
-msgstr ""
+msgstr "Validación VIES:"
 
 #: includes/class-vat-guard-admin.php:602
 msgid ""
 "Enable for stricter validation, but consider enabling \"Ignore VIES errors\" "
 "for better user experience when the service is down"
 msgstr ""
+"Habilite para validación más estricta, pero considere habilitar \"Ignorar "
+"errores VIES\" para mejor experiencia de usuario cuando el servicio esté caído"
 
 #: includes/class-vat-guard-admin.php:604
 msgid "Block Checkout:"
-msgstr ""
+msgstr "Checkout de Bloques:"
 
 #: includes/class-vat-guard-admin.php:605
 msgid "Enable if you're using WooCommerce's new block-based checkout"
-msgstr ""
+msgstr "Habilite si está usando el nuevo checkout basado en bloques de WooCommerce"
 
 #: includes/class-vat-guard-admin.php:611
 msgid "📞 Need Help?"
-msgstr ""
+msgstr "📞 ¿Necesita Ayuda?"
 
 #: includes/class-vat-guard-admin.php:612
 msgid ""
@@ -516,44 +545,53 @@ msgid ""
 "contact our support team. We're here to help ensure your store meets all EU "
 "VAT requirements."
 msgstr ""
+"Si encuentra algún problema o necesita asistencia con el cumplimiento del IVA, "
+"por favor contacte a nuestro equipo de soporte. Estamos aquí para ayudar a "
+"asegurar que su tienda cumpla con todos los requisitos de IVA de la UE."
 
 #: includes/class-vat-guard-admin.php:614
 msgid "Email:"
-msgstr ""
+msgstr "Correo electrónico:"
 
 #: includes/class-vat-guard-admin.php:617
 msgid "Website:"
-msgstr ""
+msgstr "Sitio web:"
 
 #: includes/class-vat-guard-admin.php:630
 msgid "Help & Support"
-msgstr ""
+msgstr "Ayuda y Soporte"
 
 #: includes/class-vat-guard-admin.php:637
 msgid ""
 "Need help with the plugin? Have questions about VAT compliance or "
 "configuration?"
 msgstr ""
+"¿Necesita ayuda con el plugin? ¿Tiene preguntas sobre cumplimiento de IVA o "
+"configuración?"
 
 #: includes/class-vat-guard-admin.php:638
 msgid ""
 "Visit our support forum on WordPress.org where our team and community can "
 "help you:"
 msgstr ""
+"Visite nuestro foro de soporte en WordPress.org donde nuestro equipo y "
+"comunidad pueden ayudarle:"
 
 #: includes/class-vat-guard-admin.php:644
 msgid "Visit Support Forum"
-msgstr ""
+msgstr "Visitar Foro de Soporte"
 
 #: includes/class-vat-guard-admin.php:648
 msgid ""
 "Before posting, please search existing topics - your question might already "
 "be answered!"
 msgstr ""
+"Antes de publicar, por favor busque en temas existentes - ¡su pregunta podría "
+"ya estar respondida!"
 
 #: includes/class-vat-guard-admin.php:655
 msgid "Love This Plugin?"
-msgstr ""
+msgstr "¿Le Gusta Este Plugin?"
 
 #: includes/class-vat-guard-admin.php:657
 msgid ""
@@ -561,70 +599,80 @@ msgid ""
 "Your feedback helps us improve and helps other store owners discover the "
 "plugin."
 msgstr ""
+"Si EU VAT Guard ha ayudado a su negocio, por favor considere dejar una reseña. "
+"Sus comentarios nos ayudan a mejorar y ayudan a otros propietarios de tiendas "
+"a descubrir el plugin."
 
 #: includes/class-vat-guard-admin.php:667
 msgid "It only takes a minute and means the world to us! 🙏"
-msgstr ""
+msgstr "¡Solo toma un minuto y significa mucho para nosotros! 🙏"
 
 #: includes/class-vat-guard-admin.php:674
 msgid "Documentation"
-msgstr ""
+msgstr "Documentación"
 
 #: includes/class-vat-guard-admin.php:676
 msgid ""
 "Learn more about how VAT Guard works and how to configure it for your store:"
 msgstr ""
+"Aprenda más sobre cómo funciona VAT Guard y cómo configurarlo para su tienda:"
 
 #: includes/class-vat-guard-admin.php:680
 msgid "How It Works - VAT Exemption Rules"
-msgstr ""
+msgstr "Cómo Funciona - Reglas de Exención de IVA"
 
 #: includes/class-vat-guard-admin.php:685
 msgid "Basic Settings - Configure Required Fields"
-msgstr ""
+msgstr "Configuración Básica - Configurar Campos Requeridos"
 
 #: includes/class-vat-guard-admin.php:690
 msgid "Advanced Settings - Custom Labels & Exemption Rules"
-msgstr ""
+msgstr "Configuración Avanzada - Etiquetas Personalizadas y Reglas de Exención"
 
 #: includes/class-vat-guard-admin.php:699
 msgid "Common Questions"
-msgstr ""
+msgstr "Preguntas Frecuentes"
 
 #: includes/class-vat-guard-admin.php:702
 msgid "Does this work with WooCommerce blocks?"
-msgstr ""
+msgstr "¿Funciona esto con los bloques de WooCommerce?"
 
 #: includes/class-vat-guard-admin.php:703
 msgid ""
 "Yes! The plugin fully supports both classic checkout and the new block-based "
 "checkout. Enable \"Block-based Checkout Support\" in Settings."
 msgstr ""
+"¡Sí! El plugin es totalmente compatible con el checkout clásico y el nuevo "
+"checkout basado en bloques. Habilite \"Soporte de Checkout Basado en Bloques\" "
+"en Configuración."
 
 #: includes/class-vat-guard-admin.php:705
-#, fuzzy
 msgid "What VAT number formats are supported?"
-msgstr "Número de IVA inválido"
+msgstr "¿Qué formatos de número de IVA son compatibles?"
 
 #: includes/class-vat-guard-admin.php:706
 msgid ""
 "All 27 EU member states VAT number formats are supported with proper "
 "validation."
 msgstr ""
+"Todos los formatos de número de IVA de los 27 estados miembros de la UE son "
+"compatibles con validación adecuada."
 
 #: includes/class-vat-guard-admin.php:708
 msgid "Is VIES validation required?"
-msgstr ""
+msgstr "¿Es requerida la validación VIES?"
 
 #: includes/class-vat-guard-admin.php:709
 msgid ""
 "No, VIES validation is optional. You can use format-only validation or "
 "enable real-time VIES checking in Settings."
 msgstr ""
+"No, la validación VIES es opcional. Puede usar validación solo de formato o "
+"habilitar la verificación VIES en tiempo real en Configuración."
 
 #: includes/class-vat-guard-admin.php:711
 msgid "Does this handle VAT exemptions automatically?"
-msgstr ""
+msgstr "¿Maneja esto las exenciones de IVA automáticamente?"
 
 #: includes/class-vat-guard-admin.php:712
 msgid ""
@@ -632,37 +680,41 @@ msgid ""
 "transactions between different EU countries. See the How It Works tab for "
 "details."
 msgstr ""
+"Sí, el plugin aplica automáticamente exenciones de IVA para transacciones B2B "
+"válidas entre diferentes países de la UE. Vea la pestaña Cómo Funciona para "
+"más detalles."
 
 #: includes/class-vat-guard-admin.php:719
 msgid "Useful Links"
-msgstr ""
+msgstr "Enlaces Útiles"
 
 #: includes/class-vat-guard-admin.php:724
 msgid "Plugin Page on WordPress.org"
-msgstr ""
+msgstr "Página del Plugin en WordPress.org"
 
 #: includes/class-vat-guard-admin.php:729
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Preguntas Frecuentes"
 
 #: includes/class-vat-guard-admin.php:734
 msgid "Stormlabs Website"
-msgstr ""
+msgstr "Sitio Web de Stormlabs"
 
 #: includes/class-vat-guard-admin.php:739
-#, fuzzy
 msgid "EU VIES VAT Number Validation"
-msgstr "El número de IVA es válido"
+msgstr "Validación de Número de IVA VIES de la UE"
 
 #: includes/class-vat-guard-admin.php:747
 msgid "Thank You for Using EU VAT Guard!"
-msgstr ""
+msgstr "¡Gracias por Usar EU VAT Guard!"
 
 #: includes/class-vat-guard-admin.php:749
 msgid ""
 "We're committed to helping your business comply with EU VAT regulations. If "
 "you have any suggestions for improvements, we'd love to hear from you."
 msgstr ""
+"Estamos comprometidos a ayudar a su negocio a cumplir con las regulaciones de "
+"IVA de la UE. Si tiene alguna sugerencia de mejora, nos encantaría escucharle."
 
 #: includes/class-vat-guard-block-integration.php:99
 #: includes/class-vat-guard-block-integration.php:585
@@ -718,7 +770,7 @@ msgstr ""
 #: includes/class-vat-guard-pdf-integration.php:200
 #: includes/class-vat-guard.php:707 includes/pdf-template-helpers.php:61
 msgid "VAT Status"
-msgstr ""
+msgstr "Estado de IVA"
 
 #: includes/class-vat-guard-pdf-integration.php:253
 msgid "VAT Number:"
@@ -726,100 +778,107 @@ msgstr "Número de IVA:"
 
 #: includes/class-vat-guard-pdf-integration.php:277
 msgid "VAT exempt"
-msgstr ""
+msgstr "Exento de IVA"
 
 #: includes/class-vat-guard-rate-importer.php:180
 #: includes/class-vat-guard-rate-importer.php:181
 msgid "VAT Rate Importer"
-msgstr ""
+msgstr "Importador de Tarifas de IVA"
 
 #: includes/class-vat-guard-rate-importer.php:226
 msgid "You do not have sufficient permissions to access this page."
-msgstr ""
+msgstr "No tiene permisos suficientes para acceder a esta página."
 
 #: includes/class-vat-guard-rate-importer.php:234
 msgid "Please select at least one country to import."
-msgstr ""
+msgstr "Por favor, seleccione al menos un país para importar."
 
 #. translators: %d: number of VAT rates imported
 #: includes/class-vat-guard-rate-importer.php:244
 #, php-format
 msgid "Successfully imported %d VAT rates."
-msgstr ""
+msgstr "Se importaron exitosamente %d tarifas de IVA."
 
 #: includes/class-vat-guard-rate-importer.php:303
 msgid "Reduced tax class not found. make sure this class exists in Woocommerce"
-msgstr ""
+msgstr "Clase de impuesto reducido no encontrada. Asegúrese de que esta clase existe en WooCommerce"
 
 #: includes/class-vat-guard-rate-importer.php:413
 msgid "EU VAT Rate Importer"
-msgstr ""
+msgstr "Importador de Tarifas de IVA de la UE"
 
 #: includes/class-vat-guard-rate-importer.php:416
 msgid ""
 "Import current EU VAT rates into your WooCommerce tax settings. This tool "
 "will create or update tax rates for the selected countries."
 msgstr ""
+"Importe las tarifas de IVA actuales de la UE a su configuración de impuestos "
+"de WooCommerce. Esta herramienta creará o actualizará las tarifas de impuestos "
+"para los países seleccionados."
 
 #: includes/class-vat-guard-rate-importer.php:426
 msgid "Select Countries"
-msgstr ""
+msgstr "Seleccionar Países"
 
 #: includes/class-vat-guard-rate-importer.php:433
 msgid "Select All"
-msgstr ""
+msgstr "Seleccionar Todo"
 
 #: includes/class-vat-guard-rate-importer.php:445
 msgid "standard"
-msgstr ""
+msgstr "estándar"
 
 #: includes/class-vat-guard-rate-importer.php:448
 msgid "reduced"
-msgstr ""
+msgstr "reducida"
 
 #: includes/class-vat-guard-rate-importer.php:456
 msgid ""
 "Only countries that are enabled in your WooCommerce selling locations are "
 "shown."
 msgstr ""
+"Solo se muestran los países que están habilitados en sus ubicaciones de venta "
+"de WooCommerce."
 
 #: includes/class-vat-guard-rate-importer.php:464
 msgid "Include Reduced Rates"
-msgstr ""
+msgstr "Incluir Tarifas Reducidas"
 
 #: includes/class-vat-guard-rate-importer.php:469
 msgid "Import reduced VAT rates (lower rates for specific goods)"
-msgstr ""
+msgstr "Importar tarifas de IVA reducidas (tarifas más bajas para bienes específicos)"
 
 #: includes/class-vat-guard-rate-importer.php:472
 msgid ""
 "Reduced rates will be imported as separate tax classes that you can assign "
 "to specific products."
 msgstr ""
+"Las tarifas reducidas se importarán como clases de impuestos separadas que "
+"puede asignar a productos específicos."
 
 #: includes/class-vat-guard-rate-importer.php:480
 msgid "Import Selected VAT Rates"
-msgstr ""
+msgstr "Importar Tarifas de IVA Seleccionadas"
 
 #: includes/class-vat-guard-rate-importer.php:485
 msgid "Current EU VAT Rates Overview"
-msgstr ""
+msgstr "Resumen de Tarifas de IVA Actuales de la UE"
 
 #: includes/class-vat-guard-rate-importer.php:490
 msgid "Country"
-msgstr ""
+msgstr "País"
 
 #: includes/class-vat-guard-rate-importer.php:491
 msgid "Standard Rate"
-msgstr ""
+msgstr "Tarifa Estándar"
 
 #: includes/class-vat-guard-rate-importer.php:492
 msgid "Reduced Rates"
-msgstr ""
+msgstr "Tarifas Reducidas"
 
 #: includes/class-vat-guard-rate-importer.php:505
 msgid "None"
-msgstr ""
+msgstr "Ninguna"
 
 #: includes/class-vat-guard.php:480
 msgid "The shipping country must match the country of the VAT number."
@@ -827,4 +886,4 @@ msgstr "El país de envío debe coincidir con el país del número de IVA."
 
 #: includes/class-vat-guard.php:697 includes/class-vat-guard.php:744
 msgid "VAT Information"
-msgstr ""
+msgstr "Información de IVA"

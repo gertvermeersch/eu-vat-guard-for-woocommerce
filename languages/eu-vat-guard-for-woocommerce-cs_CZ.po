@@ -30,16 +30,19 @@ msgid ""
 "exempts VAT (reverse charge) where applicable and provides admin tools for "
 "VAT management."
 msgstr ""
+"Spravujte DIČ EU a informace o společnosti pro zákazníky WooCommerce a B2B. "
+"Přidává pole společnosti a DIČ do registrace, účtu a pokladny, osvobozuje od "
+"DPH (reverse charge) tam, kde je to možné, a poskytuje nástroje pro správu DPH."
 
 #. Author of the plugin
 #: vat-guard-woocommerce.php
 msgid "Stormlabs"
-msgstr ""
+msgstr "Stormlabs"
 
 #. Author URI of the plugin
 #: vat-guard-woocommerce.php
 msgid "https://stormlabs.be/"
-msgstr ""
+msgstr "https://stormlabs.be/"
 
 #: includes/class-vat-guard-account.php:112
 #: includes/class-vat-guard-account.php:149
@@ -55,7 +58,7 @@ msgstr "Zadejte prosím vaše DIČ."
 
 #: includes/class-vat-guard-admin-ui.php:207
 msgid "or"
-msgstr ""
+msgstr "nebo"
 
 #: includes/class-vat-guard-admin.php:99
 msgid "Enter VAT number"
@@ -85,72 +88,77 @@ msgstr "VAT Guard"
 #: includes/class-vat-guard-admin.php:275
 #: includes/class-vat-guard-admin.php:315
 msgid "Settings"
-msgstr ""
+msgstr "Nastavení"
 
 #: includes/class-vat-guard-admin.php:299
 msgid ""
 "Thank you for using VAT Guard for WooCommerce! Your support helps us keep "
 "improving."
 msgstr ""
+"Děkujeme za používání VAT Guard pro WooCommerce! Vaše podpora nám pomáhá "
+"neustále se zlepšovat."
 
 #: includes/class-vat-guard-admin.php:303
 #: includes/class-vat-guard-admin.php:635
 #: includes/class-vat-guard-admin.php:755
 msgid "Get Support"
-msgstr ""
+msgstr "Získat podporu"
 
 #: includes/class-vat-guard-admin.php:308
 #: includes/class-vat-guard-admin.php:663
 #: includes/class-vat-guard-admin.php:761
 msgid "Leave a Review"
-msgstr ""
+msgstr "Napsat recenzi"
 
 #: includes/class-vat-guard-admin.php:316
 msgid "Advanced"
-msgstr ""
+msgstr "Pokročilé"
 
 #: includes/class-vat-guard-admin.php:317
 msgid "How It Works"
-msgstr ""
+msgstr "Jak to funguje"
 
 #: includes/class-vat-guard-admin.php:318
 msgid "Help"
-msgstr ""
+msgstr "Nápověda"
 
 #: includes/class-vat-guard-admin.php:344
 msgid "Enable Block-based Checkout Support"
-msgstr ""
+msgstr "Povolit podporu blokové pokladny"
 
 #: includes/class-vat-guard-admin.php:349
 msgid ""
 "Enable support for WooCommerce Block-based Checkout (Cart & Checkout Blocks)"
 msgstr ""
+"Povolit podporu pro WooCommerce blokovou pokladnu (bloky košíku a pokladny)"
 
 #: includes/class-vat-guard-admin.php:351
 msgid "Disable when using classic checkout or Cartflows"
-msgstr ""
+msgstr "Zakázat při použití klasické pokladny nebo Cartflows"
 
 #: includes/class-vat-guard-admin.php:356
 msgid "Require Company Name"
-msgstr ""
+msgstr "Vyžadovat název společnosti"
 
 #: includes/class-vat-guard-admin.php:360
 msgid "Make company name a required field"
-msgstr ""
+msgstr "Učinit název společnosti povinným polem"
 
 #: includes/class-vat-guard-admin.php:362
 msgid ""
 "Warning: This does not have effect on the block based checkout. You need to "
 "manually enable the Company name field in the block editor."
 msgstr ""
+"Upozornění: Toto nemá vliv na blokovou pokladnu. Musíte ručně povolit pole "
+"názvu společnosti v blokovém editoru."
 
 #: includes/class-vat-guard-admin.php:367
 msgid "Require VAT Number - only sell B2B"
-msgstr ""
+msgstr "Vyžadovat DIČ - prodávat pouze B2B"
 
 #: includes/class-vat-guard-admin.php:372
 msgid "Make VAT number a required field"
-msgstr ""
+msgstr "Učinit DIČ povinným polem"
 
 #: includes/class-vat-guard-admin.php:376
 #, fuzzy
@@ -167,32 +175,36 @@ msgid ""
 "VIES (VAT Information Exchange System) is a search engine (not a database) "
 "owned by the European Commission"
 msgstr ""
+"VIES (Systém výměny informací o DPH) je vyhledávač (ne databáze) vlastněný "
+"Evropskou komisí"
 
 #: includes/class-vat-guard-admin.php:387
 msgid "Ignore VIES errors"
-msgstr ""
+msgstr "Ignorovat chyby VIES"
 
 #: includes/class-vat-guard-admin.php:391
 msgid "Allow checkout if VIES is unavailable or returns an error"
-msgstr ""
+msgstr "Povolit dokončení objednávky, pokud je VIES nedostupný nebo vrací chybu"
 
 #: includes/class-vat-guard-admin.php:406
 msgid "Exemption Rules"
-msgstr ""
+msgstr "Pravidla osvobození"
 
 #: includes/class-vat-guard-admin.php:409
 msgid "Disable VAT Exemption"
-msgstr ""
+msgstr "Zakázat osvobození od DPH"
 
 #: includes/class-vat-guard-admin.php:413
 msgid "Skip VAT exemption entirely and just register VAT numbers"
-msgstr ""
+msgstr "Úplně přeskočit osvobození od DPH a pouze registrovat DIČ"
 
 #: includes/class-vat-guard-admin.php:415
 msgid ""
 "When enabled, VAT numbers will be collected and validated but no tax "
 "exemption will be applied."
 msgstr ""
+"Pokud je povoleno, DIČ budou shromažďována a ověřována, ale nebude použito "
+"žádné daňové osvobození."
 
 #: includes/class-vat-guard-admin.php:421
 msgid "Pricing Options"
@@ -217,32 +229,34 @@ msgstr ""
 
 #: includes/class-vat-guard-admin.php:436
 msgid "Custom Labels & Messages"
-msgstr ""
+msgstr "Vlastní popisky a zprávy"
 
 #: includes/class-vat-guard-admin.php:437
 msgid ""
 "These labels and messages will be displayed on the checkout page. Can be "
 "translated (e.g. WPML String Translations)"
 msgstr ""
+"Tyto popisky a zprávy budou zobrazeny na stránce pokladny. Mohou být "
+"přeloženy (např. WPML String Translations)"
 
 #: includes/class-vat-guard-admin.php:443
 msgid "Company Name Label"
-msgstr ""
+msgstr "Popisek názvu společnosti"
 
 #: includes/class-vat-guard-admin.php:448
 #: includes/class-vat-guard-helper.php:139
 msgid "Company Name"
-msgstr ""
+msgstr "Název společnosti"
 
 #: includes/class-vat-guard-admin.php:450
 msgid "Custom label for the company name field. Leave empty to use default."
-msgstr ""
+msgstr "Vlastní popisek pro pole názvu společnosti. Ponechte prázdné pro výchozí."
 
 #: includes/class-vat-guard-admin.php:452
 #: includes/class-vat-guard-admin.php:469
 #: includes/class-vat-guard-admin.php:487
 msgid "This string will be registered with WPML for translation."
-msgstr ""
+msgstr "Tento řetězec bude registrován s WPML pro překlad."
 
 #: includes/class-vat-guard-admin.php:460
 #, fuzzy
@@ -256,7 +270,7 @@ msgstr "DIČ"
 
 #: includes/class-vat-guard-admin.php:467
 msgid "Custom label for the VAT number field. Leave empty to use default."
-msgstr ""
+msgstr "Vlastní popisek pro pole DIČ. Ponechte prázdné pro výchozí."
 
 #: includes/class-vat-guard-admin.php:477
 #, fuzzy
@@ -273,68 +287,79 @@ msgid ""
 "Custom message shown when VAT exemption is applied. Leave empty to use "
 "default."
 msgstr ""
+"Vlastní zpráva zobrazená při použití osvobození od DPH. Ponechte prázdné "
+"pro výchozí."
 
 #: includes/class-vat-guard-admin.php:501
 msgid "Disable VAT Exemption:"
-msgstr ""
+msgstr "Zakázat osvobození od DPH:"
 
 #: includes/class-vat-guard-admin.php:502
 msgid ""
 "Useful if you only want to collect VAT numbers for record-keeping without "
 "applying tax exemptions."
 msgstr ""
+"Užitečné, pokud chcete pouze shromažďovat DIČ pro vedení záznamů bez "
+"použití daňových osvobození."
 
 #: includes/class-vat-guard-admin.php:503
 msgid "Fixed Prices Including VAT:"
-msgstr ""
+msgstr "Pevné ceny včetně DPH:"
 
 #: includes/class-vat-guard-admin.php:504
 msgid ""
 "Prevents WooCommerce from adjusting prices based on customer location. All "
 "customers see the same prices including VAT."
 msgstr ""
+"Zabraňuje WooCommerce upravovat ceny na základě polohy zákazníka. Všichni "
+"zákazníci vidí stejné ceny včetně DPH."
 
 #: includes/class-vat-guard-admin.php:505
 msgid "Custom Labels:"
-msgstr ""
+msgstr "Vlastní popisky:"
 
 #: includes/class-vat-guard-admin.php:506
 msgid ""
 "Override default field labels to match your store's terminology or language "
 "preferences."
 msgstr ""
+"Přepsat výchozí popisky polí tak, aby odpovídaly terminologii nebo jazykovým "
+"preferencím vašeho obchodu."
 
 #: includes/class-vat-guard-admin.php:507
 msgid "Custom Messages:"
-msgstr ""
+msgstr "Vlastní zprávy:"
 
 #: includes/class-vat-guard-admin.php:508
 msgid "Customize the VAT exemption message shown to customers during checkout."
-msgstr ""
+msgstr "Přizpůsobit zprávu o osvobození od DPH zobrazenou zákazníkům během pokladny."
 
 #: includes/class-vat-guard-admin.php:509
 msgid "WPML Compatibility:"
-msgstr ""
+msgstr "Kompatibilita s WPML:"
 
 #: includes/class-vat-guard-admin.php:510
 msgid ""
 "Custom strings are automatically registered with WPML for translation when "
 "saved."
 msgstr ""
+"Vlastní řetězce jsou automaticky registrovány s WPML pro překlad při uložení."
 
 #: includes/class-vat-guard-admin.php:512
 msgid "⚙️ Advanced Settings Info"
-msgstr ""
+msgstr "⚙️ Informace o pokročilých nastaveních"
 
 #: includes/class-vat-guard-admin.php:518
 msgid ""
 "WPML is active! Custom strings will be automatically registered for "
 "translation when you save them. You can translate them in:"
 msgstr ""
+"WPML je aktivní! Vlastní řetězce budou automaticky registrovány pro překlad "
+"při jejich uložení. Můžete je přeložit v:"
 
 #: includes/class-vat-guard-admin.php:520
 msgid "🌍 WPML Translation"
-msgstr ""
+msgstr "🌍 WPML překlad"
 
 #: includes/class-vat-guard-admin.php:529
 #, fuzzy
@@ -343,23 +368,27 @@ msgstr "VAT Guard"
 
 #: includes/class-vat-guard-admin.php:532
 msgid "🎯 Purpose"
-msgstr ""
+msgstr "🎯 Účel"
 
 #: includes/class-vat-guard-admin.php:533
 msgid ""
 "VAT Guard helps you comply with EU VAT regulations by automatically managing "
 "VAT exemptions for valid B2B transactions between EU member states."
 msgstr ""
+"VAT Guard vám pomáhá dodržovat předpisy EU o DPH automatickou správou "
+"osvobození od DPH pro platné B2B transakce mezi členskými státy EU."
 
 #: includes/class-vat-guard-admin.php:538
 msgid "⚖️ VAT Exemption Rules"
-msgstr ""
+msgstr "⚖️ Pravidla osvobození od DPH"
 
 #: includes/class-vat-guard-admin.php:539
 msgid ""
 "VAT exemption is automatically applied when ALL of the following conditions "
 "are met:"
 msgstr ""
+"Osvobození od DPH se automaticky použije, když jsou splněny VŠECHNY "
+"následující podmínky:"
 
 #: includes/class-vat-guard-admin.php:542
 #, fuzzy
@@ -368,11 +397,11 @@ msgstr "Zadejte prosím platné DIČ EU."
 
 #: includes/class-vat-guard-admin.php:543
 msgid "VAT number country is different from your store's base country"
-msgstr ""
+msgstr "Země DIČ se liší od základní země vašeho obchodu"
 
 #: includes/class-vat-guard-admin.php:545
 msgid "Shipping method is NOT local pickup"
-msgstr ""
+msgstr "Způsob dopravy NENÍ osobní odběr"
 
 #: includes/class-vat-guard-admin.php:546
 #, fuzzy
@@ -381,13 +410,14 @@ msgstr "Země doručení se musí shodovat se zemí DIČ."
 
 #: includes/class-vat-guard-admin.php:549
 msgid "Important:"
-msgstr ""
+msgstr "Důležité:"
 
 #: includes/class-vat-guard-admin.php:550
 msgid ""
 "If local pickup is selected, VAT is always charged regardless of the VAT "
 "number."
 msgstr ""
+"Pokud je vybrán osobní odběr, DPH se vždy účtuje bez ohledu na DIČ."
 
 #: includes/class-vat-guard-admin.php:555
 #, fuzzy
@@ -396,27 +426,27 @@ msgstr "DIČ je platné"
 
 #: includes/class-vat-guard-admin.php:556
 msgid "The plugin validates VAT numbers in two stages:"
-msgstr ""
+msgstr "Plugin ověřuje DIČ ve dvou fázích:"
 
 #: includes/class-vat-guard-admin.php:558
 msgid "Format Validation:"
-msgstr ""
+msgstr "Ověření formátu:"
 
 #: includes/class-vat-guard-admin.php:559
 msgid "Checks if the VAT number matches the correct format for each EU country"
-msgstr ""
+msgstr "Kontroluje, zda DIČ odpovídá správnému formátu pro každou zemi EU"
 
 #: includes/class-vat-guard-admin.php:561
 msgid "VIES Validation (Optional):"
-msgstr ""
+msgstr "VIES ověření (volitelné):"
 
 #: includes/class-vat-guard-admin.php:562
 msgid "Verifies the VAT number exists in the official EU VIES database"
-msgstr ""
+msgstr "Ověřuje, že DIČ existuje v oficiální databázi EU VIES"
 
 #: includes/class-vat-guard-admin.php:568
 msgid "🚫 When VAT is NOT Exempted"
-msgstr ""
+msgstr "🚫 Kdy NENÍ osvobození od DPH"
 
 #: includes/class-vat-guard-admin.php:571
 #, fuzzy
@@ -430,11 +460,11 @@ msgstr "Neplatné DIČ"
 
 #: includes/class-vat-guard-admin.php:573
 msgid "VAT number country same as store base country"
-msgstr ""
+msgstr "Země DIČ stejná jako základní země obchodu"
 
 #: includes/class-vat-guard-admin.php:575
 msgid "Local pickup shipping method selected"
-msgstr ""
+msgstr "Vybrán způsob dopravy osobní odběr"
 
 #: includes/class-vat-guard-admin.php:576
 #, fuzzy
@@ -443,69 +473,71 @@ msgstr "Země doručení se musí shodovat se zemí DIČ."
 
 #: includes/class-vat-guard-admin.php:578
 msgid "VIES validation fails (if enabled)"
-msgstr ""
+msgstr "VIES ověření selže (pokud je povoleno)"
 
 #: includes/class-vat-guard-admin.php:583
 msgid "📋 Supported Features"
-msgstr ""
+msgstr "📋 Podporované funkce"
 
 #: includes/class-vat-guard-admin.php:585
 msgid "Classic WooCommerce checkout"
-msgstr ""
+msgstr "Klasická WooCommerce pokladna"
 
 #: includes/class-vat-guard-admin.php:586
 msgid "Block-based checkout (Cart & Checkout blocks)"
-msgstr ""
+msgstr "Bloková pokladna (bloky košíku a pokladny)"
 
 #: includes/class-vat-guard-admin.php:588
 msgid "Customer registration and account pages"
-msgstr ""
+msgstr "Registrace zákazníků a stránky účtu"
 
 #: includes/class-vat-guard-admin.php:589
 msgid "Admin order management"
-msgstr ""
+msgstr "Správa objednávek v administraci"
 
 #: includes/class-vat-guard-admin.php:590
 msgid "Email notifications"
-msgstr ""
+msgstr "E-mailová oznámení"
 
 #: includes/class-vat-guard-admin.php:591
 msgid "All 27 EU member states VAT formats"
-msgstr ""
+msgstr "Všech 27 formátů DIČ členských států EU"
 
 #: includes/class-vat-guard-admin.php:596
 msgid "⚙️ Configuration Tips"
-msgstr ""
+msgstr "⚙️ Tipy pro konfiguraci"
 
 #: includes/class-vat-guard-admin.php:598
 msgid "B2B Only:"
-msgstr ""
+msgstr "Pouze B2B:"
 
 #: includes/class-vat-guard-admin.php:599
 msgid "Enable \"Require VAT Number\" to sell only to businesses"
-msgstr ""
+msgstr "Povolit \"Vyžadovat DIČ\" pro prodej pouze firmám"
 
 #: includes/class-vat-guard-admin.php:601
 msgid "VIES Validation:"
-msgstr ""
+msgstr "VIES ověření:"
 
 #: includes/class-vat-guard-admin.php:602
 msgid ""
 "Enable for stricter validation, but consider enabling \"Ignore VIES errors\" "
 "for better user experience when the service is down"
 msgstr ""
+"Povolit pro přísnější ověření, ale zvažte povolení \"Ignorovat chyby VIES\" "
+"pro lepší uživatelský zážitek, když je služba nedostupná"
 
 #: includes/class-vat-guard-admin.php:604
 msgid "Block Checkout:"
-msgstr ""
+msgstr "Bloková pokladna:"
 
 #: includes/class-vat-guard-admin.php:605
 msgid "Enable if you're using WooCommerce's new block-based checkout"
-msgstr ""
+msgstr "Povolit, pokud používáte novou blokovou pokladnu WooCommerce"
 
 #: includes/class-vat-guard-admin.php:611
 msgid "📞 Need Help?"
-msgstr ""
+msgstr "📞 Potřebujete pomoc?"
 
 #: includes/class-vat-guard-admin.php:612
 msgid ""
@@ -513,44 +545,53 @@ msgid ""
 "contact our support team. We're here to help ensure your store meets all EU "
 "VAT requirements."
 msgstr ""
+"Pokud narazíte na nějaké problémy nebo potřebujete pomoc s dodržováním DPH, "
+"kontaktujte náš tým podpory. Jsme tu, abychom pomohli zajistit, že váš obchod "
+"splňuje všechny požadavky EU na DPH."
 
 #: includes/class-vat-guard-admin.php:614
 msgid "Email:"
-msgstr ""
+msgstr "E-mail:"
 
 #: includes/class-vat-guard-admin.php:617
 msgid "Website:"
-msgstr ""
+msgstr "Webové stránky:"
 
 #: includes/class-vat-guard-admin.php:630
 msgid "Help & Support"
-msgstr ""
+msgstr "Nápověda a podpora"
 
 #: includes/class-vat-guard-admin.php:637
 msgid ""
 "Need help with the plugin? Have questions about VAT compliance or "
 "configuration?"
 msgstr ""
+"Potřebujete pomoc s pluginem? Máte otázky ohledně dodržování DPH nebo "
+"konfigurace?"
 
 #: includes/class-vat-guard-admin.php:638
 msgid ""
 "Visit our support forum on WordPress.org where our team and community can "
 "help you:"
 msgstr ""
+"Navštivte naše fórum podpory na WordPress.org, kde vám náš tým a komunita "
+"mohou pomoci:"
 
 #: includes/class-vat-guard-admin.php:644
 msgid "Visit Support Forum"
-msgstr ""
+msgstr "Navštívit fórum podpory"
 
 #: includes/class-vat-guard-admin.php:648
 msgid ""
 "Before posting, please search existing topics - your question might already "
 "be answered!"
 msgstr ""
+"Před odesláním příspěvku prosím prohledejte existující témata - vaše otázka "
+"už možná byla zodpovězena!"
 
 #: includes/class-vat-guard-admin.php:655
 msgid "Love This Plugin?"
-msgstr ""
+msgstr "Líbí se vám tento plugin?"
 
 #: includes/class-vat-guard-admin.php:657
 msgid ""
@@ -558,45 +599,52 @@ msgid ""
 "Your feedback helps us improve and helps other store owners discover the "
 "plugin."
 msgstr ""
+"Pokud vám EU VAT Guard pomohl ve vašem podnikání, zvažte prosím napsání "
+"recenze. Vaše zpětná vazba nám pomáhá se zlepšovat a pomáhá ostatním "
+"majitelům obchodů objevit plugin."
 
 #: includes/class-vat-guard-admin.php:667
 msgid "It only takes a minute and means the world to us! 🙏"
-msgstr ""
+msgstr "Zabere to jen minutu a pro nás to znamená celý svět! 🙏"
 
 #: includes/class-vat-guard-admin.php:674
 msgid "Documentation"
-msgstr ""
+msgstr "Dokumentace"
 
 #: includes/class-vat-guard-admin.php:676
 msgid ""
 "Learn more about how VAT Guard works and how to configure it for your store:"
 msgstr ""
+"Dozvědět se více o tom, jak VAT Guard funguje a jak jej nakonfigurovat pro "
+"váš obchod:"
 
 #: includes/class-vat-guard-admin.php:680
 msgid "How It Works - VAT Exemption Rules"
-msgstr ""
+msgstr "Jak to funguje - Pravidla osvobození od DPH"
 
 #: includes/class-vat-guard-admin.php:685
 msgid "Basic Settings - Configure Required Fields"
-msgstr ""
+msgstr "Základní nastavení - Konfigurace povinných polí"
 
 #: includes/class-vat-guard-admin.php:690
 msgid "Advanced Settings - Custom Labels & Exemption Rules"
-msgstr ""
+msgstr "Pokročilá nastavení - Vlastní popisky a pravidla osvobození"
 
 #: includes/class-vat-guard-admin.php:699
 msgid "Common Questions"
-msgstr ""
+msgstr "Časté otázky"
 
 #: includes/class-vat-guard-admin.php:702
 msgid "Does this work with WooCommerce blocks?"
-msgstr ""
+msgstr "Funguje to s WooCommerce bloky?"
 
 #: includes/class-vat-guard-admin.php:703
 msgid ""
 "Yes! The plugin fully supports both classic checkout and the new block-based "
 "checkout. Enable \"Block-based Checkout Support\" in Settings."
 msgstr ""
+"Ano! Plugin plně podporuje jak klasickou pokladnu, tak novou blokovou "
+"pokladnu. Povolte \"Podporu blokové pokladny\" v Nastavení."
 
 #: includes/class-vat-guard-admin.php:705
 #, fuzzy
@@ -608,20 +656,23 @@ msgid ""
 "All 27 EU member states VAT number formats are supported with proper "
 "validation."
 msgstr ""
+"Všech 27 formátů DIČ členských států EU je podporováno se správným ověřením."
 
 #: includes/class-vat-guard-admin.php:708
 msgid "Is VIES validation required?"
-msgstr ""
+msgstr "Je VIES ověření povinné?"
 
 #: includes/class-vat-guard-admin.php:709
 msgid ""
 "No, VIES validation is optional. You can use format-only validation or "
 "enable real-time VIES checking in Settings."
 msgstr ""
+"Ne, VIES ověření je volitelné. Můžete použít pouze ověření formátu nebo "
+"povolit kontrolu VIES v reálném čase v Nastavení."
 
 #: includes/class-vat-guard-admin.php:711
 msgid "Does this handle VAT exemptions automatically?"
-msgstr ""
+msgstr "Zpracovává to osvobození od DPH automaticky?"
 
 #: includes/class-vat-guard-admin.php:712
 msgid ""
@@ -629,22 +680,24 @@ msgid ""
 "transactions between different EU countries. See the How It Works tab for "
 "details."
 msgstr ""
+"Ano, plugin automaticky aplikuje osvobození od DPH pro platné B2B transakce "
+"mezi různými zeměmi EU. Podrobnosti najdete na kartě Jak to funguje."
 
 #: includes/class-vat-guard-admin.php:719
 msgid "Useful Links"
-msgstr ""
+msgstr "Užitečné odkazy"
 
 #: includes/class-vat-guard-admin.php:724
 msgid "Plugin Page on WordPress.org"
-msgstr ""
+msgstr "Stránka pluginu na WordPress.org"
 
 #: includes/class-vat-guard-admin.php:729
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Často kladené otázky"
 
 #: includes/class-vat-guard-admin.php:734
 msgid "Stormlabs Website"
-msgstr ""
+msgstr "Webové stránky Stormlabs"
 
 #: includes/class-vat-guard-admin.php:739
 #, fuzzy
@@ -653,13 +706,15 @@ msgstr "DIČ je platné"
 
 #: includes/class-vat-guard-admin.php:747
 msgid "Thank You for Using EU VAT Guard!"
-msgstr ""
+msgstr "Děkujeme za používání EU VAT Guard!"
 
 #: includes/class-vat-guard-admin.php:749
 msgid ""
 "We're committed to helping your business comply with EU VAT regulations. If "
 "you have any suggestions for improvements, we'd love to hear from you."
 msgstr ""
+"Jsme odhodláni pomoci vašemu podnikání dodržovat předpisy EU o DPH. Pokud "
+"máte nějaké návrhy na zlepšení, rádi od vás uslyšíme."
 
 #: includes/class-vat-guard-block-integration.php:99
 #: includes/class-vat-guard-block-integration.php:585
@@ -715,7 +770,7 @@ msgstr ""
 #: includes/class-vat-guard-pdf-integration.php:200
 #: includes/class-vat-guard.php:707 includes/pdf-template-helpers.php:61
 msgid "VAT Status"
-msgstr ""
+msgstr "Stav DPH"
 
 #: includes/class-vat-guard-pdf-integration.php:253
 msgid "VAT Number:"
@@ -723,100 +778,106 @@ msgstr "DIČ:"
 
 #: includes/class-vat-guard-pdf-integration.php:277
 msgid "VAT exempt"
-msgstr ""
+msgstr "Osvobozeno od DPH"
 
 #: includes/class-vat-guard-rate-importer.php:180
 #: includes/class-vat-guard-rate-importer.php:181
 msgid "VAT Rate Importer"
-msgstr ""
+msgstr "Importér sazeb DPH"
 
 #: includes/class-vat-guard-rate-importer.php:226
 msgid "You do not have sufficient permissions to access this page."
-msgstr ""
+msgstr "Nemáte dostatečná oprávnění pro přístup k této stránce."
 
 #: includes/class-vat-guard-rate-importer.php:234
 msgid "Please select at least one country to import."
-msgstr ""
+msgstr "Vyberte prosím alespoň jednu zemi k importu."
 
 #. translators: %d: number of VAT rates imported
 #: includes/class-vat-guard-rate-importer.php:244
 #, php-format
 msgid "Successfully imported %d VAT rates."
-msgstr ""
+msgstr "Úspěšně importováno %d sazeb DPH."
 
 #: includes/class-vat-guard-rate-importer.php:303
 msgid "Reduced tax class not found. make sure this class exists in Woocommerce"
-msgstr ""
+msgstr "Snížená daňová třída nebyla nalezena. Ujistěte se, že tato třída existuje ve WooCommerce"
 
 #: includes/class-vat-guard-rate-importer.php:413
 msgid "EU VAT Rate Importer"
-msgstr ""
+msgstr "Importér sazeb DPH EU"
 
 #: includes/class-vat-guard-rate-importer.php:416
 msgid ""
 "Import current EU VAT rates into your WooCommerce tax settings. This tool "
 "will create or update tax rates for the selected countries."
 msgstr ""
+"Importovat aktuální sazby DPH EU do nastavení daní WooCommerce. Tento nástroj "
+"vytvoří nebo aktualizuje daňové sazby pro vybrané země."
 
 #: includes/class-vat-guard-rate-importer.php:426
 msgid "Select Countries"
-msgstr ""
+msgstr "Vybrat země"
 
 #: includes/class-vat-guard-rate-importer.php:433
 msgid "Select All"
-msgstr ""
+msgstr "Vybrat vše"
 
 #: includes/class-vat-guard-rate-importer.php:445
 msgid "standard"
-msgstr ""
+msgstr "standardní"
 
 #: includes/class-vat-guard-rate-importer.php:448
 msgid "reduced"
-msgstr ""
+msgstr "snížená"
 
 #: includes/class-vat-guard-rate-importer.php:456
 msgid ""
 "Only countries that are enabled in your WooCommerce selling locations are "
 "shown."
 msgstr ""
+"Zobrazeny jsou pouze země, které jsou povoleny ve vašich prodejních lokalitách "
+"WooCommerce."
 
 #: includes/class-vat-guard-rate-importer.php:464
 msgid "Include Reduced Rates"
-msgstr ""
+msgstr "Zahrnout snížené sazby"
 
 #: includes/class-vat-guard-rate-importer.php:469
 msgid "Import reduced VAT rates (lower rates for specific goods)"
-msgstr ""
+msgstr "Importovat snížené sazby DPH (nižší sazby pro specifické zboží)"
 
 #: includes/class-vat-guard-rate-importer.php:472
 msgid ""
 "Reduced rates will be imported as separate tax classes that you can assign "
 "to specific products."
 msgstr ""
+"Snížené sazby budou importovány jako samostatné daňové třídy, které můžete "
+"přiřadit konkrétním produktům."
 
 #: includes/class-vat-guard-rate-importer.php:480
 msgid "Import Selected VAT Rates"
-msgstr ""
+msgstr "Importovat vybrané sazby DPH"
 
 #: includes/class-vat-guard-rate-importer.php:485
 msgid "Current EU VAT Rates Overview"
-msgstr ""
+msgstr "Přehled aktuálních sazeb DPH EU"
 
 #: includes/class-vat-guard-rate-importer.php:490
 msgid "Country"
-msgstr ""
+msgstr "Země"
 
 #: includes/class-vat-guard-rate-importer.php:491
 msgid "Standard Rate"
-msgstr ""
+msgstr "Standardní sazba"
 
 #: includes/class-vat-guard-rate-importer.php:492
 msgid "Reduced Rates"
-msgstr ""
+msgstr "Snížené sazby"
 
 #: includes/class-vat-guard-rate-importer.php:505
 msgid "None"
-msgstr ""
+msgstr "Žádné"
 
 #: includes/class-vat-guard.php:480
 msgid "The shipping country must match the country of the VAT number."
@@ -824,4 +885,4 @@ msgstr "Země doručení se musí shodovat se zemí DIČ."
 
 #: includes/class-vat-guard.php:697 includes/class-vat-guard.php:744
 msgid "VAT Information"
-msgstr ""
+msgstr "Informace o DPH"

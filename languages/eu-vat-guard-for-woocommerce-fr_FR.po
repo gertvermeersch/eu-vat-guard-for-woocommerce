@@ -60,7 +60,7 @@ msgstr "Veuillez saisir votre numéro de TVA."
 
 #: includes/class-vat-guard-admin-ui.php:207
 msgid "or"
-msgstr ""
+msgstr "ou"
 
 #: includes/class-vat-guard-admin.php:99
 msgid "Enter VAT number"
@@ -97,20 +97,19 @@ msgid ""
 "improving."
 msgstr ""
 "Merci d'utiliser VAT Guard pour WooCommerce ! Votre soutien nous aide à "
-"continuer à nous améliorer. Si vous avez des commentaires ou des "
-"suggestions, contactez-nous à"
+"continuer à nous améliorer."
 
 #: includes/class-vat-guard-admin.php:303
 #: includes/class-vat-guard-admin.php:635
 #: includes/class-vat-guard-admin.php:755
 msgid "Get Support"
-msgstr ""
+msgstr "Obtenir de l'aide"
 
 #: includes/class-vat-guard-admin.php:308
 #: includes/class-vat-guard-admin.php:663
 #: includes/class-vat-guard-admin.php:761
 msgid "Leave a Review"
-msgstr ""
+msgstr "Laisser un avis"
 
 #: includes/class-vat-guard-admin.php:316
 msgid "Advanced"
@@ -122,7 +121,7 @@ msgstr "Comment ça marche"
 
 #: includes/class-vat-guard-admin.php:318
 msgid "Help"
-msgstr ""
+msgstr "Aide"
 
 #: includes/class-vat-guard-admin.php:344
 msgid "Enable Block-based Checkout Support"
@@ -310,13 +309,15 @@ msgstr ""
 
 #: includes/class-vat-guard-admin.php:503
 msgid "Fixed Prices Including VAT:"
-msgstr ""
+msgstr "Prix fixes TTC :"
 
 #: includes/class-vat-guard-admin.php:504
 msgid ""
 "Prevents WooCommerce from adjusting prices based on customer location. All "
 "customers see the same prices including VAT."
 msgstr ""
+"Empêche WooCommerce d'ajuster les prix en fonction de l'emplacement du "
+"client. Tous les clients voient les mêmes prix TTC."
 
 #: includes/class-vat-guard-admin.php:505
 msgid "Custom Labels:"
@@ -576,33 +577,39 @@ msgstr "Site web :"
 
 #: includes/class-vat-guard-admin.php:630
 msgid "Help & Support"
-msgstr ""
+msgstr "Aide et support"
 
 #: includes/class-vat-guard-admin.php:637
 msgid ""
 "Need help with the plugin? Have questions about VAT compliance or "
 "configuration?"
 msgstr ""
+"Besoin d'aide avec le plugin ? Avez-vous des questions sur la conformité TVA "
+"ou la configuration ?"
 
 #: includes/class-vat-guard-admin.php:638
 msgid ""
 "Visit our support forum on WordPress.org where our team and community can "
 "help you:"
 msgstr ""
+"Visitez notre forum de support sur WordPress.org où notre équipe et la "
+"communauté peuvent vous aider :"
 
 #: includes/class-vat-guard-admin.php:644
 msgid "Visit Support Forum"
-msgstr ""
+msgstr "Visiter le forum de support"
 
 #: includes/class-vat-guard-admin.php:648
 msgid ""
 "Before posting, please search existing topics - your question might already "
 "be answered!"
 msgstr ""
+"Avant de poster, veuillez rechercher dans les sujets existants - votre "
+"question pourrait déjà avoir une réponse !"
 
 #: includes/class-vat-guard-admin.php:655
 msgid "Love This Plugin?"
-msgstr ""
+msgstr "Vous aimez ce plugin ?"
 
 #: includes/class-vat-guard-admin.php:657
 msgid ""
@@ -610,116 +617,125 @@ msgid ""
 "Your feedback helps us improve and helps other store owners discover the "
 "plugin."
 msgstr ""
+"Si EU VAT Guard a aidé votre entreprise, veuillez considérer laisser un "
+"avis. Vos commentaires nous aident à nous améliorer et aident d'autres "
+"propriétaires de boutiques à découvrir le plugin."
 
 #: includes/class-vat-guard-admin.php:667
 msgid "It only takes a minute and means the world to us! 🙏"
-msgstr ""
+msgstr "Cela ne prend qu'une minute et cela compte énormément pour nous ! 🙏"
 
 #: includes/class-vat-guard-admin.php:674
 msgid "Documentation"
-msgstr ""
+msgstr "Documentation"
 
 #: includes/class-vat-guard-admin.php:676
 msgid ""
 "Learn more about how VAT Guard works and how to configure it for your store:"
 msgstr ""
+"Apprenez-en plus sur le fonctionnement de VAT Guard et comment le configurer "
+"pour votre boutique :"
 
 #: includes/class-vat-guard-admin.php:680
-#, fuzzy
 msgid "How It Works - VAT Exemption Rules"
-msgstr "⚖️ Règles d'exonération de TVA"
+msgstr "Comment ça marche - Règles d'exonération de TVA"
 
 #: includes/class-vat-guard-admin.php:685
 msgid "Basic Settings - Configure Required Fields"
-msgstr ""
+msgstr "Paramètres de base - Configurer les champs obligatoires"
 
 #: includes/class-vat-guard-admin.php:690
 msgid "Advanced Settings - Custom Labels & Exemption Rules"
-msgstr ""
+msgstr "Paramètres avancés - Libellés personnalisés et règles d'exonération"
 
 #: includes/class-vat-guard-admin.php:699
 msgid "Common Questions"
-msgstr ""
+msgstr "Questions fréquentes"
 
 #: includes/class-vat-guard-admin.php:702
 msgid "Does this work with WooCommerce blocks?"
-msgstr ""
+msgstr "Cela fonctionne-t-il avec les blocs WooCommerce ?"
 
 #: includes/class-vat-guard-admin.php:703
 msgid ""
 "Yes! The plugin fully supports both classic checkout and the new block-based "
 "checkout. Enable \"Block-based Checkout Support\" in Settings."
 msgstr ""
+"Oui ! Le plugin prend entièrement en charge le paiement classique et le "
+"nouveau paiement basé sur les blocs. Activez \"Support du paiement basé sur "
+"les blocs\" dans les Paramètres."
 
 #: includes/class-vat-guard-admin.php:705
-#, fuzzy
 msgid "What VAT number formats are supported?"
-msgstr "Format de numéro de TVA invalide"
+msgstr "Quels formats de numéro de TVA sont pris en charge ?"
 
 #: includes/class-vat-guard-admin.php:706
-#, fuzzy
 msgid ""
 "All 27 EU member states VAT number formats are supported with proper "
 "validation."
-msgstr "Tous les formats de TVA des 27 États membres de l'UE"
+msgstr ""
+"Tous les formats de numéro de TVA des 27 États membres de l'UE sont pris en "
+"charge avec une validation appropriée."
 
 #: includes/class-vat-guard-admin.php:708
-#, fuzzy
 msgid "Is VIES validation required?"
-msgstr "Validation VIES :"
+msgstr "La validation VIES est-elle obligatoire ?"
 
 #: includes/class-vat-guard-admin.php:709
 msgid ""
 "No, VIES validation is optional. You can use format-only validation or "
 "enable real-time VIES checking in Settings."
 msgstr ""
+"Non, la validation VIES est optionnelle. Vous pouvez utiliser uniquement la "
+"validation de format ou activer la vérification VIES en temps réel dans les "
+"Paramètres."
 
 #: includes/class-vat-guard-admin.php:711
 msgid "Does this handle VAT exemptions automatically?"
-msgstr ""
+msgstr "Cela gère-t-il les exonérations de TVA automatiquement ?"
 
 #: includes/class-vat-guard-admin.php:712
-#, fuzzy
 msgid ""
 "Yes, the plugin automatically applies VAT exemptions for valid B2B "
 "transactions between different EU countries. See the How It Works tab for "
 "details."
 msgstr ""
-"VAT Guard vous aide à vous conformer aux réglementations TVA de l'UE en "
-"gérant automatiquement les exonérations de TVA pour les transactions B2B "
-"valides entre États membres de l'UE."
+"Oui, le plugin applique automatiquement les exonérations de TVA pour les "
+"transactions B2B valides entre différents pays de l'UE. Consultez l'onglet "
+"Comment ça marche pour plus de détails."
 
 #: includes/class-vat-guard-admin.php:719
 msgid "Useful Links"
-msgstr ""
+msgstr "Liens utiles"
 
 #: includes/class-vat-guard-admin.php:724
 msgid "Plugin Page on WordPress.org"
-msgstr ""
+msgstr "Page du plugin sur WordPress.org"
 
 #: includes/class-vat-guard-admin.php:729
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Questions fréquemment posées"
 
 #: includes/class-vat-guard-admin.php:734
-#, fuzzy
 msgid "Stormlabs Website"
-msgstr "Stormlabs"
+msgstr "Site web Stormlabs"
 
 #: includes/class-vat-guard-admin.php:739
-#, fuzzy
 msgid "EU VIES VAT Number Validation"
-msgstr "🔍 Validation du numéro de TVA"
+msgstr "Validation des numéros de TVA UE VIES"
 
 #: includes/class-vat-guard-admin.php:747
 msgid "Thank You for Using EU VAT Guard!"
-msgstr ""
+msgstr "Merci d'utiliser EU VAT Guard !"
 
 #: includes/class-vat-guard-admin.php:749
 msgid ""
 "We're committed to helping your business comply with EU VAT regulations. If "
 "you have any suggestions for improvements, we'd love to hear from you."
 msgstr ""
+"Nous nous engageons à aider votre entreprise à se conformer aux "
+"réglementations TVA de l'UE. Si vous avez des suggestions d'améliorations, "
+"nous aimerions avoir de vos nouvelles."
 
 #: includes/class-vat-guard-block-integration.php:99
 #: includes/class-vat-guard-block-integration.php:585
@@ -792,7 +808,7 @@ msgstr "Importateur de taux de TVA"
 
 #: includes/class-vat-guard-rate-importer.php:226
 msgid "You do not have sufficient permissions to access this page."
-msgstr ""
+msgstr "Vous n'avez pas les autorisations suffisantes pour accéder à cette page."
 "Vous n'avez pas les autorisations suffisantes pour accéder à cette page."
 
 #: includes/class-vat-guard-rate-importer.php:234
@@ -895,4 +911,4 @@ msgstr "Le pays de livraison doit correspondre au pays du numéro de TVA."
 
 #: includes/class-vat-guard.php:697 includes/class-vat-guard.php:744
 msgid "VAT Information"
-msgstr ""
+msgstr "Informations TVA"

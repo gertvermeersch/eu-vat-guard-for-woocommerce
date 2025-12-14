@@ -30,16 +30,20 @@ msgid ""
 "exempts VAT (reverse charge) where applicable and provides admin tools for "
 "VAT management."
 msgstr ""
+"Administrer EU-momsnumre og virksomhedsoplysninger for WooCommerce-kunder og "
+"B2B. Tilføjer virksomheds- og momsfelter til registrering, konto og checkout, "
+"fritager for moms (omvendt betalingspligt) hvor det er relevant og giver "
+"administratorværktøjer til momshåndtering."
 
 #. Author of the plugin
 #: vat-guard-woocommerce.php
 msgid "Stormlabs"
-msgstr ""
+msgstr "Stormlabs"
 
 #. Author URI of the plugin
 #: vat-guard-woocommerce.php
 msgid "https://stormlabs.be/"
-msgstr ""
+msgstr "https://stormlabs.be/"
 
 #: includes/class-vat-guard-account.php:112
 #: includes/class-vat-guard-account.php:149
@@ -55,7 +59,7 @@ msgstr "Indtast venligst dit momsnummer."
 
 #: includes/class-vat-guard-admin-ui.php:207
 msgid "or"
-msgstr ""
+msgstr "eller"
 
 #: includes/class-vat-guard-admin.php:99
 msgid "Enter VAT number"
@@ -85,72 +89,77 @@ msgstr "VAT Guard"
 #: includes/class-vat-guard-admin.php:275
 #: includes/class-vat-guard-admin.php:315
 msgid "Settings"
-msgstr ""
+msgstr "Indstillinger"
 
 #: includes/class-vat-guard-admin.php:299
 msgid ""
 "Thank you for using VAT Guard for WooCommerce! Your support helps us keep "
 "improving."
 msgstr ""
+"Tak for at bruge VAT Guard til WooCommerce! Din støtte hjælper os med at "
+"blive ved med at forbedre."
 
 #: includes/class-vat-guard-admin.php:303
 #: includes/class-vat-guard-admin.php:635
 #: includes/class-vat-guard-admin.php:755
 msgid "Get Support"
-msgstr ""
+msgstr "Få support"
 
 #: includes/class-vat-guard-admin.php:308
 #: includes/class-vat-guard-admin.php:663
 #: includes/class-vat-guard-admin.php:761
 msgid "Leave a Review"
-msgstr ""
+msgstr "Skriv en anmeldelse"
 
 #: includes/class-vat-guard-admin.php:316
 msgid "Advanced"
-msgstr ""
+msgstr "Avanceret"
 
 #: includes/class-vat-guard-admin.php:317
 msgid "How It Works"
-msgstr ""
+msgstr "Sådan fungerer det"
 
 #: includes/class-vat-guard-admin.php:318
 msgid "Help"
-msgstr ""
+msgstr "Hjælp"
 
 #: includes/class-vat-guard-admin.php:344
 msgid "Enable Block-based Checkout Support"
-msgstr ""
+msgstr "Aktivér blok-baseret checkout-support"
 
 #: includes/class-vat-guard-admin.php:349
 msgid ""
 "Enable support for WooCommerce Block-based Checkout (Cart & Checkout Blocks)"
 msgstr ""
+"Aktivér support for WooCommerce blok-baseret checkout (kurv- og checkout-blokke)"
 
 #: includes/class-vat-guard-admin.php:351
 msgid "Disable when using classic checkout or Cartflows"
-msgstr ""
+msgstr "Deaktivér ved brug af klassisk checkout eller Cartflows"
 
 #: includes/class-vat-guard-admin.php:356
 msgid "Require Company Name"
-msgstr ""
+msgstr "Kræv firmanavn"
 
 #: includes/class-vat-guard-admin.php:360
 msgid "Make company name a required field"
-msgstr ""
+msgstr "Gør firmanavn til et påkrævet felt"
 
 #: includes/class-vat-guard-admin.php:362
 msgid ""
 "Warning: This does not have effect on the block based checkout. You need to "
 "manually enable the Company name field in the block editor."
 msgstr ""
+"Advarsel: Dette har ingen effekt på den blok-baserede checkout. Du skal "
+"manuelt aktivere firmanavnfeltet i blokeditoren."
 
 #: includes/class-vat-guard-admin.php:367
 msgid "Require VAT Number - only sell B2B"
-msgstr ""
+msgstr "Kræv momsnummer - sælg kun B2B"
 
 #: includes/class-vat-guard-admin.php:372
 msgid "Make VAT number a required field"
-msgstr ""
+msgstr "Gør momsnummer til et påkrævet felt"
 
 #: includes/class-vat-guard-admin.php:376
 #, fuzzy
@@ -167,32 +176,36 @@ msgid ""
 "VIES (VAT Information Exchange System) is a search engine (not a database) "
 "owned by the European Commission"
 msgstr ""
+"VIES (VAT Information Exchange System) er en søgemaskine (ikke en database) "
+"ejet af Europa-Kommissionen"
 
 #: includes/class-vat-guard-admin.php:387
 msgid "Ignore VIES errors"
-msgstr ""
+msgstr "Ignorer VIES-fejl"
 
 #: includes/class-vat-guard-admin.php:391
 msgid "Allow checkout if VIES is unavailable or returns an error"
-msgstr ""
+msgstr "Tillad checkout hvis VIES er utilgængelig eller returnerer en fejl"
 
 #: includes/class-vat-guard-admin.php:406
 msgid "Exemption Rules"
-msgstr ""
+msgstr "Fritagelsesregler"
 
 #: includes/class-vat-guard-admin.php:409
 msgid "Disable VAT Exemption"
-msgstr ""
+msgstr "Deaktivér momsfritagelse"
 
 #: includes/class-vat-guard-admin.php:413
 msgid "Skip VAT exemption entirely and just register VAT numbers"
-msgstr ""
+msgstr "Spring momsfritagelse helt over og registrer kun momsnumre"
 
 #: includes/class-vat-guard-admin.php:415
 msgid ""
 "When enabled, VAT numbers will be collected and validated but no tax "
 "exemption will be applied."
 msgstr ""
+"Når aktiveret, vil momsnumre blive indsamlet og valideret, men ingen "
+"momsfritagelse vil blive anvendt."
 
 #: includes/class-vat-guard-admin.php:421
 msgid "Pricing Options"
@@ -217,32 +230,34 @@ msgstr ""
 
 #: includes/class-vat-guard-admin.php:436
 msgid "Custom Labels & Messages"
-msgstr ""
+msgstr "Brugerdefinerede etiketter og beskeder"
 
 #: includes/class-vat-guard-admin.php:437
 msgid ""
 "These labels and messages will be displayed on the checkout page. Can be "
 "translated (e.g. WPML String Translations)"
 msgstr ""
+"Disse etiketter og beskeder vil blive vist på checkout-siden. Kan oversættes "
+"(f.eks. WPML String Translations)"
 
 #: includes/class-vat-guard-admin.php:443
 msgid "Company Name Label"
-msgstr ""
+msgstr "Firmanavn-etiket"
 
 #: includes/class-vat-guard-admin.php:448
 #: includes/class-vat-guard-helper.php:139
 msgid "Company Name"
-msgstr ""
+msgstr "Firmanavn"
 
 #: includes/class-vat-guard-admin.php:450
 msgid "Custom label for the company name field. Leave empty to use default."
-msgstr ""
+msgstr "Brugerdefineret etiket for firmanavnfeltet. Lad stå tomt for at bruge standard."
 
 #: includes/class-vat-guard-admin.php:452
 #: includes/class-vat-guard-admin.php:469
 #: includes/class-vat-guard-admin.php:487
 msgid "This string will be registered with WPML for translation."
-msgstr ""
+msgstr "Denne streng vil blive registreret med WPML til oversættelse."
 
 #: includes/class-vat-guard-admin.php:460
 #, fuzzy
@@ -256,7 +271,7 @@ msgstr "CVR-nummer"
 
 #: includes/class-vat-guard-admin.php:467
 msgid "Custom label for the VAT number field. Leave empty to use default."
-msgstr ""
+msgstr "Brugerdefineret etiket for momsnummerfeltet. Lad stå tomt for at bruge standard."
 
 #: includes/class-vat-guard-admin.php:477
 #, fuzzy
@@ -273,68 +288,80 @@ msgid ""
 "Custom message shown when VAT exemption is applied. Leave empty to use "
 "default."
 msgstr ""
+"Brugerdefineret besked vist når momsfritagelse anvendes. Lad stå tomt for at "
+"bruge standard."
 
 #: includes/class-vat-guard-admin.php:501
 msgid "Disable VAT Exemption:"
-msgstr ""
+msgstr "Deaktivér momsfritagelse:"
 
 #: includes/class-vat-guard-admin.php:502
 msgid ""
 "Useful if you only want to collect VAT numbers for record-keeping without "
 "applying tax exemptions."
 msgstr ""
+"Nyttigt hvis du kun vil indsamle momsnumre til registrering uden at anvende "
+"momsfritagelser."
 
 #: includes/class-vat-guard-admin.php:503
 msgid "Fixed Prices Including VAT:"
-msgstr ""
+msgstr "Faste priser inkl. moms:"
 
 #: includes/class-vat-guard-admin.php:504
 msgid ""
 "Prevents WooCommerce from adjusting prices based on customer location. All "
 "customers see the same prices including VAT."
 msgstr ""
+"Forhindrer WooCommerce i at justere priser baseret på kundens placering. Alle "
+"kunder ser de samme priser inkl. moms."
 
 #: includes/class-vat-guard-admin.php:505
 msgid "Custom Labels:"
-msgstr ""
+msgstr "Brugerdefinerede etiketter:"
 
 #: includes/class-vat-guard-admin.php:506
 msgid ""
 "Override default field labels to match your store's terminology or language "
 "preferences."
 msgstr ""
+"Tilsidesæt standard feltetiketter for at matche din butiks terminologi eller "
+"sprogpræferencer."
 
 #: includes/class-vat-guard-admin.php:507
 msgid "Custom Messages:"
-msgstr ""
+msgstr "Brugerdefinerede beskeder:"
 
 #: includes/class-vat-guard-admin.php:508
 msgid "Customize the VAT exemption message shown to customers during checkout."
-msgstr ""
+msgstr "Tilpas momsfritagelsesbeskeden vist til kunder under checkout."
 
 #: includes/class-vat-guard-admin.php:509
 msgid "WPML Compatibility:"
-msgstr ""
+msgstr "WPML-kompatibilitet:"
 
 #: includes/class-vat-guard-admin.php:510
 msgid ""
 "Custom strings are automatically registered with WPML for translation when "
 "saved."
 msgstr ""
+"Brugerdefinerede strenge registreres automatisk med WPML til oversættelse når "
+"de gemmes."
 
 #: includes/class-vat-guard-admin.php:512
 msgid "⚙️ Advanced Settings Info"
-msgstr ""
+msgstr "⚙️ Avancerede indstillinger info"
 
 #: includes/class-vat-guard-admin.php:518
 msgid ""
 "WPML is active! Custom strings will be automatically registered for "
 "translation when you save them. You can translate them in:"
 msgstr ""
+"WPML er aktiv! Brugerdefinerede strenge vil automatisk blive registreret til "
+"oversættelse når du gemmer dem. Du kan oversætte dem i:"
 
 #: includes/class-vat-guard-admin.php:520
 msgid "🌍 WPML Translation"
-msgstr ""
+msgstr "🌍 WPML-oversættelse"
 
 #: includes/class-vat-guard-admin.php:529
 #, fuzzy
@@ -343,23 +370,26 @@ msgstr "VAT Guard"
 
 #: includes/class-vat-guard-admin.php:532
 msgid "🎯 Purpose"
-msgstr ""
+msgstr "🎯 Formål"
 
 #: includes/class-vat-guard-admin.php:533
 msgid ""
 "VAT Guard helps you comply with EU VAT regulations by automatically managing "
 "VAT exemptions for valid B2B transactions between EU member states."
 msgstr ""
+"VAT Guard hjælper dig med at overholde EU-momsregler ved automatisk at "
+"administrere momsfritagelser for gyldige B2B-transaktioner mellem EU-medlemsstater."
 
 #: includes/class-vat-guard-admin.php:538
 msgid "⚖️ VAT Exemption Rules"
-msgstr ""
+msgstr "⚖️ Momsfritagelsesregler"
 
 #: includes/class-vat-guard-admin.php:539
 msgid ""
 "VAT exemption is automatically applied when ALL of the following conditions "
 "are met:"
 msgstr ""
+"Momsfritagelse anvendes automatisk når ALLE følgende betingelser er opfyldt:"
 
 #: includes/class-vat-guard-admin.php:542
 #, fuzzy
@@ -368,11 +398,11 @@ msgstr "Indtast venligst et gyldigt EU-momsnummer."
 
 #: includes/class-vat-guard-admin.php:543
 msgid "VAT number country is different from your store's base country"
-msgstr ""
+msgstr "Momsnummerets land er forskelligt fra din butiks basisland"
 
 #: includes/class-vat-guard-admin.php:545
 msgid "Shipping method is NOT local pickup"
-msgstr ""
+msgstr "Forsendelsesmetoden er IKKE lokal afhentning"
 
 #: includes/class-vat-guard-admin.php:546
 #, fuzzy
@@ -381,13 +411,14 @@ msgstr "Forsendelseslandet skal matche landet for momsnummeret."
 
 #: includes/class-vat-guard-admin.php:549
 msgid "Important:"
-msgstr ""
+msgstr "Vigtigt:"
 
 #: includes/class-vat-guard-admin.php:550
 msgid ""
 "If local pickup is selected, VAT is always charged regardless of the VAT "
 "number."
 msgstr ""
+"Hvis lokal afhentning vælges, opkræves moms altid uanset momsnummeret."
 
 #: includes/class-vat-guard-admin.php:555
 #, fuzzy
@@ -396,27 +427,27 @@ msgstr "Momsnummeret er gyldigt"
 
 #: includes/class-vat-guard-admin.php:556
 msgid "The plugin validates VAT numbers in two stages:"
-msgstr ""
+msgstr "Pluginet validerer momsnumre i to trin:"
 
 #: includes/class-vat-guard-admin.php:558
 msgid "Format Validation:"
-msgstr ""
+msgstr "Formatvalidering:"
 
 #: includes/class-vat-guard-admin.php:559
 msgid "Checks if the VAT number matches the correct format for each EU country"
-msgstr ""
+msgstr "Kontrollerer om momsnummeret matcher det korrekte format for hvert EU-land"
 
 #: includes/class-vat-guard-admin.php:561
 msgid "VIES Validation (Optional):"
-msgstr ""
+msgstr "VIES-validering (valgfri):"
 
 #: includes/class-vat-guard-admin.php:562
 msgid "Verifies the VAT number exists in the official EU VIES database"
-msgstr ""
+msgstr "Verificerer at momsnummeret findes i den officielle EU VIES-database"
 
 #: includes/class-vat-guard-admin.php:568
 msgid "🚫 When VAT is NOT Exempted"
-msgstr ""
+msgstr "🚫 Når moms IKKE fritages"
 
 #: includes/class-vat-guard-admin.php:571
 #, fuzzy
@@ -430,11 +461,11 @@ msgstr "Ugyldigt momsnummer"
 
 #: includes/class-vat-guard-admin.php:573
 msgid "VAT number country same as store base country"
-msgstr ""
+msgstr "Momsnummerets land samme som butikkens basisland"
 
 #: includes/class-vat-guard-admin.php:575
 msgid "Local pickup shipping method selected"
-msgstr ""
+msgstr "Lokal afhentning forsendelsesmetode valgt"
 
 #: includes/class-vat-guard-admin.php:576
 #, fuzzy
@@ -443,69 +474,71 @@ msgstr "Forsendelseslandet skal matche landet for momsnummeret."
 
 #: includes/class-vat-guard-admin.php:578
 msgid "VIES validation fails (if enabled)"
-msgstr ""
+msgstr "VIES-validering fejler (hvis aktiveret)"
 
 #: includes/class-vat-guard-admin.php:583
 msgid "📋 Supported Features"
-msgstr ""
+msgstr "📋 Understøttede funktioner"
 
 #: includes/class-vat-guard-admin.php:585
 msgid "Classic WooCommerce checkout"
-msgstr ""
+msgstr "Klassisk WooCommerce checkout"
 
 #: includes/class-vat-guard-admin.php:586
 msgid "Block-based checkout (Cart & Checkout blocks)"
-msgstr ""
+msgstr "Blok-baseret checkout (kurv- og checkout-blokke)"
 
 #: includes/class-vat-guard-admin.php:588
 msgid "Customer registration and account pages"
-msgstr ""
+msgstr "Kunderegistrering og kontosider"
 
 #: includes/class-vat-guard-admin.php:589
 msgid "Admin order management"
-msgstr ""
+msgstr "Admin ordrehåndtering"
 
 #: includes/class-vat-guard-admin.php:590
 msgid "Email notifications"
-msgstr ""
+msgstr "E-mail-notifikationer"
 
 #: includes/class-vat-guard-admin.php:591
 msgid "All 27 EU member states VAT formats"
-msgstr ""
+msgstr "Alle 27 EU-medlemsstaters momsformater"
 
 #: includes/class-vat-guard-admin.php:596
 msgid "⚙️ Configuration Tips"
-msgstr ""
+msgstr "⚙️ Konfigurationstips"
 
 #: includes/class-vat-guard-admin.php:598
 msgid "B2B Only:"
-msgstr ""
+msgstr "Kun B2B:"
 
 #: includes/class-vat-guard-admin.php:599
 msgid "Enable \"Require VAT Number\" to sell only to businesses"
-msgstr ""
+msgstr "Aktivér \"Kræv momsnummer\" for kun at sælge til virksomheder"
 
 #: includes/class-vat-guard-admin.php:601
 msgid "VIES Validation:"
-msgstr ""
+msgstr "VIES-validering:"
 
 #: includes/class-vat-guard-admin.php:602
 msgid ""
 "Enable for stricter validation, but consider enabling \"Ignore VIES errors\" "
 "for better user experience when the service is down"
 msgstr ""
+"Aktivér for strengere validering, men overvej at aktivere \"Ignorer VIES-fejl\" "
+"for bedre brugeroplevelse når tjenesten er nede"
 
 #: includes/class-vat-guard-admin.php:604
 msgid "Block Checkout:"
-msgstr ""
+msgstr "Blok-checkout:"
 
 #: includes/class-vat-guard-admin.php:605
 msgid "Enable if you're using WooCommerce's new block-based checkout"
-msgstr ""
+msgstr "Aktivér hvis du bruger WooCommerces nye blok-baserede checkout"
 
 #: includes/class-vat-guard-admin.php:611
 msgid "📞 Need Help?"
-msgstr ""
+msgstr "📞 Brug for hjælp?"
 
 #: includes/class-vat-guard-admin.php:612
 msgid ""
@@ -513,44 +546,53 @@ msgid ""
 "contact our support team. We're here to help ensure your store meets all EU "
 "VAT requirements."
 msgstr ""
+"Hvis du støder på problemer eller har brug for hjælp med momsoverholdelse, "
+"kontakt venligst vores supportteam. Vi er her for at hjælpe med at sikre, at "
+"din butik opfylder alle EU-momskrav."
 
 #: includes/class-vat-guard-admin.php:614
 msgid "Email:"
-msgstr ""
+msgstr "E-mail:"
 
 #: includes/class-vat-guard-admin.php:617
 msgid "Website:"
-msgstr ""
+msgstr "Hjemmeside:"
 
 #: includes/class-vat-guard-admin.php:630
 msgid "Help & Support"
-msgstr ""
+msgstr "Hjælp og support"
 
 #: includes/class-vat-guard-admin.php:637
 msgid ""
 "Need help with the plugin? Have questions about VAT compliance or "
 "configuration?"
 msgstr ""
+"Har du brug for hjælp med pluginet? Har du spørgsmål om momsoverholdelse eller "
+"konfiguration?"
 
 #: includes/class-vat-guard-admin.php:638
 msgid ""
 "Visit our support forum on WordPress.org where our team and community can "
 "help you:"
 msgstr ""
+"Besøg vores supportforum på WordPress.org hvor vores team og fællesskab kan "
+"hjælpe dig:"
 
 #: includes/class-vat-guard-admin.php:644
 msgid "Visit Support Forum"
-msgstr ""
+msgstr "Besøg supportforum"
 
 #: includes/class-vat-guard-admin.php:648
 msgid ""
 "Before posting, please search existing topics - your question might already "
 "be answered!"
 msgstr ""
+"Før du poster, søg venligst i eksisterende emner - dit spørgsmål er måske "
+"allerede besvaret!"
 
 #: includes/class-vat-guard-admin.php:655
 msgid "Love This Plugin?"
-msgstr ""
+msgstr "Elsker du dette plugin?"
 
 #: includes/class-vat-guard-admin.php:657
 msgid ""
@@ -558,45 +600,52 @@ msgid ""
 "Your feedback helps us improve and helps other store owners discover the "
 "plugin."
 msgstr ""
+"Hvis EU VAT Guard har hjulpet din virksomhed, overvej venligst at skrive en "
+"anmeldelse. Din feedback hjælper os med at forbedre og hjælper andre "
+"butiksejere med at opdage pluginet."
 
 #: includes/class-vat-guard-admin.php:667
 msgid "It only takes a minute and means the world to us! 🙏"
-msgstr ""
+msgstr "Det tager kun et minut og betyder verden for os! 🙏"
 
 #: includes/class-vat-guard-admin.php:674
 msgid "Documentation"
-msgstr ""
+msgstr "Dokumentation"
 
 #: includes/class-vat-guard-admin.php:676
 msgid ""
 "Learn more about how VAT Guard works and how to configure it for your store:"
 msgstr ""
+"Lær mere om hvordan VAT Guard fungerer og hvordan du konfigurerer det til din "
+"butik:"
 
 #: includes/class-vat-guard-admin.php:680
 msgid "How It Works - VAT Exemption Rules"
-msgstr ""
+msgstr "Sådan fungerer det - Momsfritagelsesregler"
 
 #: includes/class-vat-guard-admin.php:685
 msgid "Basic Settings - Configure Required Fields"
-msgstr ""
+msgstr "Grundlæggende indstillinger - Konfigurer påkrævede felter"
 
 #: includes/class-vat-guard-admin.php:690
 msgid "Advanced Settings - Custom Labels & Exemption Rules"
-msgstr ""
+msgstr "Avancerede indstillinger - Brugerdefinerede etiketter og fritagelsesregler"
 
 #: includes/class-vat-guard-admin.php:699
 msgid "Common Questions"
-msgstr ""
+msgstr "Almindelige spørgsmål"
 
 #: includes/class-vat-guard-admin.php:702
 msgid "Does this work with WooCommerce blocks?"
-msgstr ""
+msgstr "Virker dette med WooCommerce-blokke?"
 
 #: includes/class-vat-guard-admin.php:703
 msgid ""
 "Yes! The plugin fully supports both classic checkout and the new block-based "
 "checkout. Enable \"Block-based Checkout Support\" in Settings."
 msgstr ""
+"Ja! Pluginet understøtter fuldt ud både klassisk checkout og den nye "
+"blok-baserede checkout. Aktivér \"Blok-baseret checkout-support\" i indstillinger."
 
 #: includes/class-vat-guard-admin.php:705
 #, fuzzy
@@ -608,20 +657,24 @@ msgid ""
 "All 27 EU member states VAT number formats are supported with proper "
 "validation."
 msgstr ""
+"Alle 27 EU-medlemsstaters momsnummerformater understøttes med korrekt "
+"validering."
 
 #: includes/class-vat-guard-admin.php:708
 msgid "Is VIES validation required?"
-msgstr ""
+msgstr "Er VIES-validering påkrævet?"
 
 #: includes/class-vat-guard-admin.php:709
 msgid ""
 "No, VIES validation is optional. You can use format-only validation or "
 "enable real-time VIES checking in Settings."
 msgstr ""
+"Nej, VIES-validering er valgfri. Du kan bruge kun formatvalidering eller "
+"aktivere realtids VIES-kontrol i indstillinger."
 
 #: includes/class-vat-guard-admin.php:711
 msgid "Does this handle VAT exemptions automatically?"
-msgstr ""
+msgstr "Håndterer dette momsfritagelser automatisk?"
 
 #: includes/class-vat-guard-admin.php:712
 msgid ""
@@ -629,22 +682,24 @@ msgid ""
 "transactions between different EU countries. See the How It Works tab for "
 "details."
 msgstr ""
+"Ja, pluginet anvender automatisk momsfritagelser for gyldige B2B-transaktioner "
+"mellem forskellige EU-lande. Se fanen \"Sådan fungerer det\" for detaljer."
 
 #: includes/class-vat-guard-admin.php:719
 msgid "Useful Links"
-msgstr ""
+msgstr "Nyttige links"
 
 #: includes/class-vat-guard-admin.php:724
 msgid "Plugin Page on WordPress.org"
-msgstr ""
+msgstr "Plugin-side på WordPress.org"
 
 #: includes/class-vat-guard-admin.php:729
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Ofte stillede spørgsmål"
 
 #: includes/class-vat-guard-admin.php:734
 msgid "Stormlabs Website"
-msgstr ""
+msgstr "Stormlabs hjemmeside"
 
 #: includes/class-vat-guard-admin.php:739
 #, fuzzy
@@ -653,13 +708,15 @@ msgstr "Momsnummeret er gyldigt"
 
 #: includes/class-vat-guard-admin.php:747
 msgid "Thank You for Using EU VAT Guard!"
-msgstr ""
+msgstr "Tak for at bruge EU VAT Guard!"
 
 #: includes/class-vat-guard-admin.php:749
 msgid ""
 "We're committed to helping your business comply with EU VAT regulations. If "
 "you have any suggestions for improvements, we'd love to hear from you."
 msgstr ""
+"Vi er forpligtet til at hjælpe din virksomhed med at overholde EU-momsregler. "
+"Hvis du har forslag til forbedringer, vil vi gerne høre fra dig."
 
 #: includes/class-vat-guard-block-integration.php:99
 #: includes/class-vat-guard-block-integration.php:585
@@ -715,7 +772,7 @@ msgstr ""
 #: includes/class-vat-guard-pdf-integration.php:200
 #: includes/class-vat-guard.php:707 includes/pdf-template-helpers.php:61
 msgid "VAT Status"
-msgstr ""
+msgstr "Momsstatus"
 
 #: includes/class-vat-guard-pdf-integration.php:253
 msgid "VAT Number:"
@@ -723,7 +780,7 @@ msgstr "CVR-nummer:"
 
 #: includes/class-vat-guard-pdf-integration.php:277
 msgid "VAT exempt"
-msgstr ""
+msgstr "Momsfritaget"
 
 #: includes/class-vat-guard-rate-importer.php:180
 #: includes/class-vat-guard-rate-importer.php:181
