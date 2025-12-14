@@ -105,28 +105,11 @@ php compile-translations.php
 This plugin uses:
 - **Text Domain**: `eu-vat-guard-for-woocommerce`
 - **Plugin Slug**: `eu-vat-guard-for-woocommerce`
-- **Stable Tag**: `1.3.9`
+- **Stable Tag**: `1.3.29`
 
 ## Changelog
 
-### Version 1.3.13 (Upcoming)
-- ✨ **Added**: Plugin activation hook now initializes default option values for better first-time setup
-- 🔧 **Improved**: New installations come with sensible defaults pre-configured
-- 🔧 **Improved**: Existing installations also benefit from default options initialization on admin_init
-- 🔧 **Technical**: Refactored activation code with `eu_vat_guard_get_default_options()` helper function
-- 🔧 **Technical**: Added `eu_vat_guard_init_options()` function that runs on both activation and admin_init
-- 🔧 **Technical**: Default options include: require_company (enabled), require_vat (enabled), require_vies (disabled), ignore_vies_error (disabled), enable_block_checkout (enabled), disable_exemption (disabled), fixed_prices (disabled)
-- 🔧 **Technical**: Empty string defaults for custom labels (company_label, vat_label, exemption_message)
 
-### Version 1.3.12
-- 🐛 **Fixed**: Block checkout setting now properly saves in correct settings group
-- 🔧 **Technical**: Moved block checkout option registration to 'options' group for proper WordPress settings API integration
-- ✨ **Improved**: Enhanced settings registration consistency
-
-### Version 1.3.11
-- ✨ **Improved**: Code cleanup - removed redundant hidden input fields from advanced settings form
-- 🔧 **Technical**: Simplified form structure as checkbox sanitization is already handled in register_settings()
-- 📝 **Quality**: Enhanced code maintainability with cleaner form implementation
 
 ### Version 1.3.10
 - 🐛 **Fixed**: Checkbox settings now properly save unchecked state on all server configurations

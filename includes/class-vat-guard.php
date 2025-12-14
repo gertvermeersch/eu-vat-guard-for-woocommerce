@@ -115,21 +115,26 @@ class VAT_Guard
 
         // Order display hooks - always active regardless of block support setting
         add_action('woocommerce_order_details_after_customer_details', array($this, 'show_vat_in_order_details'), 10, 1);
-        //add_action('woocommerce_thankyou', array($this, 'show_vat_on_thankyou_page'), 10, 1);
-
+       
         // Checkout hooks - only load when actually needed
         add_action('wp', array($this, 'maybe_setup_checkout_hooks'));
+
+        // Order recalculation protection hooks - run with very high priority to override B2B plugins
+        //add_action('woocommerce_before_calculate_totals', array($this, 'restore_vat_exemption_from_order'), 999);
+       
+        // Additional hooks to catch different recalculation scenarios from B2B plugins
+        //add_action('woocommerce_cart_calculate_fees', array($this, 'restore_vat_exemption_from_order'), 999);
+        //add_action('woocommerce_after_calculate_totals', array($this, 'ensure_vat_exemption_persists'), 999);
+        
+        // Hook into order status changes (PayPal and B2B plugins often trigger these)
+        //add_action('woocommerce_order_status_changed', array($this, 'restore_vat_exemption_on_status_change'), 999, 3);
+        //add_action('woocommerce_payment_complete', array($this, 'restore_vat_exemption_after_payment'), 999);
+        
+        // Hook into order save events (B2B plugins may trigger these)
+        //add_action('woocommerce_process_shop_order_meta', array($this, 'restore_vat_exemption_on_order_save'), 999, 2);
+        //add_action('save_post_shop_order', array($this, 'restore_vat_exemption_on_post_save'), 999, 2);
     }
 
-    /**
-     * Set up admin-specific hooks
-    //  */
-    // private function setup_admin_hooks()
-    // {
-    //     // Order display hooks
-    //     add_action('woocommerce_admin_order_data_after_billing_address', array($this, 'show_vat_in_admin_order'));
-
-    // }
 
     /**
      * Conditionally set up checkout hooks only when on checkout page or processing checkout
@@ -146,18 +151,11 @@ class VAT_Guard
             add_action('woocommerce_checkout_update_order_meta', array($this, 'save_checkout_vat_field'));
 
             // Validation hooks
-            add_action('woocommerce_checkout_update_order_review', array($this, 'ajax_validate_and_exempt_vat'), 20);
-            add_action('woocommerce_after_checkout_validation', array($this, 'on_checkout_vat_field'), 10, 2);
+            add_action('woocommerce_checkout_update_order_review', array($this, 'ajax_validate_and_exempt_vat'), 999);
+            add_action('woocommerce_after_checkout_validation', array($this, 'on_checkout_vat_field'), 999, 2);
 
             // VAT exempt notice
             add_action('woocommerce_review_order_before_shipping', array($this, 'show_vat_exempt_notice_checkout'), 5);
-
-            // Enqueue checkout scripts
-            //disabled for now, might go against woocommerce default behaviour
-            //add_action('wp_enqueue_scripts', array($this, 'enqueue_checkout_scripts'));
-
-            // Setup additional hooks for admin and email display
-            //$this->setup_admin_hooks();
         }
     }
 
@@ -749,6 +747,348 @@ class VAT_Guard
         }
 
         echo '</div>';
+    }
+
+    /**
+     * Restore VAT exemption status during cart recalculation
+     * This prevents VAT from being re-added after payment processing or B2B plugin interference
+     * 
+     * @param WC_Cart $cart
+     */
+    public function restore_vat_exemption_from_order($cart)
+    {
+        // Only run during checkout or order processing
+        if (!is_checkout() && !wp_doing_ajax()) {
+            return;
+        }
+
+        // Skip if exemption is disabled
+        if ($this->is_exemption_disabled()) {
+            return;
+        }
+
+        // First, try to get order ID for existing orders (payment processing scenario)
+        $order_id = $this->get_current_order_id();
+        
+        if ($order_id) {
+            $order = wc_get_order($order_id);
+            if ($order) {
+                // Check if this order was previously VAT exempt
+                $is_exempt = $order->get_meta(EU_VAT_GUARD_META_ORDER_EXEMPT);
+                $vat_number = VAT_Guard_Helper::get_order_vat_number($order);
+
+                if ($is_exempt === 'yes' && !empty($vat_number)) {
+                    // Restore VAT exemption status from order data
+                    if (WC()->customer) {
+                        WC()->customer->set_is_vat_exempt(true);
+                    }
+                    return;
+                }
+            }
+        }
+
+        // If no order exists yet, check session data and re-validate VAT exemption
+        // This handles the checkout process before order creation
+        $this->restore_vat_exemption_from_session();
+    }
+
+    /**
+     * Restore VAT exemption from session data during checkout
+     * This handles cases where order doesn't exist yet but VAT exemption should be maintained
+     */
+    private function restore_vat_exemption_from_session()
+    {
+        if (!WC()->session || !WC()->customer) {
+            return;
+        }
+
+        // Get VAT number from session
+        $vat_number = WC()->session->get(EU_VAT_GUARD_META_ORDER_VAT);
+        
+        if (empty($vat_number)) {
+            // Try to get from user meta if logged in
+            if (is_user_logged_in()) {
+                $vat_number = get_user_meta(get_current_user_id(), EU_VAT_GUARD_META_VAT_NUMBER, true);
+            }
+        }
+
+        if (empty($vat_number)) {
+            return;
+        }
+
+        // Get current customer countries
+        $billing_country = WC()->customer->get_billing_country();
+        $shipping_country = WC()->customer->get_shipping_country();
+
+        // Re-validate VAT exemption with current data (no error messages needed here)
+        $error_messages = [];
+        $is_exempt = $this->validate_and_set_vat_exemption(
+            $vat_number,
+            $billing_country,
+            $shipping_country,
+            $error_messages
+        );
+
+        // If validation determined exemption should apply, ensure it's set
+        if ($is_exempt && !WC()->customer->get_is_vat_exempt()) {
+            WC()->customer->set_is_vat_exempt(true);
+        }
+    }
+
+    /**
+     * Restore VAT exemption status during order recalculation
+     * This prevents VAT from being re-added after payment processing or B2B plugin interference
+     * Specifically handles order-level recalculation scenarios
+     * 
+     * @param bool $and_taxes Whether to calculate taxes (WooCommerce parameter)
+     * @param WC_Order $order The order object being recalculated
+     */
+    public function restore_vat_exemption_from_order_object($and_taxes, $order)
+    {
+        // Skip if exemption is disabled
+        if ($this->is_exemption_disabled()) {
+            return;
+        }
+
+        // Validate order object
+        if (!$order || !is_a($order, 'WC_Order')) {
+            return;
+        }
+
+        // Check if this order was previously VAT exempt
+        $is_exempt = $order->get_meta(EU_VAT_GUARD_META_ORDER_EXEMPT);
+        $vat_number = VAT_Guard_Helper::get_order_vat_number($order);
+
+        if ($is_exempt === 'yes' && !empty($vat_number)) {
+            // Restore VAT exemption status from order data
+            if (WC()->customer) {
+                WC()->customer->set_is_vat_exempt(true);
+            }
+        }
+    }
+
+   
+
+    /**
+     * Get current order ID from various sources during checkout/payment processing
+     * 
+     * @return int|null Order ID or null if not found
+     */
+    private function get_current_order_id()
+    {
+        // Method 1: Check session for order awaiting payment
+        if (WC()->session) {
+            $order_id = WC()->session->get('order_awaiting_payment');
+            if ($order_id) {
+                return $order_id;
+            }
+        }
+
+        // Method 2: Check POST data for order ID (PayPal and other gateways)
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Order ID verification happens in WooCommerce
+        if (isset($_POST['order_id'])) {
+            return absint($_POST['order_id']);
+        }
+
+        // Method 3: Check GET parameters (some payment gateways use this)
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Order ID verification happens in WooCommerce
+        if (isset($_GET['order_id'])) {
+            return absint($_GET['order_id']);
+        }
+
+        // Method 4: Check if we're on order-pay page
+        global $wp;
+        if (isset($wp->query_vars['order-pay'])) {
+            return absint($wp->query_vars['order-pay']);
+        }
+
+        return null;
+    }
+
+    /**
+     * Ensure VAT exemption persists after cart calculation
+     * This runs after calculate_totals to verify exemption wasn't removed
+     * 
+     * @param WC_Cart $cart
+     */
+    public function ensure_vat_exemption_persists($cart)
+    {
+        // Only run during checkout or order processing
+        if (!is_checkout() && !wp_doing_ajax()) {
+            return;
+        }
+
+        // Skip if exemption is disabled
+        if ($this->is_exemption_disabled()) {
+            return;
+        }
+
+        // First check if we have an existing order
+        $order_id = $this->get_current_order_id();
+        if ($order_id) {
+            $order = wc_get_order($order_id);
+            if ($order) {
+                // Check if order should be VAT exempt but customer isn't marked as exempt
+                $is_exempt = $order->get_meta(EU_VAT_GUARD_META_ORDER_EXEMPT);
+                $vat_number = VAT_Guard_Helper::get_order_vat_number($order);
+
+                if ($is_exempt === 'yes' && !empty($vat_number)) {
+                    if (WC()->customer && !WC()->customer->get_is_vat_exempt()) {
+                        // Force restore exemption status
+                        WC()->customer->set_is_vat_exempt(true);
+                        
+                        // Prevent infinite loop by checking if we need recalculation
+                        static $recalculating = false;
+                        if (!$recalculating && WC()->cart) {
+                            $recalculating = true;
+                            WC()->cart->calculate_totals();
+                            $recalculating = false;
+                        }
+                    }
+                }
+                return;
+            }
+        }
+
+        // If no order exists, check session-based exemption
+        if (!WC()->session || !WC()->customer) {
+            return;
+        }
+
+        // Get VAT number from session or user meta
+        $vat_number = WC()->session->get(EU_VAT_GUARD_META_ORDER_VAT);
+        if (empty($vat_number) && is_user_logged_in()) {
+            $vat_number = get_user_meta(get_current_user_id(), EU_VAT_GUARD_META_VAT_NUMBER, true);
+        }
+
+        if (!empty($vat_number)) {
+            // Check if VAT exemption should be applied but isn't
+            $billing_country = WC()->customer->get_billing_country();
+            $shipping_country = WC()->customer->get_shipping_country();
+            
+            // Quick check for cross-border transaction
+            $vat_country = substr(strtoupper(str_replace([' ', '-', '.'], '', $vat_number)), 0, 2);
+            $shop_base_country = wc_get_base_location()['country'];
+            $should_be_exempt = !empty($vat_number) && $vat_country && $vat_country !== $shop_base_country;
+
+            if ($should_be_exempt && !WC()->customer->get_is_vat_exempt()) {
+                // Re-validate and set exemption
+                $error_messages = [];
+                $this->validate_and_set_vat_exemption(
+                    $vat_number,
+                    $billing_country,
+                    $shipping_country,
+                    $error_messages
+                );
+            }
+        }
+    }
+
+    /**
+     * Restore VAT exemption when order status changes (PayPal completion, etc.)
+     * 
+     * @param int $order_id
+     * @param string $old_status
+     * @param string $new_status
+     */
+    public function restore_vat_exemption_on_status_change($order_id, $old_status, $new_status)
+    {
+        // Skip if exemption is disabled
+        if ($this->is_exemption_disabled()) {
+            return;
+        }
+
+        $order = wc_get_order($order_id);
+        if (!$order) {
+            return;
+        }
+
+        // Check if this order was VAT exempt
+        $is_exempt = $order->get_meta(EU_VAT_GUARD_META_ORDER_EXEMPT);
+        $vat_number = VAT_Guard_Helper::get_order_vat_number($order);
+
+        if ($is_exempt === 'yes' && !empty($vat_number)) {
+            // Restore VAT exemption status
+            if (WC()->customer) {
+                WC()->customer->set_is_vat_exempt(true);
+            }
+        }
+    }
+
+    /**
+     * Restore VAT exemption after payment completion
+     * 
+     * @param int $order_id
+     */
+    public function restore_vat_exemption_after_payment($order_id)
+    {
+        // Skip if exemption is disabled
+        if ($this->is_exemption_disabled()) {
+            return;
+        }
+
+        $order = wc_get_order($order_id);
+        if (!$order) {
+            return;
+        }
+
+        // Check if this order was VAT exempt
+        $is_exempt = $order->get_meta(EU_VAT_GUARD_META_ORDER_EXEMPT);
+        $vat_number = VAT_Guard_Helper::get_order_vat_number($order);
+
+        if ($is_exempt === 'yes' && !empty($vat_number)) {
+            // Restore VAT exemption status
+            if (WC()->customer) {
+                WC()->customer->set_is_vat_exempt(true);
+            }
+        }
+    }
+
+    /**
+     * Restore VAT exemption when order is saved (B2B plugins may trigger this)
+     * 
+     * @param int $post_id
+     * @param WP_Post $post
+     */
+    public function restore_vat_exemption_on_order_save($post_id, $post)
+    {
+        // Skip if exemption is disabled
+        if ($this->is_exemption_disabled()) {
+            return;
+        }
+
+        // Only handle shop_order post type
+        if (!$post || $post->post_type !== 'shop_order') {
+            return;
+        }
+
+        $order = wc_get_order($post_id);
+        if (!$order) {
+            return;
+        }
+
+        // Check if this order was VAT exempt
+        $is_exempt = $order->get_meta(EU_VAT_GUARD_META_ORDER_EXEMPT);
+        $vat_number = VAT_Guard_Helper::get_order_vat_number($order);
+
+        if ($is_exempt === 'yes' && !empty($vat_number)) {
+            // Restore VAT exemption status
+            if (WC()->customer) {
+                WC()->customer->set_is_vat_exempt(true);
+            }
+        }
+    }
+
+    /**
+     * Restore VAT exemption when post is saved (additional safety net)
+     * 
+     * @param int $post_id
+     * @param WP_Post $post
+     */
+    public function restore_vat_exemption_on_post_save($post_id, $post)
+    {
+        // Delegate to order save method
+        $this->restore_vat_exemption_on_order_save($post_id, $post);
     }
 
 

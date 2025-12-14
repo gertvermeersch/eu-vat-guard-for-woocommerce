@@ -5,7 +5,9 @@ All notable changes to EU VAT Guard for WooCommerce will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+
+
+## [1.3.10] - 2024-12-13
 
 ### Added
 - Plugin activation hook that initializes default option values on first installation
@@ -16,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved first-time installation experience with sensible defaults
 - Options are only created if they don't already exist (preserves existing settings)
 - Refactored activation code for better maintainability and reusability
+- Increased priority for VAT hooks
 
 ### Technical
 - Added `eu_vat_guard_get_default_options()` helper function that returns default option values

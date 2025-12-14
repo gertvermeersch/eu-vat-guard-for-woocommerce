@@ -5,7 +5,7 @@ Requires: woocommerce
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.3.9
+Stable tag: 1.3.29
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,13 +83,15 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 
 == Changelog ==
 
-= 1.3.13 =
-* **Added** - Plugin activation hook now initializes default option values for better first-time setup
-* **Improved** - New installations come with sensible defaults pre-configured
-* **Improved** - Existing installations also benefit from default options initialization
-* **Technical** - Refactored activation code with helper functions for better maintainability
-* **Technical** - Default options set during activation: company/VAT required, VIES disabled, block checkout enabled
-* **Technical** - Options initialization also runs on admin_init for existing installations
+= 1.3.10 =
+* **Fixed** - Checkbox settings not saving properly on some server configurations
+* **Fixed** - Options now properly initialize in database on plugin activation
+* **Technical** - Added hidden input fields to ensure unchecked checkboxes submit '0' value
+* **Technical** - Added activation hook to initialize all options with default values
+* **Technical** - Added admin_init fallback to initialize missing options for existing installations
+* **Improved** - Enhanced form reliability across different PHP/WordPress environments
+* **Improved** - Increased priority of hooks for VAT exemption
+* **Improved** - Translations
 
 = 1.3.9 =
 * **Fixed** - Checkbox settings not saving properly on some server configurations
@@ -182,6 +184,51 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 * Admin settings interface
 
 == Upgrade Notice ==
+
+= 1.3.29 =
+Critical bug fix: Added missing method that was referenced but not implemented, fixing fatal error when order recalculation hook is enabled. Immediate update recommended for all users.
+
+= 1.3.28 =
+Compatibility improvement: Temporarily disabled cart recalculation hook to improve compatibility with cart calculation plugins and payment gateways. VAT exemption continues to work normally through alternative mechanisms.
+
+= 1.3.27 =
+Enhanced AJAX VAT validation: Improved compatibility with other checkout plugins by increasing hook priority. Better integration with third-party checkout and payment plugins. Recommended for all users.
+
+= 1.3.26 =
+Code quality improvement with cleanup of additional deprecated code. No functional changes. Recommended for all users.
+
+= 1.3.25 =
+Enhanced VAT exemption restoration: Improved logic for handling VAT exemption during cart recalculation with better session management and B2B plugin compatibility. Recommended for all users.
+
+= 1.3.24 =
+Code quality improvement with cleanup of deprecated code. No functional changes. Recommended for all users.
+
+= 1.3.23 =
+Code simplification update: Removed complex order-level recalculation protection for better stability. VAT exemption continues to work normally during checkout.
+
+= 1.3.22 =
+Enhanced VAT exemption protection: Re-enabled comprehensive order-level recalculation protection. Recommended for all users.
+
+= 1.3.21 =
+Critical syntax error fix: Corrects malformed parameter that was causing PHP parse errors and preventing plugin activation. Immediate update recommended for all users.
+
+= 1.3.20 =
+Code optimization update: Temporarily disabled order-level recalculation hook to improve payment gateway compatibility. VAT exemption continues to work normally.
+
+= 1.3.19 =
+Bug fix for method signature compatibility with WooCommerce hooks. Fixes potential PHP warnings during order recalculation. Recommended for all users.
+
+= 1.3.18 =
+Code quality improvement with corrected method signature to remove unused parameters. Recommended for all users.
+
+= 1.3.16 =
+Enhanced order recalculation protection: Comprehensive system to prevent VAT exemption loss during payment processing. Improved compatibility with B2B plugins and payment gateways. Recommended for all users.
+
+= 1.3.15 =
+Code simplification update: Removed order recalculation protection methods that were causing compatibility issues with some payment gateways. VAT exemption continues to work normally during checkout.
+
+= 1.3.14 =
+Important bug fix for VAT exemption preservation during payment processing. Recommended for all users using payment gateways.
 
 = 1.3.13 =
 Improved first-time installation with automatic default settings. Existing installations are not affected.
