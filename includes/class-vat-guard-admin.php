@@ -240,6 +240,13 @@ class VAT_Guard_Admin
             'default' => '',
             'sanitize_callback' => 'sanitize_text_field'
         ]);
+        register_setting('eu_vat_guard_advanced_options', 'eu_vat_guard_override_b2b_plugins', [
+            'type' => 'string',
+            'default' => '0',
+            'sanitize_callback' => function($value) {
+                return $value ? '1' : '0';
+            }
+        ]);
 
         // Hook to register WPML strings when settings are saved
         add_action('update_option_eu_vat_guard_company_label', [$this, 'register_wpml_string'], 10, 3);
@@ -442,6 +449,21 @@ class VAT_Guard_Admin
                             for="eu_vat_guard_fixed_prices"><?php esc_html_e('Show the same prices including VAT regardless of customer location', 'eu-vat-guard-for-woocommerce'); ?></label>
                         <p class="description">
                             <?php esc_html_e('When enabled, all customers will see the same prices including VAT, regardless of their country. This prevents WooCommerce from adjusting prices based on location.', 'eu-vat-guard-for-woocommerce'); ?>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+            <?php VAT_Guard_Admin_UI::section_header(__('Plugin Compatibility', 'eu-vat-guard-for-woocommerce')); ?>
+            <table class="form-table" role="presentation">
+                <tr>
+                    <th scope="row"><?php esc_html_e('Override B2B Plugin VAT Settings', 'eu-vat-guard-for-woocommerce'); ?></th>
+                    <td>
+                        <input type="checkbox" name="eu_vat_guard_override_b2b_plugins" value="1" <?php checked(1, get_option('eu_vat_guard_override_b2b_plugins', 0)); ?> />
+                        <label for="eu_vat_guard_override_b2b_plugins"><?php esc_html_e('Enable compatibility mode for B2B plugins', 'eu-vat-guard-for-woocommerce'); ?></label>
+                        <p class="description">
+                            <?php esc_html_e('Enable this if you use WooCommerce B2B or similar plugins that interfere with VAT exemption. This ensures EU VAT Guard\'s exemption decisions take priority.', 'eu-vat-guard-for-woocommerce'); ?>
+                            <br><strong><?php esc_html_e('Note:', 'eu-vat-guard-for-woocommerce'); ?></strong> <?php esc_html_e('Only enable if you experience issues with VAT being re-added after checkout.', 'eu-vat-guard-for-woocommerce'); ?>
                         </p>
                     </td>
                 </tr>

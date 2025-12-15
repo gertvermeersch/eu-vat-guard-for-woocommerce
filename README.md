@@ -109,6 +109,9 @@ This plugin uses:
 
 ## Changelog
 
+### Version 1.3.12
+- **Improved**: Added an agressive init hook to override interfering plugins
+
 ### Version 1.3.11
 - **Improved**: Added filter on woocommerce_order_is_vat_exempt to handle interfering plugins
 

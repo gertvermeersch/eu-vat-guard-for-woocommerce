@@ -121,6 +121,11 @@ class VAT_Guard
 
         // Critical: Override B2B plugin's VAT exemption filter with higher priority
         add_filter('woocommerce_order_is_vat_exempt', array($this, 'override_order_vat_exempt_status'), 999, 2);
+        
+        // Override B2B plugin's init-based VAT exemption (only if enabled in settings)
+        if (get_option('eu_vat_guard_override_b2b_plugins', '0') === '1') {
+            add_action('init', array($this, 'override_b2b_vat_exemption'), 999);
+        }
 
         // Order recalculation protection hooks - run with very high priority to override B2B plugins
         //add_action('woocommerce_before_calculate_totals', array($this, 'restore_vat_exemption_from_order'), 999);
@@ -1126,6 +1131,63 @@ class VAT_Guard
 
         // If EU VAT Guard hasn't set a status, fall back to current status
         return $is_vat_exempt;
+    }
+
+    /**
+     * Override B2B plugin's VAT exemption logic that runs on init
+     * This prevents B2B plugin from overriding EU VAT Guard's exemption decisions
+     */
+    public function override_b2b_vat_exemption()
+    {
+        // Skip if exemption is disabled
+        if ($this->is_exemption_disabled()) {
+            return;
+        }
+
+        // Only run on frontend and AJAX calls
+        if (is_admin() && !wp_doing_ajax()) {
+            return;
+        }
+
+        // Only proceed if WooCommerce customer exists
+        if (!WC()->customer) {
+            return;
+        }
+
+        // Check if we have a VAT number that should grant exemption
+        $vat_number = '';
+        
+        // Try to get VAT number from session first
+        if (WC()->session) {
+            $vat_number = WC()->session->get(EU_VAT_GUARD_META_ORDER_VAT);
+        }
+        
+        // If no session VAT, try user meta for logged-in users
+        if (empty($vat_number) && is_user_logged_in()) {
+            $vat_number = get_user_meta(get_current_user_id(), EU_VAT_GUARD_META_VAT_NUMBER, true);
+        }
+
+        // If we have a VAT number, check if it should grant exemption
+        if (!empty($vat_number)) {
+            // Get current customer countries
+            $billing_country = WC()->customer->get_billing_country();
+            $shipping_country = WC()->customer->get_shipping_country();
+
+            // Use our centralized validation to determine exemption
+            $error_messages = [];
+            $should_be_exempt = $this->validate_and_set_vat_exemption(
+                $vat_number,
+                $billing_country,
+                $shipping_country,
+                $error_messages
+            );
+
+            // If our validation says exempt, ensure it stays exempt
+            // This overrides any B2B plugin decision
+            if ($should_be_exempt) {
+                WC()->customer->set_is_vat_exempt(true);
+            }
+        }
     }
 
 
