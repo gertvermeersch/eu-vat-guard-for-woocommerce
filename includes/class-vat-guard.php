@@ -1136,6 +1136,7 @@ class VAT_Guard
     /**
      * Override B2B plugin's VAT exemption logic that runs on init
      * This prevents B2B plugin from overriding EU VAT Guard's exemption decisions
+     * Only applies during checkout/cart contexts to avoid interfering with price display
      */
     public function override_b2b_vat_exemption()
     {
@@ -1151,6 +1152,11 @@ class VAT_Guard
 
         // Only proceed if WooCommerce customer exists
         if (!WC()->customer) {
+            return;
+        }
+
+        // Only override during checkout/cart contexts to avoid price display issues
+        if (!$this->is_checkout_or_cart_context()) {
             return;
         }
 
@@ -1188,6 +1194,47 @@ class VAT_Guard
                 WC()->customer->set_is_vat_exempt(true);
             }
         }
+    }
+
+    /**
+     * Check if we're in a checkout or cart context where VAT exemption should be applied
+     * This prevents interference with general product price display
+     * 
+     * @return bool True if in checkout/cart context
+     */
+    private function is_checkout_or_cart_context()
+    {
+        // Direct page checks
+        if (is_checkout() || is_cart()) {
+            return true;
+        }
+
+        // AJAX checks for checkout/cart operations
+        if (wp_doing_ajax()) {
+            $ajax_actions = [
+                'woocommerce_update_order_review',
+                'woocommerce_checkout',
+                'woocommerce_apply_coupon',
+                'woocommerce_remove_coupon',
+                'woocommerce_update_shipping_method',
+                'wc_ajax_update_order_review',
+                'wc_ajax_checkout',
+                'wc_ajax_apply_coupon',
+                'wc_ajax_remove_coupon'
+            ];
+
+            $current_action = isset($_REQUEST['action']) ? sanitize_text_field(wp_unslash($_REQUEST['action'])) : '';
+            if (in_array($current_action, $ajax_actions, true)) {
+                return true;
+            }
+        }
+
+        // Check if we're processing an order (payment gateways)
+        if ($this->get_current_order_id()) {
+            return true;
+        }
+
+        return false;
     }
 
 
