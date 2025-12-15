@@ -1209,6 +1209,11 @@ class VAT_Guard
             return true;
         }
 
+        // Check if we're on order-pay page (payment processing)
+        if (is_wc_endpoint_url('order-pay')) {
+            return true;
+        }
+
         // AJAX checks for checkout/cart operations
         if (wp_doing_ajax()) {
             $ajax_actions = [
@@ -1231,6 +1236,55 @@ class VAT_Guard
 
         // Check if we're processing an order (payment gateways)
         if ($this->get_current_order_id()) {
+            return true;
+        }
+
+        // Check if we have a VAT number in session (indicates active checkout process)
+        if (WC()->session && WC()->session->get(EU_VAT_GUARD_META_ORDER_VAT)) {
+            return true;
+        }
+
+        // Check for payment gateway callbacks (PayPal, Stripe, etc.)
+        if ($this->is_payment_gateway_callback()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if current request is a payment gateway callback
+     * Payment gateways often process orders outside of normal checkout context
+     * 
+     * @return bool True if this appears to be a payment gateway callback
+     */
+    private function is_payment_gateway_callback()
+    {
+        // Check for common payment gateway parameters
+        $gateway_params = [
+            'wc-api',           // WooCommerce API callbacks
+            'paypal',           // PayPal callbacks
+            'stripe',           // Stripe callbacks
+            'payment_method',   // Generic payment method
+            'order_id',         // Order processing
+            'key',              // Order key (payment processing)
+        ];
+
+        foreach ($gateway_params as $param) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Payment gateway callbacks don't use nonces
+            if (isset($_GET[$param]) || isset($_POST[$param])) {
+                return true;
+            }
+        }
+
+        // Check for PayPal specific patterns
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Payment gateway callbacks don't use nonces
+        if (isset($_GET['PayerID']) || isset($_GET['token'])) {
+            return true;
+        }
+
+        // Check if we're in a WooCommerce API context
+        if (defined('WC_API_REQUEST') && WC_API_REQUEST) {
             return true;
         }
 
