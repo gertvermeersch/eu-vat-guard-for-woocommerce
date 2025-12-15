@@ -105,10 +105,12 @@ php compile-translations.php
 This plugin uses:
 - **Text Domain**: `eu-vat-guard-for-woocommerce`
 - **Plugin Slug**: `eu-vat-guard-for-woocommerce`
-- **Stable Tag**: `1.3.29`
+- **Stable Tag**: `1.3.11`
 
 ## Changelog
 
+### Version 1.3.11
+- **Improved**: Added filter on woocommerce_order_is_vat_exempt to handle interfering plugins
 
 
 ### Version 1.3.10

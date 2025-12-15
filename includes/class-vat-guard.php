@@ -119,6 +119,9 @@ class VAT_Guard
         // Checkout hooks - only load when actually needed
         add_action('wp', array($this, 'maybe_setup_checkout_hooks'));
 
+        // Critical: Override B2B plugin's VAT exemption filter with higher priority
+        add_filter('woocommerce_order_is_vat_exempt', array($this, 'override_order_vat_exempt_status'), 999, 2);
+
         // Order recalculation protection hooks - run with very high priority to override B2B plugins
         //add_action('woocommerce_before_calculate_totals', array($this, 'restore_vat_exemption_from_order'), 999);
        
@@ -1089,6 +1092,40 @@ class VAT_Guard
     {
         // Delegate to order save method
         $this->restore_vat_exemption_on_order_save($post_id, $post);
+    }
+
+    /**
+     * Override order VAT exempt status to prevent B2B plugins from interfering
+     * This filter runs when WooCommerce checks if an order should be VAT exempt
+     * 
+     * @param bool $is_vat_exempt Current VAT exempt status
+     * @param WC_Order $order Order object
+     * @return bool Final VAT exempt status
+     */
+    public function override_order_vat_exempt_status($is_vat_exempt, $order)
+    {
+        // Skip if exemption is disabled in our plugin
+        if ($this->is_exemption_disabled()) {
+            return $is_vat_exempt;
+        }
+
+        if (!$order) {
+            return $is_vat_exempt;
+        }
+
+        // Check if EU VAT Guard has determined this order should be VAT exempt
+        $eu_vat_guard_exempt = $order->get_meta(EU_VAT_GUARD_META_ORDER_EXEMPT);
+        $vat_number = VAT_Guard_Helper::get_order_vat_number($order);
+
+        // If EU VAT Guard has explicitly set exemption status, use that
+        if ($eu_vat_guard_exempt === 'yes' && !empty($vat_number)) {
+            return true;
+        } elseif ($eu_vat_guard_exempt === 'no') {
+            return false;
+        }
+
+        // If EU VAT Guard hasn't set a status, fall back to current status
+        return $is_vat_exempt;
     }
 
 

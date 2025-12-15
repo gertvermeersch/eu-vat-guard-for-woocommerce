@@ -83,6 +83,10 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 
 == Changelog ==
 
+= 1.3.11 =
+### Version 1.3.11
+* **Improved**: Added filter on woocommerce_order_is_vat_exempt to handle interfering plugins
+
 = 1.3.10 =
 * **Fixed** - Checkbox settings not saving properly on some server configurations
 * **Fixed** - Options now properly initialize in database on plugin activation
