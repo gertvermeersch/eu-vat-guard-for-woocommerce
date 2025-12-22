@@ -1239,17 +1239,38 @@ class VAT_Guard
             return true;
         }
 
-        // Check if we have a VAT number in session (indicates active checkout process)
-        if (WC()->session && WC()->session->get(EU_VAT_GUARD_META_ORDER_VAT)) {
-            return true;
-        }
+       
 
         // Check for payment gateway callbacks (PayPal, Stripe, etc.)
         if ($this->is_payment_gateway_callback()) {
             return true;
         }
 
+        
+
         return false;
+    }
+
+    /**
+     * Check if current user has a valid VAT number that should grant exemption
+     * 
+     * @return bool True if user has valid VAT number
+     */
+    private function user_has_valid_vat_number()
+    {
+        if (!is_user_logged_in()) {
+            return false;
+        }
+
+        $vat_number = get_user_meta(get_current_user_id(), EU_VAT_GUARD_META_VAT_NUMBER, true);
+        
+        if (empty($vat_number)) {
+            return false;
+        }
+
+        // Quick format validation (don't do VIES check here for performance)
+        $error_message = '';
+        return VAT_Guard_Helper::is_valid_eu_vat_number($vat_number, $error_message);
     }
 
     /**

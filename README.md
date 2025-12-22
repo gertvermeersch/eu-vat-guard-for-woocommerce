@@ -109,6 +109,9 @@ This plugin uses:
 
 ## Changelog
 
+### Version 1.3.13
+- **Fixed**: Fixed pricing visible with VAT in shop with B2B plugin
+
 ### Version 1.3.12
 - **Improved**: Added an agressive init hook to override interfering plugins
 

@@ -191,6 +191,8 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 
 == Upgrade Notice ==
 
+= 1.3.13 =
+Fixed pricing visible with VAT in shop with B2B plugin
 
 = 1.3.12 =
 Bug fix for block checkout setting registration. Recommended for all users.
