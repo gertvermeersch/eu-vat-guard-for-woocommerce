@@ -105,9 +105,17 @@ php compile-translations.php
 This plugin uses:
 - **Text Domain**: `eu-vat-guard-for-woocommerce`
 - **Plugin Slug**: `eu-vat-guard-for-woocommerce`
-- **Stable Tag**: `1.3.11`
+- **Stable Tag**: `1.4.0`
 
 ## Changelog
+
+### Version 1.4.0
+- ✨ **Added**: New option to hide company and VAT fields from registration form while keeping them on checkout and account pages
+- ✨ **Added**: Plugin compatibility option to override B2B plugins that interfere with VAT exemption (WooCommerce B2B, etc.)
+- 🔧 **Improved**: Smart context detection for B2B plugin override - only applies during checkout, cart, payment processing, and for logged-in users with VAT numbers
+- ⚡ **Improved**: More efficient hook registration - registration form hooks are only added when needed
+- 🤝 **Enhanced**: Better compatibility with third-party B2B plugins that modify VAT behavior
+- 🏗️ **Technical**: Added conditional hook registration to improve performance when features are disabled
 
 ### Version 1.3.13
 - **Fixed**: Fixed pricing visible with VAT in shop with B2B plugin

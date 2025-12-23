@@ -2,7 +2,7 @@
 /*
 Plugin Name: EU VAT Guard for WooCommerce
 Description: Manage EU VAT numbers and company information for WooCommerce customers and B2B. Adds company and VAT fields to registration, account, and checkout, exempts VAT (reverse charge) where applicable and provides admin tools for VAT management.
-Version: 1.3.13
+Version: 1.4.0
 Author: Stormlabs
 Author URI: https://stormlabs.be/
 License: GPLv2 or later
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('EU_VAT_GUARD_VERSION', '1.3.13');
+define('EU_VAT_GUARD_VERSION', '1.4.0');
 define('EU_VAT_GUARD_PLUGIN_FILE', __FILE__);
 define('EU_VAT_GUARD_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('EU_VAT_GUARD_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -36,6 +36,7 @@ define('EU_VAT_GUARD_OPTION_COMPANY_LABEL', 'eu_vat_guard_company_label');
 define('EU_VAT_GUARD_OPTION_VAT_LABEL', 'eu_vat_guard_vat_label');
 define('EU_VAT_GUARD_OPTION_EXEMPTION_MESSAGE', 'eu_vat_guard_exemption_message');
 define('EU_VAT_GUARD_OPTION_OVERRIDE_B2B_PLUGINS', 'eu_vat_guard_override_b2b_plugins');
+define('EU_VAT_GUARD_OPTION_HIDE_REGISTRATION_FIELDS', 'eu_vat_guard_hide_registration_fields');
 
 // Define meta key constants with plugin prefix
 define('EU_VAT_GUARD_META_VAT_NUMBER', '_eu_vat_guard_vat_number'); // User meta
@@ -68,7 +69,8 @@ function eu_vat_guard_activate() {
         'eu_vat_guard_company_label' => '',
         'eu_vat_guard_vat_label' => '',
         'eu_vat_guard_exemption_message' => '',
-        'eu_vat_guard_override_b2b_plugins' => '0'
+        'eu_vat_guard_override_b2b_plugins' => '0',
+        'eu_vat_guard_hide_registration_fields' => '0'
     );
     
     foreach ($default_options as $option_name => $default_value) {

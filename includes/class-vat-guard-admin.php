@@ -209,6 +209,13 @@ class VAT_Guard_Admin
                 return $value ? '1' : '0';
             }
         ]);
+        register_setting('eu_vat_guard_basic_options', 'eu_vat_guard_hide_registration_fields', [
+            'type' => 'string',
+            'default' => '0',
+            'sanitize_callback' => function($value) {
+                return $value ? '1' : '0';
+            }
+        ]);
 
         // Advanced settings group
         register_setting('eu_vat_guard_advanced_options', 'eu_vat_guard_disable_exemption', [
@@ -370,6 +377,16 @@ class VAT_Guard_Admin
                             for="eu_vat_guard_enable_block_checkout"><?php esc_html_e('Enable support for WooCommerce Block-based Checkout (Cart & Checkout Blocks)', 'eu-vat-guard-for-woocommerce'); ?></label>
                         <p class="description">
                             <?php esc_html_e('Disable when using classic checkout or Cartflows', 'eu-vat-guard-for-woocommerce'); ?>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php esc_html_e('Hide Registration Fields', 'eu-vat-guard-for-woocommerce'); ?></th>
+                    <td>
+                        <input type="checkbox" name="eu_vat_guard_hide_registration_fields" value="1" <?php checked(1, get_option('eu_vat_guard_hide_registration_fields', 0)); ?> />
+                        <label for="eu_vat_guard_hide_registration_fields"><?php esc_html_e('Hide VAT and company fields on registration form', 'eu-vat-guard-for-woocommerce'); ?></label>
+                        <p class="description">
+                            <?php esc_html_e('When enabled, VAT number and company name fields will not appear on the registration form. Customers can still add this information in their account area or during checkout.', 'eu-vat-guard-for-woocommerce'); ?>
                         </p>
                     </td>
                 </tr>

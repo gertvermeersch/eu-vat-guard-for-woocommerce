@@ -5,7 +5,7 @@ Requires: woocommerce
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.3.12
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,14 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 4. VAT information displayed in order admin
 
 == Changelog ==
+
+= 1.4.0 =
+* **Added** - New option to hide company and VAT fields from registration form while keeping them on checkout and account pages
+* **Added** - Plugin compatibility option to override B2B plugins that interfere with VAT exemption (WooCommerce B2B, etc.)
+* **Improved** - Smart context detection for B2B plugin override - only applies during checkout, cart, payment processing, and for logged-in users with VAT numbers
+* **Improved** - More efficient hook registration - registration form hooks are only added when needed
+* **Enhanced** - Better compatibility with third-party B2B plugins that modify VAT behavior
+* **Technical** - Added conditional hook registration to improve performance when features are disabled
 
 = 1.3.12 =
 * **Improved**: Added an agressive init hook to override interfering plugins
@@ -190,6 +198,9 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 * Admin settings interface
 
 == Upgrade Notice ==
+
+= 1.4.0 =
+New features: Hide registration fields option and B2B plugin compatibility. Improved performance and third-party plugin compatibility.
 
 = 1.3.13 =
 Fixed pricing visible with VAT in shop with B2B plugin

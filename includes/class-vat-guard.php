@@ -1251,27 +1251,6 @@ class VAT_Guard
         return false;
     }
 
-    /**
-     * Check if current user has a valid VAT number that should grant exemption
-     * 
-     * @return bool True if user has valid VAT number
-     */
-    private function user_has_valid_vat_number()
-    {
-        if (!is_user_logged_in()) {
-            return false;
-        }
-
-        $vat_number = get_user_meta(get_current_user_id(), EU_VAT_GUARD_META_VAT_NUMBER, true);
-        
-        if (empty($vat_number)) {
-            return false;
-        }
-
-        // Quick format validation (don't do VIES check here for performance)
-        $error_message = '';
-        return VAT_Guard_Helper::is_valid_eu_vat_number($vat_number, $error_message);
-    }
 
     /**
      * Check if current request is a payment gateway callback

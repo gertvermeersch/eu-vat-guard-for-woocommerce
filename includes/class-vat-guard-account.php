@@ -28,12 +28,15 @@ class VAT_Guard_Account
 
     public function setup_hooks() {
         // Account and registration hooks
-        add_action('woocommerce_register_form', array($this, 'add_registration_fields'));
         add_action('woocommerce_edit_account_form_start', array($this, 'add_account_fields'));
-        add_filter('woocommerce_registration_errors', array($this, 'validate_registration_fields'), 10, 3);
-        add_action('woocommerce_created_customer', array($this, 'save_fields_registration'));
         add_action('woocommerce_save_account_details', array($this, 'save_fields_registration'));
 
+        // Only add registration hooks if registration fields are not hidden
+        if (get_option('eu_vat_guard_hide_registration_fields', '0') !== '1') {
+            add_action('woocommerce_register_form', array($this, 'add_registration_fields'));
+            add_filter('woocommerce_registration_errors', array($this, 'validate_registration_fields'), 10, 3);
+            add_action('woocommerce_created_customer', array($this, 'save_fields_registration'));
+        }
     }
 
      /* adds registration field to create account 
