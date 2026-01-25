@@ -1,0 +1,63 @@
+name: Build & Release ZIP
+
+on:
+  push:
+    tags:
+      - "v*"
+      - "*"
+
+permissions:
+  contents: write   # required to create releases & upload assets
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Optional: ensure we’re building from the tag commit itself (already true on tag push)
+      - name: Show ref
+        run: |
+          echo "GITHUB_REF=$GITHUB_REF"
+          git describe --tags --always
+
+      # Create a clean ZIP without .git and without dev files
+      - name: Build plugin ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          TAG="${GITHUB_REF_NAME}"
+          REPO="${GITHUB_REPOSITORY#*/}"
+
+          # Decide folder name inside the ZIP (WordPress expects plugin folder name)
+          # Use repo name by default; change if your plugin folder differs.
+          PLUGIN_SLUG="$REPO"
+
+          BUILD_DIR="build/${PLUGIN_SLUG}"
+          mkdir -p "$BUILD_DIR"
+
+          # Copy tracked files only (prevents junk), excluding workflow/meta by default
+          git ls-files -z | rsync -0a --files-from=- ./ "$BUILD_DIR"/
+
+          # Optional exclusions (uncomment/adjust as needed)
+          rm -rf "$BUILD_DIR/.github" || true
+          rm -rf "$BUILD_DIR/.gitignore" || true
+          rm -rf "$BUILD_DIR/node_modules" || true
+          rm -rf "$BUILD_DIR/vendor/bin" || true
+          rm -rf "$BUILD_DIR/tests" || true
+
+          ZIP_NAME="${PLUGIN_SLUG}-${TAG}.zip"
+          (cd build && zip -r "../${ZIP_NAME}" "${PLUGIN_SLUG}" -q)
+
+          echo "ZIP_NAME=${ZIP_NAME}" >> $GITHUB_ENV
+
+      - name: Create GitHub Release and upload ZIP
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          files: ${{ env.ZIP_NAME }}
