@@ -106,6 +106,17 @@ class VAT_Guard_Account
         $require_company = get_option('eu_vat_guard_require_company', 1);
         $require_vat = get_option('eu_vat_guard_require_vat', 1);
 
+        // Skip validation when accounts are created during checkout without registration fields present.
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Read-only check for checkout processing.
+        if (
+            (function_exists('WC') && WC()->is_store_api_request())
+            || (function_exists('is_checkout') && is_checkout())
+            || isset($_POST['woocommerce-process-checkout-nonce'])
+            || isset($_POST['woocommerce_checkout_update_totals'])
+        ) {
+            return $errors;
+        }
+
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- WordPress handles nonce verification for registration forms
         $company_name = isset($_POST['company_name']) ? sanitize_text_field(wp_unslash($_POST['company_name'])) : '';
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- WordPress handles nonce verification for registration forms
@@ -161,4 +172,3 @@ class VAT_Guard_Account
     }
 
 }
-

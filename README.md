@@ -105,9 +105,12 @@ php compile-translations.php
 This plugin uses:
 - **Text Domain**: `eu-vat-guard-for-woocommerce`
 - **Plugin Slug**: `eu-vat-guard-for-woocommerce`
-- **Stable Tag**: `1.4.0`
+- **Stable Tag**: `1.4.1`
 
 ## Changelog
+
+### Version 1.4.1
+- 🐛 **Fixed**: Skip registration VAT/company validation for block checkout account creation (Store API) when Create account during checkout is enabled
 
 ### Version 1.4.0
 - ✨ **Added**: New option to hide company and VAT fields from registration form while keeping them on checkout and account pages
