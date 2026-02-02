@@ -105,9 +105,12 @@ php compile-translations.php
 This plugin uses:
 - **Text Domain**: `eu-vat-guard-for-woocommerce`
 - **Plugin Slug**: `eu-vat-guard-for-woocommerce`
-- **Stable Tag**: `1.4.1`
+- **Stable Tag**: `1.4.2`
 
 ## Changelog
+
+### Version 1.4.2
+- 🐛 **Fixed**: Prevented stale VAT numbers from being reinstated in block checkout when customers update VAT after guest orders or during checkout
 
 ### Version 1.4.1
 - 🐛 **Fixed**: Skip registration VAT/company validation for block checkout account creation (Store API) when Create account during checkout is enabled

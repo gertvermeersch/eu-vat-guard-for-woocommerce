@@ -5,7 +5,7 @@ Requires: woocommerce
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,9 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 4. VAT information displayed in order admin
 
 == Changelog ==
+
+= 1.4.2 =
+* **Fixed** - Prevented stale VAT numbers from being reinstated in block checkout when customers update VAT after guest orders or during checkout
 
 = 1.4.1 =
 * **Fixed** - Skip registration VAT/company validation for block checkout account creation (Store API)
