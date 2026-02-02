@@ -376,14 +376,24 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
         // Handle VAT field specific updates, happens AFTER validation
         $vat = '';
         if ('eu-vat-guard/vat_number' === $key) {
-            // Clean and validate VAT number
-            $vat = strtoupper(str_replace([' ', '-', '.'], '', $value));
+            // Sanitize VAT number
+            $vat = VAT_Guard_Helper::sanitize_vat_field($value);
             $wc_object->update_meta_data(EU_VAT_GUARD_META_ORDER_VAT, $vat, true);
             //also save in the session
             if (WC()->session) {
-                WC()->session->set(EU_VAT_GUARD_META_ORDER_VAT, $vat);
+                if ($vat === '') {
+                    WC()->session->set(EU_VAT_GUARD_META_ORDER_VAT, '');
+                } else {
+                    WC()->session->set(EU_VAT_GUARD_META_ORDER_VAT, $vat);
+                }
+            }
+            //save customer object
+            if (WC()->customer) {
+                WC()->customer->update_meta_data('_wc_other/eu-vat-guard/vat_number', $vat);
+                WC()->customer->save();
             }
         }
+
 
         // Get shipping and billing countries from customer object
         $billing_country = '';
@@ -555,7 +565,20 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
 
         // Store the VAT in session to handle old values being passed in handle_vat_field_update
         if (WC()->session) {
-            WC()->session->set(EU_VAT_GUARD_META_ORDER_VAT, $value);
+            $sanitized = VAT_Guard_Helper::sanitize_vat_field($value);
+            WC()->session->set(EU_VAT_GUARD_META_ORDER_VAT, $sanitized);
+        }
+
+        if (defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
+            $session_vat = (WC()->session) ? WC()->session->get(EU_VAT_GUARD_META_ORDER_VAT) : '';
+            error_log(
+                sprintf(
+                    '[VAT Guard] validate_vat_field value=%s sanitized=%s session=%s',
+                    is_scalar($value) ? (string) $value : '[non-scalar]',
+                    isset($sanitized) ? $sanitized : '',
+                    is_scalar($session_vat) ? (string) $session_vat : '[non-scalar]'
+                )
+            );
         }
         return true; // No errors - exemption status will be determined later with complete address info
     }
