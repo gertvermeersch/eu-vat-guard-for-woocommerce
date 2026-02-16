@@ -3,9 +3,9 @@ Contributors: stormlabs, bytefarmer
 Tags: reverse charge, vat, eu, tax, b2b
 Requires: woocommerce
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 6.9.1
 Requires PHP: 7.4
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ Manage EU VAT numbers and company information for WooCommerce customers and B2B 
 * **Company Name & VAT Number Fields** - Adds company name and VAT number fields to registration, account, and checkout forms
 * **EU VAT Number Validation** - Offline format validation for all EU VAT numbers with optional real-time VIES validation (uses European Commission's VIES service)
 * **Automatic VAT Exemption** - Applies reverse charge VAT exemption for valid B2B transactions between EU member states
-* **VAT Rate Importer** - Import current EU VAT rates for all 27 member states with special categories support
+* **VAT Rate Importer** - Import current EU VAT rates for all 27 member states, including one reduced rate per country
 * **WooCommerce Integration** - VAT numbers are saved to orders and displayed in admin and emails
 * **Block Checkout Support** - Full compatibility with WooCommerce's new block-based checkout
 * **Advanced Customization** - Custom labels, messages, and exemption rules
@@ -82,6 +82,11 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 4. VAT information displayed in order admin
 
 == Changelog ==
+
+= 1.4.3 =
+* **Fixed** - VAT Rate Importer now resolves WooCommerce default reduced tax class in a translation-safe way (e.g. localized class names)
+* **Changed** - VAT Rate Importer now imports only the primary reduced VAT rate per country into WooCommerce's default Reduced rate tax class
+* **Improved** - Updated importer UI text and documentation to reflect current reduced-rate behavior
 
 = 1.4.2 =
 * **Fixed** - Prevented stale VAT numbers from being reinstated in block checkout when customers update VAT after guest orders or during checkout
@@ -204,6 +209,9 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 * Admin settings interface
 
 == Upgrade Notice ==
+
+= 1.4.3 =
+Improved VAT Rate Importer reduced-rate handling for translated WooCommerce tax classes and aligned reduced-rate import behavior.
 
 = 1.4.0 =
 New features: Hide registration fields option and B2B plugin compatibility. Improved performance and third-party plugin compatibility.

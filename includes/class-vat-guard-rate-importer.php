@@ -201,7 +201,7 @@ class VAT_Guard_Rate_Importer
             'vat-importer-admin-js',
             plugin_dir_url(dirname(__FILE__)) . 'assets/js/admin-rate-importer.js',
             array('jquery'),
-            '1.2.0',
+            EU_VAT_GUARD_VERSION,
             true
         );
 
@@ -209,7 +209,7 @@ class VAT_Guard_Rate_Importer
             'vat-importer-admin',
             plugin_dir_url(dirname(__FILE__)) . 'assets/admin-vat-importer.css',
             array(),
-            '1.2.0'
+            EU_VAT_GUARD_VERSION
         );
     }
 
@@ -266,14 +266,11 @@ class VAT_Guard_Rate_Importer
             $this->create_or_update_tax_rate($country_code, 'standard', $country_data['standard'], $country_data['country_name']);
             $imported_count++;
 
-            // Import reduced rates if requested
+            // Import one reduced rate if requested. Additional special reduced tiers are skipped for now.
             if ($include_reduced && !empty($country_data['reduced'])) {
-                foreach ($country_data['reduced'] as $index => $rate) {
-                    // Create unique tax class for each reduced rate
-                    $rate_type = count($country_data['reduced']) > 1 ? 'reduced-' . ($index + 1) : 'reduced';
-                    $this->create_or_update_tax_rate($country_code, $rate_type, $rate, $country_data['country_name']);
-                    $imported_count++;
-                }
+                $primary_reduced_rate = (float) $country_data['reduced'][0];
+                $this->create_or_update_tax_rate($country_code, 'reduced', $primary_reduced_rate, $country_data['country_name']);
+                $imported_count++;
             }
         }
 
@@ -290,28 +287,8 @@ class VAT_Guard_Rate_Importer
         // Create clean tax rate name - just the percentage
         $tax_rate_name = $rate . '%';
 
-        // Use WooCommerce's standard tax class system
-        $tax_class = '';
-        if ($type !== 'standard') {
-            $tax_class = $wpdb->get_row($wpdb->prepare(
-                "SELECT slug FROM {$wpdb->prefix}wc_tax_rate_classes
-                 WHERE tax_rate_class_id = 1"
-            ));
-            if (empty($tax_class->slug)) {
-                //create reduced class (shouldn't happen as tax rate class exists by default)
-                add_action('admin_notices', function () {
-                    echo '<div class="notice notice-error"><p>' . esc_html__('Reduced tax class not found. make sure this class exists in Woocommerce', 'eu-vat-guard-for-woocommerce') . '</p></div>';
-                });
-                // $wpdb->insert(
-                //     $wpdb->prefix . 'wc_tax_rate_classes',
-                //     array(
-                //         'name' => 'Reduced Rate',
-                //         'slug' => 'reduced-rate'
-                //     ),
-                //     array('%s', '%s')
-                // );
-            }
-        }
+        // Standard rates use an empty class. Reduced rates use WooCommerce's default reduced class.
+        $tax_class_slug = $this->get_tax_class_slug_for_type($type);
 
         // Check if rate already exists for this country and class
         $existing_rate = $wpdb->get_row($wpdb->prepare(
@@ -320,7 +297,7 @@ class VAT_Guard_Rate_Importer
              AND tax_rate_class = %s
              AND tax_rate = %f",
             $country_code,
-            $tax_class,
+            $tax_class_slug,
             $rate
         ));
 
@@ -351,15 +328,10 @@ class VAT_Guard_Rate_Importer
                     'tax_rate_compound' => 0,
                     'tax_rate_shipping' => $type === 'standard' ? 1 : 0,
                     'tax_rate_order' => 0,
-                    'tax_rate_class' => $tax_class->slug ? $tax_class->slug : ''
+                    'tax_rate_class' => $tax_class_slug
                 ),
                 array('%s', '%s', '%f', '%s', '%d', '%d', '%d', '%d', '%s')
             );
-
-            // Ensure the reduced-rate tax class exists in WooCommerce
-            if ($type !== 'standard') {
-                $this->ensure_reduced_rate_tax_class();
-            }
         }
 
         // Clear WooCommerce tax cache
@@ -367,22 +339,71 @@ class VAT_Guard_Rate_Importer
     }
 
     /**
-     * Ensure the reduced-rate tax class exists in WooCommerce
+     * Resolve the WooCommerce tax class slug for a given importer rate type.
      */
-    private function ensure_reduced_rate_tax_class()
+    private function get_tax_class_slug_for_type($type)
+    {
+        if ($type === 'standard') {
+            return '';
+        }
+
+        if ($type === 'reduced') {
+            return $this->get_default_reduced_tax_class_slug();
+        }
+
+        // Fallback for unexpected custom types.
+        return $this->get_default_reduced_tax_class_slug();
+    }
+
+    /**
+     * Resolve the default WooCommerce reduced tax class slug in a translation-safe way.
+     */
+    private function get_default_reduced_tax_class_slug()
+    {
+        global $wpdb;
+
+        // Prefer WooCommerce's first default tax class from the dedicated table.
+        // On standard installs this is the reduced class and keeps the canonical slug.
+        $default_class_slug = $wpdb->get_var(
+            "SELECT slug FROM {$wpdb->prefix}wc_tax_rate_classes
+             ORDER BY tax_rate_class_id ASC
+             LIMIT 1"
+        );
+
+        if (!empty($default_class_slug)) {
+            return $default_class_slug;
+        }
+
+        // Fallback to first configured class name (translation-aware).
+        $tax_classes = WC_Tax::get_tax_classes();
+        if (!empty($tax_classes) && !empty($tax_classes[0])) {
+            return sanitize_title($tax_classes[0]);
+        }
+
+        // Final fallback for edge cases where no classes exist yet.
+        return $this->ensure_tax_class('Reduced rate');
+    }
+
+    /**
+     * Ensure a WooCommerce tax class exists and return its slug.
+     */
+    private function ensure_tax_class($tax_class_name)
     {
         $tax_classes = WC_Tax::get_tax_classes();
+        $target_slug = sanitize_title($tax_class_name);
 
-        // Check if 'Reduced rate' class already exists
+        // Check if class already exists by slug.
         foreach ($tax_classes as $existing_class) {
-            if (sanitize_title($existing_class) === 'reduced-rate') {
-                return; // Class already exists
+            if (sanitize_title($existing_class) === $target_slug) {
+                return $target_slug;
             }
         }
 
-        // Add the reduced rate tax class if it doesn't exist
-        $tax_classes[] = 'Reduced rate';
+        // Add class when missing.
+        $tax_classes[] = $tax_class_name;
         update_option('woocommerce_tax_classes', implode("\n", $tax_classes));
+
+        return $target_slug;
     }
 
     /**
@@ -444,7 +465,7 @@ class VAT_Guard_Rate_Importer
                                                 - <?php echo esc_html(self::$eu_vat_rates[$code]['standard']); ?>%
                                                 <?php esc_html_e('standard', 'eu-vat-guard-for-woocommerce'); ?>
                                                 <?php if (!empty(self::$eu_vat_rates[$code]['reduced'])): ?>
-                                                    , <?php echo esc_html(implode('%, ', self::$eu_vat_rates[$code]['reduced'])); ?>%
+                                                    , <?php echo esc_html(self::$eu_vat_rates[$code]['reduced'][0]); ?>%
                                                     <?php esc_html_e('reduced', 'eu-vat-guard-for-woocommerce'); ?>
                                                 <?php endif; ?>
                                             </span>
@@ -469,7 +490,7 @@ class VAT_Guard_Rate_Importer
                                 <?php esc_html_e('Import reduced VAT rates (lower rates for specific goods)', 'eu-vat-guard-for-woocommerce'); ?>
                             </label>
                             <p class="description">
-                                <?php esc_html_e('Reduced rates will be imported as separate tax classes that you can assign to specific products.', 'eu-vat-guard-for-woocommerce'); ?>
+                                <?php esc_html_e('Only the primary reduced VAT rate per country is imported into WooCommerce\'s default Reduced rate tax class.', 'eu-vat-guard-for-woocommerce'); ?>
                             </p>
                         </td>
                     </tr>

@@ -33,9 +33,9 @@
 
 - **VAT Rate Importer** *(New in v1.2.0)*
   - Import current EU VAT rates for all 27 member states
-  - Support for standard, reduced, and special category rates
+  - Support for standard rates and one primary reduced rate per country
   - WooCommerce-style country selection interface
-  - Automatic tax class creation and rate management
+  - Uses WooCommerce's default reduced tax class with translation-safe detection
 
 - **WooCommerce Integration**
   - VAT number is pre-filled for logged-in users at checkout.
@@ -105,9 +105,14 @@ php compile-translations.php
 This plugin uses:
 - **Text Domain**: `eu-vat-guard-for-woocommerce`
 - **Plugin Slug**: `eu-vat-guard-for-woocommerce`
-- **Stable Tag**: `1.4.2`
+- **Stable Tag**: `1.4.3`
 
 ## Changelog
+
+### Version 1.4.3
+- 🐛 **Fixed**: VAT Rate Importer now resolves the default reduced tax class in a translation-safe way (localized class names)
+- 🔧 **Changed**: Importer now imports only the primary reduced VAT rate per country into WooCommerce's default reduced class
+- 📝 **Improved**: Importer descriptions and docs updated to match current reduced-rate behavior
 
 ### Version 1.4.2
 - 🐛 **Fixed**: Prevented stale VAT numbers from being reinstated in block checkout when customers update VAT after guest orders or during checkout

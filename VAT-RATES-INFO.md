@@ -1,6 +1,6 @@
 # EU VAT Rates Information
 
-This document provides information about the VAT Rate Importer feature in EU VAT Guard for WooCommerce v1.2.0.
+This document provides information about the VAT Rate Importer feature in EU VAT Guard for WooCommerce.
 
 ## Overview
 
@@ -24,7 +24,7 @@ The VAT Rate Importer allows you to easily import current EU VAT rates for all 2
 - Lower VAT rates for specific categories of goods
 - Common for essential items like food, books, and pharmaceuticals
 - Optional import - can be enabled/disabled
-- Creates separate WooCommerce tax classes for easy product assignment
+- Imports the primary reduced rate per country into WooCommerce's default Reduced rate tax class
 
 ## Current EU VAT Rates (2024)
 
@@ -63,20 +63,20 @@ The VAT Rate Importer allows you to easily import current EU VAT rates for all 2
 ### Import Process
 1. Navigate to **EU VAT Guard > VAT Rate Importer** in your WordPress admin
 2. Select the countries you want to import rates for
-3. Choose whether to include special VAT categories
+3. Choose whether to include reduced VAT rates
 4. Click "Import Selected VAT Rates"
 
 ### WooCommerce Integration
 - Creates or updates tax rates in WooCommerce tax tables
 - Standard rates get priority 1, reduced rates get priority 2
-- Special rates create separate tax classes (e.g., "food", "books")
+- Reduced rates use WooCommerce's default reduced tax class (translation-safe detection)
 - Automatically clears WooCommerce tax cache
 
 ### Tax Class Assignment
-After importing, you can assign the new tax classes to products:
+After importing, you can assign the Reduced rate class to relevant products:
 1. Go to **Products > Edit Product**
 2. In the **General** tab, find **Tax Class**
-3. Select the appropriate class (e.g., "Food (Belgium)" for 6% rate)
+3. Select **Reduced rate** (or its localized label, depending on store language)
 
 ## Best Practices
 
