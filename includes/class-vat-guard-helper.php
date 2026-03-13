@@ -87,6 +87,12 @@ class VAT_Guard_Helper
             $error_message = __('Please enter a valid EU VAT number.', 'eu-vat-guard-for-woocommerce');
             return false;
         }
+        // Short-circuit hook — allows Pro plugin (or others) to return a cached result
+        $pre = apply_filters('eu_vat_guard_pre_validate_vat_number', null, $vat);
+        if ($pre !== null) {
+            return (bool) $pre;
+        }
+
         // VIES check if required
         if ($require_vies) {
             $ignore_vies_error = get_option('eu_vat_guard_ignore_vies_error', 0);

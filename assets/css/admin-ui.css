@@ -411,6 +411,8 @@
 .vat-guard-pro-feature-card:nth-child(2) { border-top-color: #2271b1; }
 .vat-guard-pro-feature-card:nth-child(3) { border-top-color: #2ecc71; }
 .vat-guard-pro-feature-card:nth-child(4) { border-top-color: #9b59b6; }
+.vat-guard-pro-feature-card:nth-child(5) { border-top-color: #e74c3c; }
+.vat-guard-pro-feature-card:nth-child(6) { border-top-color: #1abc9c; }
 
 .vat-guard-pro-feature-icon-wrap {
     display: inline-flex;
@@ -428,6 +430,8 @@
 .vat-guard-pro-feature-card:nth-child(2) .vat-guard-pro-feature-icon-wrap { background: #e8f0fb; }
 .vat-guard-pro-feature-card:nth-child(3) .vat-guard-pro-feature-icon-wrap { background: #e8f8ee; }
 .vat-guard-pro-feature-card:nth-child(4) .vat-guard-pro-feature-icon-wrap { background: #f4edfb; }
+.vat-guard-pro-feature-card:nth-child(5) .vat-guard-pro-feature-icon-wrap { background: #fdecea; }
+.vat-guard-pro-feature-card:nth-child(6) .vat-guard-pro-feature-icon-wrap { background: #e8f8f5; }
 
 .vat-guard-pro-feature-title {
     margin: 0 0 8px 0;

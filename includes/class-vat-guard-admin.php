@@ -313,8 +313,15 @@ class VAT_Guard_Admin
 
     public function admin_page()
     {
+        $pro_active = defined('EU_VAT_GUARD_PRO_VERSION');
+
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Simple tab navigation, no data modification
         $active_tab = isset($_GET['tab']) ? sanitize_key(wp_unslash($_GET['tab'])) : 'settings';
+
+        // Redirect away from go-pro tab if pro is active
+        if ($pro_active && $active_tab === 'go-pro') {
+            $active_tab = 'settings';
+        }
         ?>
         <div class="wrap">
             <?php
@@ -339,7 +346,7 @@ class VAT_Guard_Admin
                 )
             );
 
-            if ($active_tab !== 'go-pro'): ?>
+            if (!$pro_active && $active_tab !== 'go-pro'): ?>
             <div class="vat-guard-pro-banner">
                 <span class="vat-guard-pro-banner-text">
                     ⚡ <?php esc_html_e('Take your VAT compliance further — Evidence Tracking, OSS Reporting, Customer Management & more.', 'eu-vat-guard-for-woocommerce'); ?>
@@ -355,8 +362,11 @@ class VAT_Guard_Admin
                 array('id' => 'advanced', 'label' => __('Advanced', 'eu-vat-guard-for-woocommerce')),
                 array('id' => 'documentation', 'label' => __('How It Works', 'eu-vat-guard-for-woocommerce')),
                 array('id' => 'help', 'label' => __('Help', 'eu-vat-guard-for-woocommerce')),
-                array('id' => 'go-pro', 'label' => __('⭐ Go Pro', 'eu-vat-guard-for-woocommerce'), 'class' => 'vat-guard-tab-pro'),
             );
+
+            if (!$pro_active) {
+                $tabs[] = array('id' => 'go-pro', 'label' => __('⭐ Go Pro', 'eu-vat-guard-for-woocommerce'), 'class' => 'vat-guard-tab-pro');
+            }
 
             VAT_Guard_Admin_UI::tab_navigation($tabs, $active_tab);
             ?>
@@ -369,7 +379,7 @@ class VAT_Guard_Admin
                 <?php $this->render_documentation_tab(); ?>
             <?php elseif ($active_tab == 'help'): ?>
                 <?php $this->render_help_tab(); ?>
-            <?php elseif ($active_tab == 'go-pro'): ?>
+            <?php elseif (!$pro_active && $active_tab == 'go-pro'): ?>
                 <?php $this->render_go_pro_tab(); ?>
             <?php endif; ?>
         </div>
@@ -826,7 +836,7 @@ class VAT_Guard_Admin
                         <?php esc_html_e('Customer Management', 'eu-vat-guard-for-woocommerce'); ?>
                     </h4>
                     <p class="vat-guard-pro-feature-desc">
-                        <?php esc_html_e('View and manage all B2B customers in one place. Run bulk VAT re-validation to keep your customer records accurate and up to date.', 'eu-vat-guard-for-woocommerce'); ?>
+                        <?php esc_html_e('A dedicated B2B customer overview with search, status and country filters. Edit VAT numbers and company names inline, revalidate individual customers against VIES, or run a bulk revalidation across your entire customer base. Export the full list to CSV.', 'eu-vat-guard-for-woocommerce'); ?>
                     </p>
                 </div>
 
@@ -837,6 +847,26 @@ class VAT_Guard_Admin
                     </h4>
                     <p class="vat-guard-pro-feature-desc">
                         <?php esc_html_e('Identify and remove invalid or outdated VAT data from your store. Keep your database clean and your compliance records reliable.', 'eu-vat-guard-for-woocommerce'); ?>
+                    </p>
+                </div>
+
+                <div class="vat-guard-pro-feature-card">
+                    <div class="vat-guard-pro-feature-icon-wrap">⚡</div>
+                    <h4 class="vat-guard-pro-feature-title">
+                        <?php esc_html_e('VAT Number Caching', 'eu-vat-guard-for-woocommerce'); ?>
+                    </h4>
+                    <p class="vat-guard-pro-feature-desc">
+                        <?php esc_html_e('Previously validated VAT numbers are cached so returning B2B customers skip the VIES lookup entirely. Checkout is instant, even when the VIES service is slow or temporarily unavailable.', 'eu-vat-guard-for-woocommerce'); ?>
+                    </p>
+                </div>
+
+                <div class="vat-guard-pro-feature-card">
+                    <div class="vat-guard-pro-feature-icon-wrap">🏷️</div>
+                    <h4 class="vat-guard-pro-feature-title">
+                        <?php esc_html_e('Tax-Exempt Prices in the Store', 'eu-vat-guard-for-woocommerce'); ?>
+                    </h4>
+                    <p class="vat-guard-pro-feature-desc">
+                        <?php esc_html_e('Logged-in customers with a valid VAT number on their account see prices excluding VAT throughout the entire store — on product pages, category listings, and cart — not just at checkout.', 'eu-vat-guard-for-woocommerce'); ?>
                     </p>
                 </div>
 
