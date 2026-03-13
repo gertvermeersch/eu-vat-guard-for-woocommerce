@@ -336,6 +336,14 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
             10,
             3
         );
+
+        // Save VAT number to customer account after block checkout order is placed
+        add_action(
+            'woocommerce_store_api_checkout_order_processed',
+            array($this, 'save_order_vat_to_user_account'),
+            10,
+            1
+        );
     }
 
     /**
@@ -428,6 +436,40 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
 
         // Trigger frontend refresh
         $this->trigger_frontend_refresh();
+    }
+
+    /**
+     * Save VAT number from order to customer account after block checkout order is placed.
+     * Handles both logged-in users and new accounts created at checkout.
+     *
+     * @param \WC_Order $order
+     */
+    public function save_order_vat_to_user_account($order)
+    {
+        if (!$order) {
+            return;
+        }
+
+        $vat_number = $order->get_meta(EU_VAT_GUARD_META_ORDER_VAT);
+        if (empty($vat_number)) {
+            return;
+        }
+
+        $customer_id = $order->get_customer_id();
+        if (!$customer_id) {
+            return; // Guest checkout — no account to save to
+        }
+
+        $current_vat = get_user_meta($customer_id, EU_VAT_GUARD_META_VAT_NUMBER, true);
+        if ($vat_number !== $current_vat) {
+            update_user_meta($customer_id, EU_VAT_GUARD_META_VAT_NUMBER, $vat_number);
+
+            do_action('eu_vat_guard_customer_vat_updated', $customer_id, array(
+                'vat_number' => $vat_number,
+                'previous_vat' => $current_vat,
+                'order_id' => $order->get_id(),
+            ));
+        }
     }
 
     /**

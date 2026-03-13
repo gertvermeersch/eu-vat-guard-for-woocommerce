@@ -363,15 +363,20 @@ class VAT_Guard
                 $order->save_meta_data();
             }
 
-            // Update customer account VAT number if different
-            if (is_user_logged_in()) {
-                $user_id = get_current_user_id();
-                $current_vat = get_user_meta($user_id, EU_VAT_GUARD_META_VAT_NUMBER, true);
+            // Update customer account VAT number — use order's customer ID so this
+            // also works when a new account is created at checkout (user not yet
+            // logged in when this hook fires).
+            $customer_id = $order ? $order->get_customer_id() : 0;
+            if (!$customer_id && is_user_logged_in()) {
+                $customer_id = get_current_user_id();
+            }
+            if ($customer_id) {
+                $current_vat = get_user_meta($customer_id, EU_VAT_GUARD_META_VAT_NUMBER, true);
                 if ($vat_number !== $current_vat) {
-                    update_user_meta($user_id, EU_VAT_GUARD_META_VAT_NUMBER, $vat_number);
+                    update_user_meta($customer_id, EU_VAT_GUARD_META_VAT_NUMBER, $vat_number);
 
                     // Notify Pro plugin when customer VAT is updated
-                    do_action('eu_vat_guard_customer_vat_updated', $user_id, array(
+                    do_action('eu_vat_guard_customer_vat_updated', $customer_id, array(
                         'vat_number' => $vat_number,
                         'previous_vat' => $current_vat,
                         'order_id' => $order_id
