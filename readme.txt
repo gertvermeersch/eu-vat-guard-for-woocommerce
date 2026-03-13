@@ -5,11 +5,11 @@ Requires: woocommerce
 Requires at least: 5.0
 Tested up to: 6.9.1
 Requires PHP: 7.4
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Manage EU VAT numbers and company information for WooCommerce customers and B2B with validation and tax exemption support.
+Tax exemption and reverse charge VAT. VIES Validation of VAT numbers. Manage EU VAT numbers and company information for WooCommerce customers and B2B.
 
 == Description ==
 
@@ -82,6 +82,9 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 4. VAT information displayed in order admin
 
 == Changelog ==
+
+= 1.4.4 =
+* **Tested** - Compatibility with Wordress 6.9.4
 
 = 1.4.3 =
 * **Fixed** - VAT Rate Importer now resolves WooCommerce default reduced tax class in a translation-safe way (e.g. localized class names)

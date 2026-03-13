@@ -101,9 +101,10 @@ class VAT_Guard_Admin_UI {
                 <?php
                 $url = isset($tab['url']) ? $tab['url'] : "?page={$page}&tab={$tab['id']}";
                 $is_active = $active_tab === $tab['id'];
+                $extra_class = isset($tab['class']) ? ' ' . $tab['class'] : '';
                 ?>
-                <a href="<?php echo esc_url($url); ?>" 
-                   class="nav-tab <?php echo $is_active ? 'nav-tab-active' : ''; ?>">
+                <a href="<?php echo esc_url($url); ?>"
+                   class="nav-tab <?php echo $is_active ? 'nav-tab-active' : ''; echo esc_attr($extra_class); ?>">
                     <?php echo esc_html($tab['label']); ?>
                 </a>
             <?php endforeach; ?>

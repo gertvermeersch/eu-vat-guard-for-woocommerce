@@ -109,6 +109,9 @@ This plugin uses:
 
 ## Changelog
 
+### Version 1.4.4
+- **Tested**: Compatibility with Wordpress 6.9.4
+
 ### Version 1.4.3
 - 🐛 **Fixed**: VAT Rate Importer now resolves the default reduced tax class in a translation-safe way (localized class names)
 - 🔧 **Changed**: Importer now imports only the primary reduced VAT rate per country into WooCommerce's default reduced class

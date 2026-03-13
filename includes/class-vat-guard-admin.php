@@ -339,11 +339,23 @@ class VAT_Guard_Admin
                 )
             );
 
+            if ($active_tab !== 'go-pro'): ?>
+            <div class="vat-guard-pro-banner">
+                <span class="vat-guard-pro-banner-text">
+                    ⚡ <?php esc_html_e('Take your VAT compliance further — Evidence Tracking, OSS Reporting, Customer Management & more.', 'eu-vat-guard-for-woocommerce'); ?>
+                </span>
+                <a href="https://store.stormlabs.be" target="_blank" class="vat-guard-pro-banner-btn">
+                    <?php esc_html_e('Upgrade to Pro', 'eu-vat-guard-for-woocommerce'); ?> &rarr;
+                </a>
+            </div>
+            <?php endif;
+
             $tabs = array(
                 array('id' => 'settings', 'label' => __('Settings', 'eu-vat-guard-for-woocommerce')),
                 array('id' => 'advanced', 'label' => __('Advanced', 'eu-vat-guard-for-woocommerce')),
                 array('id' => 'documentation', 'label' => __('How It Works', 'eu-vat-guard-for-woocommerce')),
                 array('id' => 'help', 'label' => __('Help', 'eu-vat-guard-for-woocommerce')),
+                array('id' => 'go-pro', 'label' => __('⭐ Go Pro', 'eu-vat-guard-for-woocommerce'), 'class' => 'vat-guard-tab-pro'),
             );
 
             VAT_Guard_Admin_UI::tab_navigation($tabs, $active_tab);
@@ -357,6 +369,8 @@ class VAT_Guard_Admin
                 <?php $this->render_documentation_tab(); ?>
             <?php elseif ($active_tab == 'help'): ?>
                 <?php $this->render_help_tab(); ?>
+            <?php elseif ($active_tab == 'go-pro'): ?>
+                <?php $this->render_go_pro_tab(); ?>
             <?php endif; ?>
         </div>
         <?php
@@ -801,19 +815,97 @@ class VAT_Guard_Admin
                 </h3>
                 <p><?php esc_html_e('We\'re committed to helping your business comply with EU VAT regulations. If you have any suggestions for improvements, we\'d love to hear from you.', 'eu-vat-guard-for-woocommerce'); ?></p>
                 <p style="margin-top: 20px;">
-                    <a href="https://wordpress.org/support/plugin/eu-vat-guard-for-woocommerce/" 
-                       target="_blank" 
+                    <a href="https://wordpress.org/support/plugin/eu-vat-guard-for-woocommerce/"
+                       target="_blank"
                        class="button button-primary"
                        style="text-decoration: none; margin-right: 10px;">
                         <?php esc_html_e('Get Support', 'eu-vat-guard-for-woocommerce'); ?>
                     </a>
-                    <a href="https://wordpress.org/plugins/eu-vat-guard-for-woocommerce/#reviews" 
-                       target="_blank" 
+                    <a href="https://wordpress.org/plugins/eu-vat-guard-for-woocommerce/#reviews"
+                       target="_blank"
                        class="button button-secondary"
                        style="text-decoration: none;">
                         <?php esc_html_e('Leave a Review', 'eu-vat-guard-for-woocommerce'); ?>
                     </a>
                 </p>
+            </div>
+
+        </div>
+        <?php
+    }
+
+    private function render_go_pro_tab()
+    {
+        $pro_url = 'https://store.stormlabs.be';
+        ?>
+        <div class="vat-guard-pro-page">
+
+            <div class="vat-guard-pro-hero">
+                <div class="vat-guard-pro-hero-badge">⭐ <?php esc_html_e('Premium Add-on', 'eu-vat-guard-for-woocommerce'); ?></div>
+                <h2 class="vat-guard-pro-hero-title">
+                    <?php esc_html_e('EU VAT Guard Pro', 'eu-vat-guard-for-woocommerce'); ?>
+                </h2>
+                <p class="vat-guard-pro-hero-subtitle">
+                    <?php esc_html_e('Everything in the free version, plus powerful tools for full EU VAT compliance: audit-ready evidence, OSS reporting, and complete customer management.', 'eu-vat-guard-for-woocommerce'); ?>
+                </p>
+                <a href="<?php echo esc_url($pro_url); ?>" target="_blank" class="vat-guard-pro-cta-btn">
+                    <?php esc_html_e('Get EU VAT Guard Pro', 'eu-vat-guard-for-woocommerce'); ?> &rarr;
+                </a>
+            </div>
+
+            <h3 class="vat-guard-pro-features-heading">
+                <?php esc_html_e('What\'s included in Pro', 'eu-vat-guard-for-woocommerce'); ?>
+            </h3>
+
+            <div class="vat-guard-pro-features-grid">
+
+                <div class="vat-guard-pro-feature-card">
+                    <div class="vat-guard-pro-feature-icon-wrap">🗂️</div>
+                    <h4 class="vat-guard-pro-feature-title">
+                        <?php esc_html_e('Evidence Tracking', 'eu-vat-guard-for-woocommerce'); ?>
+                    </h4>
+                    <p class="vat-guard-pro-feature-desc">
+                        <?php esc_html_e('Automatically store VAT validation evidence per order. Stay audit-ready with a full compliance trail that tax authorities can verify at any time.', 'eu-vat-guard-for-woocommerce'); ?>
+                    </p>
+                </div>
+
+                <div class="vat-guard-pro-feature-card">
+                    <div class="vat-guard-pro-feature-icon-wrap">📊</div>
+                    <h4 class="vat-guard-pro-feature-title">
+                        <?php esc_html_e('OSS Reporting', 'eu-vat-guard-for-woocommerce'); ?>
+                    </h4>
+                    <p class="vat-guard-pro-feature-desc">
+                        <?php esc_html_e('Generate One Stop Shop reports directly from your WooCommerce data. Meet EU OSS filing obligations without manually crunching numbers.', 'eu-vat-guard-for-woocommerce'); ?>
+                    </p>
+                </div>
+
+                <div class="vat-guard-pro-feature-card">
+                    <div class="vat-guard-pro-feature-icon-wrap">👥</div>
+                    <h4 class="vat-guard-pro-feature-title">
+                        <?php esc_html_e('Customer Management', 'eu-vat-guard-for-woocommerce'); ?>
+                    </h4>
+                    <p class="vat-guard-pro-feature-desc">
+                        <?php esc_html_e('View and manage all B2B customers in one place. Run bulk VAT re-validation to keep your customer records accurate and up to date.', 'eu-vat-guard-for-woocommerce'); ?>
+                    </p>
+                </div>
+
+                <div class="vat-guard-pro-feature-card">
+                    <div class="vat-guard-pro-feature-icon-wrap">🧹</div>
+                    <h4 class="vat-guard-pro-feature-title">
+                        <?php esc_html_e('Data Cleanup', 'eu-vat-guard-for-woocommerce'); ?>
+                    </h4>
+                    <p class="vat-guard-pro-feature-desc">
+                        <?php esc_html_e('Identify and remove invalid or outdated VAT data from your store. Keep your database clean and your compliance records reliable.', 'eu-vat-guard-for-woocommerce'); ?>
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="vat-guard-pro-cta-bottom">
+                <p><?php esc_html_e('Ready to take your EU VAT compliance to the next level?', 'eu-vat-guard-for-woocommerce'); ?></p>
+                <a href="<?php echo esc_url($pro_url); ?>" target="_blank" class="vat-guard-pro-cta-btn">
+                    <?php esc_html_e('Get EU VAT Guard Pro', 'eu-vat-guard-for-woocommerce'); ?> &rarr;
+                </a>
             </div>
 
         </div>
