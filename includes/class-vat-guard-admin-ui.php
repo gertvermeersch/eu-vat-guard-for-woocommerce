@@ -33,11 +33,13 @@ class VAT_Guard_Admin_UI {
      * Enqueue admin styles
      */
     public static function enqueue_styles() {
+        $css_file = EU_VAT_GUARD_PLUGIN_DIR . 'assets/css/admin-ui.css';
+        $version  = file_exists($css_file) ? filemtime($css_file) : EU_VAT_GUARD_VERSION;
         wp_enqueue_style(
             'eu-vat-guard-admin-ui',
             EU_VAT_GUARD_PLUGIN_URL . 'assets/css/admin-ui.css',
             array(),
-            EU_VAT_GUARD_VERSION
+            $version
         );
     }
 

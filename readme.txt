@@ -3,7 +3,7 @@ Contributors: stormlabs, bytefarmer
 Tags: reverse charge, vat, eu, tax, b2b
 Requires: woocommerce
 Requires at least: 5.0
-Tested up to: 6.9.1
+Tested up to: 6.9.4
 Requires PHP: 7.4
 Stable tag: 1.4.4
 License: GPLv2 or later

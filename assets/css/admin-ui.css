@@ -16,12 +16,44 @@
     line-height: 1;
 }
 
+/* Generic content card */
+.vat-guard-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin: 20px 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.vat-guard-card h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.05em;
+    color: #1a2f4a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.vat-guard-card p:last-child,
+.vat-guard-card ul:last-child {
+    margin-bottom: 0;
+}
+
+/* Highlighted card variant (blue border top) */
+.vat-guard-card-highlight {
+    border-top: 3px solid #2271b1;
+    text-align: center;
+}
+
 /* Info Boxes */
 .vat-guard-box {
     padding: 20px 24px;
     margin: 20px 0;
-    border-radius: 4px;
+    border-radius: 8px;
     border-left: 4px solid;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
 
 .vat-guard-box-success {

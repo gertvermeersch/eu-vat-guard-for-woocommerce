@@ -105,7 +105,7 @@ php compile-translations.php
 This plugin uses:
 - **Text Domain**: `eu-vat-guard-for-woocommerce`
 - **Plugin Slug**: `eu-vat-guard-for-woocommerce`
-- **Stable Tag**: `1.4.3`
+- **Stable Tag**: `1.4.4`
 
 ## Changelog
 
