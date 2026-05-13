@@ -4,7 +4,7 @@
 
 EU VAT Guard for WooCommerce is a free WordPress plugin that handles B2B EU VAT number validation, WooCommerce checkout integration, and reverse-charge VAT exemption. It is the required dependency for the companion Pro plugin (`eu-vat-guard-for-woocommerce-pro`).
 
-**Current version:** 1.4.4
+**Current version:** 1.4.5
 **Text domain:** `eu-vat-guard-for-woocommerce`
 **Main plugin file:** `vat-guard-woocommerce.php`
 **Plugin constant prefix:** `EU_VAT_GUARD_`

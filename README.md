@@ -105,9 +105,12 @@ php compile-translations.php
 This plugin uses:
 - **Text Domain**: `eu-vat-guard-for-woocommerce`
 - **Plugin Slug**: `eu-vat-guard-for-woocommerce`
-- **Stable Tag**: `1.4.4`
+- **Stable Tag**: `1.4.5`
 
 ## Changelog
+
+### Version 1.4.5
+- **Fixed**: Greek VAT numbers now compare the EU VAT prefix `EL` against WooCommerce's Greece country code `GR` during billing, shipping, and exemption checks
 
 ### Version 1.4.4
 - **Tested**: Compatibility with Wordpress 6.9.4

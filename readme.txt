@@ -3,9 +3,9 @@ Contributors: stormlabs, bytefarmer
 Tags: reverse charge, vat, eu, tax, b2b
 Requires: woocommerce
 Requires at least: 5.0
-Tested up to: 6.9.4
-Requires PHP: 7.4
-Stable tag: 1.4.4
+Tested up to: 7.0-RC2
+Requires PHP: 8.4
+Stable tag: 1.4.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,9 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 4. VAT information displayed in order admin
 
 == Changelog ==
+
+= 1.4.5 =
+* **Fixed** - Greek VAT numbers now compare the EU VAT prefix `EL` against WooCommerce's Greece country code `GR` during billing, shipping, and exemption checks
 
 = 1.4.4 =
 * **Tested** - Compatibility with Wordress 6.9.4
@@ -212,6 +215,9 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 * Admin settings interface
 
 == Upgrade Notice ==
+
+= 1.4.5 =
+Fixed Greek VAT country matching for VAT numbers using the EU `EL` prefix with WooCommerce's `GR` country code.
 
 = 1.4.3 =
 Improved VAT Rate Importer reduced-rate handling for translated WooCommerce tax classes and aligned reduced-rate import behavior.
