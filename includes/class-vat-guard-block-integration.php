@@ -708,7 +708,8 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
 
         // Check country matching
         $vat_country = substr(strtoupper(str_replace([' ', '-', '.'], '', $vat)), 0, 2);
-        if (!empty($billing_country) && $billing_country !== $vat_country) {
+        $vat_woocommerce_country = VAT_Guard_Helper::vat_country_to_woocommerce_country($vat_country);
+        if (!empty($billing_country) && strtoupper($billing_country) !== $vat_woocommerce_country) {
             return new WP_REST_Response(array(
                 'valid' => false,
                 'exempt' => false,
@@ -718,7 +719,7 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
 
         // Check if VAT exempt
         $shop_base_country = wc_get_base_location()['country'];
-        $is_exempt = !empty($vat) && $vat_country && $vat_country !== $shop_base_country;
+        $is_exempt = !empty($vat) && $vat_woocommerce_country && $vat_woocommerce_country !== $shop_base_country;
 
         return new WP_REST_Response(array(
             'valid' => true,

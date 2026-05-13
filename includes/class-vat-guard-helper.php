@@ -9,6 +9,35 @@ if (!defined('ABSPATH')) {
 class VAT_Guard_Helper
 {
     /**
+     * Convert a VAT country prefix to the matching WooCommerce country code.
+     *
+     * Greece uses EL as its EU VAT prefix, while WooCommerce stores Greece as GR.
+     *
+     * @param string $vat_country VAT country prefix.
+     * @return string WooCommerce country code.
+     */
+    public static function vat_country_to_woocommerce_country($vat_country)
+    {
+        $vat_country = strtoupper($vat_country);
+
+        return $vat_country === 'EL' ? 'GR' : $vat_country;
+    }
+
+    /**
+     * Get the WooCommerce country code represented by a VAT number.
+     *
+     * @param string $vat VAT number.
+     * @return string WooCommerce country code.
+     */
+    public static function get_vat_woocommerce_country($vat)
+    {
+        $vat = strtoupper(str_replace([' ', '-', '.'], '', $vat));
+        $vat_country = substr($vat, 0, 2);
+
+        return self::vat_country_to_woocommerce_country($vat_country);
+    }
+
+    /**
      * Validate EU VAT number structure and optionally VIES check
      * @param string $vat The VAT number (with country code)
      * @param bool $require_vies Whether to require VIES validation

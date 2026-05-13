@@ -57,12 +57,6 @@
         const monitorCartChanges = () => {
             const cartData = select('wc/store/cart')?.getCartData?.() || {};
             const currentVatExempt = cartData?.extensions?.['eu-vat-guard']?.vat_exempt;
-
-            // Debug: Log cart data
-           //  console.log('VAT Guard: Cart data extensions:', cartData?.extensions);
-           //TODO: get rid of this
-             console.log('VAT Guard: VAT exempt status:', currentVatExempt);
-
             if (lastCartData !== currentVatExempt) {
                 lastCartData = currentVatExempt;
                 setTimeout(addVatExemptNotice, 100); // Small delay to ensure DOM is updated

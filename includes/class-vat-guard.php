@@ -477,9 +477,10 @@ class VAT_Guard
 
         // Step 4: Extract VAT country and validate country matching
         $vat_country = substr(strtoupper(str_replace([' ', '-', '.'], '', $vat)), 0, 2);
+        $vat_woocommerce_country = VAT_Guard_Helper::vat_country_to_woocommerce_country($vat_country);
 
         // Check billing country matches VAT country
-        if (!empty($billing_country) && strtoupper($billing_country) !== $vat_country) {
+        if (!empty($billing_country) && strtoupper($billing_country) !== $vat_woocommerce_country) {
             $error_messages[] = __('The billing country must match the country of the VAT number.', 'eu-vat-guard-for-woocommerce');
             $this->set_customer_vat_exempt_status(false);
             return false;
@@ -487,7 +488,7 @@ class VAT_Guard
 
         // Check shipping country matches VAT country (use shipping if different from billing)
         $country_to_check = !empty($shipping_country) ? strtoupper($shipping_country) : strtoupper($billing_country);
-        if (!empty($country_to_check) && $country_to_check !== $vat_country) {
+        if (!empty($country_to_check) && $country_to_check !== $vat_woocommerce_country) {
             $error_messages[] = __('The shipping country must match the country of the VAT number.', 'eu-vat-guard-for-woocommerce');
             $this->set_customer_vat_exempt_status(false);
             return false;
@@ -504,7 +505,7 @@ class VAT_Guard
 
         // Step 6: Check if this is a cross-border transaction (different from shop base country)
         $shop_base_country = wc_get_base_location()['country'];
-        $is_cross_border = !empty($vat) && $vat_country && $vat_country !== $shop_base_country;
+        $is_cross_border = !empty($vat) && $vat_woocommerce_country && $vat_woocommerce_country !== $shop_base_country;
 
         $this->set_customer_vat_exempt_status($is_cross_border);
 
@@ -556,7 +557,7 @@ class VAT_Guard
             return;
         }
 
-        $vat_country = substr($vat, 0, 2);
+        $vat_country = VAT_Guard_Helper::get_vat_woocommerce_country($vat);
         $shop_base_country = wc_get_base_location()['country'];
         if (!empty($vat) && $vat_country && $vat_country !== $shop_base_country) {
             WC()->customer->set_is_vat_exempt(true);
@@ -980,7 +981,7 @@ class VAT_Guard
             $shipping_country = WC()->customer->get_shipping_country();
             
             // Quick check for cross-border transaction
-            $vat_country = substr(strtoupper(str_replace([' ', '-', '.'], '', $vat_number)), 0, 2);
+            $vat_country = VAT_Guard_Helper::get_vat_woocommerce_country($vat_number);
             $shop_base_country = wc_get_base_location()['country'];
             $should_be_exempt = !empty($vat_number) && $vat_country && $vat_country !== $shop_base_country;
 
