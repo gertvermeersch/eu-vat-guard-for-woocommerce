@@ -18,147 +18,151 @@ if (!defined('ABSPATH')) {
 class VAT_Guard_Rate_Importer
 {
 
-    /**
-     * Current EU VAT rates data
-     * Updated as of 2024
-     */
-    private static $eu_vat_rates = array(
-        'AT' => array( // Austria
-            'country_name' => 'Austria',
-            'standard' => 20,
-            'reduced' => array(10, 13)
-        ),
-        'BE' => array( // Belgium
-            'country_name' => 'Belgium',
-            'standard' => 21,
-            'reduced' => array(6, 12)
-        ),
-        'BG' => array( // Bulgaria
-            'country_name' => 'Bulgaria',
-            'standard' => 20,
-            'reduced' => array(9)
-        ),
-        'HR' => array( // Croatia
-            'country_name' => 'Croatia',
-            'standard' => 25,
-            'reduced' => array(5, 13)
-        ),
-        'CY' => array( // Cyprus
-            'country_name' => 'Cyprus',
-            'standard' => 19,
-            'reduced' => array(5, 9)
-        ),
-        'CZ' => array( // Czech Republic
-            'country_name' => 'Czech Republic',
-            'standard' => 21,
-            'reduced' => array(10, 15)
-        ),
-        'DK' => array( // Denmark
-            'country_name' => 'Denmark',
-            'standard' => 25,
-            'reduced' => array()
-        ),
-        'EE' => array( // Estonia
-            'country_name' => 'Estonia',
-            'standard' => 20,
-            'reduced' => array(9)
-        ),
-        'FI' => array( // Finland
-            'country_name' => 'Finland',
-            'standard' => 24,
-            'reduced' => array(10, 14)
-        ),
-        'FR' => array( // France
-            'country_name' => 'France',
-            'standard' => 20,
-            'reduced' => array(5.5, 10)
-        ),
-        'DE' => array( // Germany
-            'country_name' => 'Germany',
-            'standard' => 19,
-            'reduced' => array(7)
-        ),
-        'GR' => array( // Greece
-            'country_name' => 'Greece',
-            'standard' => 24,
-            'reduced' => array(6, 13)
-        ),
-        'HU' => array( // Hungary
-            'country_name' => 'Hungary',
-            'standard' => 27,
-            'reduced' => array(5, 18)
-        ),
-        'IE' => array( // Ireland
-            'country_name' => 'Ireland',
-            'standard' => 23,
-            'reduced' => array(9, 13.5)
-        ),
-        'IT' => array( // Italy
-            'country_name' => 'Italy',
-            'standard' => 22,
-            'reduced' => array(4, 5, 10)
-        ),
-        'LV' => array( // Latvia
-            'country_name' => 'Latvia',
-            'standard' => 21,
-            'reduced' => array(5, 12)
-        ),
-        'LT' => array( // Lithuania
-            'country_name' => 'Lithuania',
-            'standard' => 21,
-            'reduced' => array(5, 9)
-        ),
-        'LU' => array( // Luxembourg
-            'country_name' => 'Luxembourg',
-            'standard' => 17,
-            'reduced' => array(3, 8, 14)
-        ),
-        'MT' => array( // Malta
-            'country_name' => 'Malta',
-            'standard' => 18,
-            'reduced' => array(5, 7)
-        ),
-        'NL' => array( // Netherlands
-            'country_name' => 'Netherlands',
-            'standard' => 21,
-            'reduced' => array(9)
-        ),
-        'PL' => array( // Poland
-            'country_name' => 'Poland',
-            'standard' => 23,
-            'reduced' => array(5, 8)
-        ),
-        'PT' => array( // Portugal
-            'country_name' => 'Portugal',
-            'standard' => 23,
-            'reduced' => array(6, 13)
-        ),
-        'RO' => array( // Romania
-            'country_name' => 'Romania',
-            'standard' => 19,
-            'reduced' => array(5, 9)
-        ),
-        'SK' => array( // Slovakia
-            'country_name' => 'Slovakia',
-            'standard' => 20,
-            'reduced' => array(10)
-        ),
-        'SI' => array( // Slovenia
-            'country_name' => 'Slovenia',
-            'standard' => 22,
-            'reduced' => array(5, 9.5)
-        ),
-        'ES' => array( // Spain
-            'country_name' => 'Spain',
-            'standard' => 21,
-            'reduced' => array(4, 10)
-        ),
-        'SE' => array( // Sweden
-            'country_name' => 'Sweden',
-            'standard' => 25,
-            'reduced' => array(6, 12)
-        )
-    );
+	/**
+	 * EU VAT rate snapshot.
+	 * Verified on 12 October 2026; official sources are listed in VAT-RATES-INFO.md.
+	 * The first reduced entry is the import preset; later entries are overview-only.
+	 * Regional rates, zero rates and special schemes require manual configuration.
+	 *
+	 * @var array
+	 */
+	private static $eu_vat_rates = array(
+		'AT' => array( // Austria.
+			'country_name' => 'Austria',
+			'standard'     => 20,
+			'reduced'      => array( 10, 13, 4.9 ),
+		),
+		'BE' => array( // Belgium.
+			'country_name' => 'Belgium',
+			'standard'     => 21,
+			'reduced'      => array( 6, 12 ),
+		),
+		'BG' => array( // Bulgaria.
+			'country_name' => 'Bulgaria',
+			'standard'     => 20,
+			'reduced'      => array( 9 ),
+		),
+		'HR' => array( // Croatia.
+			'country_name' => 'Croatia',
+			'standard'     => 25,
+			'reduced'      => array( 5, 13 ),
+		),
+		'CY' => array( // Cyprus.
+			'country_name' => 'Cyprus',
+			'standard'     => 19,
+			'reduced'      => array( 5, 9, 3 ),
+		),
+		'CZ' => array( // Czech Republic.
+			'country_name' => 'Czech Republic',
+			'standard'     => 21,
+			'reduced'      => array( 12 ),
+		),
+		'DK' => array( // Denmark.
+			'country_name' => 'Denmark',
+			'standard'     => 25,
+			'reduced'      => array(),
+		),
+		'EE' => array( // Estonia.
+			'country_name' => 'Estonia',
+			'standard'     => 24,
+			'reduced'      => array( 9, 13 ),
+		),
+		'FI' => array( // Finland.
+			'country_name' => 'Finland',
+			'standard'     => 25.5,
+			'reduced'      => array( 10, 13.5 ),
+		),
+		'FR' => array( // France.
+			'country_name' => 'France',
+			'standard'     => 20,
+			'reduced'      => array( 5.5, 10, 2.1 ),
+		),
+		'DE' => array( // Germany.
+			'country_name' => 'Germany',
+			'standard'     => 19,
+			'reduced'      => array( 7 ),
+		),
+		'GR' => array( // Greece.
+			'country_name' => 'Greece',
+			'standard'     => 24,
+			'reduced'      => array( 6, 13, 4 ),
+		),
+		'HU' => array( // Hungary.
+			'country_name' => 'Hungary',
+			'standard'     => 27,
+			'reduced'      => array( 5, 18 ),
+		),
+		'IE' => array( // Ireland.
+			'country_name' => 'Ireland',
+			'standard'     => 23,
+			'reduced'      => array( 9, 13.5, 4.8 ),
+		),
+		'IT' => array( // Italy.
+			'country_name' => 'Italy',
+			'standard'     => 22,
+			'reduced'      => array( 4, 5, 10 ),
+		),
+		'LV' => array( // Latvia.
+			'country_name' => 'Latvia',
+			'standard'     => 21,
+			'reduced'      => array( 5, 12 ),
+		),
+		'LT' => array( // Lithuania.
+			'country_name' => 'Lithuania',
+			'standard'     => 21,
+			'reduced'      => array( 5, 12 ),
+		),
+		'LU' => array( // Luxembourg.
+			'country_name' => 'Luxembourg',
+			'standard'     => 17,
+			'reduced'      => array( 3, 8, 14 ),
+		),
+		'MT' => array( // Malta.
+			'country_name' => 'Malta',
+			'standard'     => 18,
+			'reduced'      => array( 5, 7, 12 ),
+		),
+		'NL' => array( // Netherlands.
+			'country_name' => 'Netherlands',
+			'standard'     => 21,
+			'reduced'      => array( 9 ),
+		),
+		'PL' => array( // Poland.
+			'country_name' => 'Poland',
+			'standard'     => 23,
+			'reduced'      => array( 5, 8 ),
+		),
+		'PT' => array( // Portugal.
+			'country_name' => 'Portugal',
+			'standard'     => 23,
+			'reduced'      => array( 6, 13 ),
+		),
+		'RO' => array( // Romania.
+			'country_name' => 'Romania',
+			'standard'     => 21,
+			'reduced'      => array( 11 ),
+		),
+		'SK' => array( // Slovakia.
+			'country_name' => 'Slovakia',
+			'standard'     => 23,
+			'reduced'      => array( 5, 19 ),
+		),
+		'SI' => array( // Slovenia.
+			'country_name' => 'Slovenia',
+			'standard'     => 22,
+			'reduced'      => array( 5, 9.5 ),
+		),
+		'ES' => array( // Spain.
+			'country_name' => 'Spain',
+			'standard'     => 21,
+			'reduced'      => array( 4, 10 ),
+		),
+		'SE' => array( // Sweden.
+			'country_name' => 'Sweden',
+			'standard'     => 25,
+			'reduced'      => array( 6, 12 ),
+		),
+	);
 
     /**
      * Initialize the importer
@@ -434,7 +438,7 @@ class VAT_Guard_Rate_Importer
             <h1><?php esc_html_e('EU VAT Rate Importer', 'eu-vat-guard-for-woocommerce'); ?></h1>
 
             <div class="vat-importer-notice">
-                <p><?php esc_html_e('Import current EU VAT rates into your WooCommerce tax settings. This tool will create or update tax rates for the selected countries.', 'eu-vat-guard-for-woocommerce'); ?>
+				<p><?php esc_html_e( 'Import EU VAT rates verified on 12 October 2026 into your WooCommerce tax settings. Updating the plugin does not change existing tax rates. After importing, review and remove obsolete rates in WooCommerce tax settings.', 'eu-vat-guard-for-woocommerce' ); ?>
                 </p>
             </div>
 
@@ -490,7 +494,7 @@ class VAT_Guard_Rate_Importer
                                 <?php esc_html_e('Import reduced VAT rates (lower rates for specific goods)', 'eu-vat-guard-for-woocommerce'); ?>
                             </label>
                             <p class="description">
-                                <?php esc_html_e('Only the primary reduced VAT rate per country is imported into WooCommerce\'s default Reduced rate tax class.', 'eu-vat-guard-for-woocommerce'); ?>
+								<?php esc_html_e( 'Only the first listed reduced rate per country is imported. Reduced rates depend on the goods or services sold; check the applicable rate before assigning products to this tax class. Regional, zero and other special rates require manual configuration.', 'eu-vat-guard-for-woocommerce' ); ?>
                             </p>
                         </td>
                     </tr>

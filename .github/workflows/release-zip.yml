@@ -48,6 +48,12 @@ jobs:
           rm -rf "$BUILD_DIR/node_modules" || true
           rm -rf "$BUILD_DIR/vendor/bin" || true
           rm -rf "$BUILD_DIR/tests" || true
+          rm -f "$BUILD_DIR/.distignore" "$BUILD_DIR/.DS_Store"
+          rm -f "$BUILD_DIR/CLAUDE.md" "$BUILD_DIR/agents.md"
+          rm -f "$BUILD_DIR/NAMING-CONVENTIONS.md" "$BUILD_DIR/NAMESPACE-CHANGES.md"
+          rm -f "$BUILD_DIR/languages/README.md"
+          rm -f "$BUILD_DIR/languages/compile-translations.php"
+          find "$BUILD_DIR" -name '.DS_Store' -delete
 
           ZIP_NAME="${PLUGIN_SLUG}-${TAG}.zip"
           (cd build && zip -r "../${ZIP_NAME}" "${PLUGIN_SLUG}" -q)

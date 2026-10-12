@@ -3,9 +3,9 @@ Contributors: stormlabs, bytefarmer
 Tags: reverse charge, vat, eu, tax, b2b
 Requires: woocommerce
 Requires at least: 5.0
-Tested up to: 7.0.2
+Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 1.4.7
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,16 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 4. VAT information displayed in order admin
 
 == Changelog ==
+
+= 1.5.0 =
+* **Updated** - EU VAT rate snapshot verified on 12 October 2026, with corrected rates for Czechia, Estonia, Finland, Lithuania, Romania and Slovakia and additional national special rates
+* **Fixed** - Classic and Block Checkout apply VAT exemption before totals are calculated, including country and shipping-method changes
+* **Fixed** - Additional checkout fields from other plugins preserve VAT exemption, order metadata and unrelated checkout errors
+* **Fixed** - Corrected VAT-country notices clear after successful validation while payment and coupon errors remain visible
+* **Fixed** - Clearing optional VAT removes stale session and customer VAT data and restores tax immediately
+* **Fixed** - Admin order VAT edits validate eligibility instead of unconditionally granting exemption
+* **Fixed** - Missing or inactive WooCommerce no longer causes a fatal error
+* **Improved** - Documented rate import presets, product-specific and regional limits, and handling of obsolete tax rows
 
 = 1.4.7 =
 * **Fixed** - Prevented the VAT number field from appearing twice on the Account Details page when block checkout support is enabled
@@ -223,6 +233,9 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 
 == Upgrade Notice ==
 
+= 1.5.0 =
+Updates EU VAT rates and fixes exemption, checkout totals, clearing and error handling. Existing WooCommerce tax rates are not changed automatically. Review obsolete rows before importing updated rates; reduced-rate presets must match your products.
+
 = 1.4.7 =
 Fixes duplicate VAT fields on Account Details and keeps customer VAT data synchronized with WooCommerce block checkout.
 
@@ -301,7 +314,8 @@ This plugin optionally uses the European Commission's VIES (VAT Information Exch
 
 * WordPress 5.0 or higher
 * WooCommerce 4.0 or higher
-* PHP 7.2 or higher
+* PHP 8.2 or higher
+* WooCommerce 8.9 or higher for the Block Checkout VAT field
 * SOAP extension (for VIES validation)
 
 == Support ==

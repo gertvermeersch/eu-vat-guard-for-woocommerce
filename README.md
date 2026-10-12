@@ -2,7 +2,7 @@
 
 [![WordPress Plugin Version](https://img.shields.io/badge/WordPress-5.0%2B-blue.svg)](https://wordpress.org/)
 [![WooCommerce Version](https://img.shields.io/badge/WooCommerce-4.0%2B-purple.svg)](https://woocommerce.com/)
-[![PHP Version](https://img.shields.io/badge/PHP-7.2%2B-green.svg)](https://php.net/)
+[![PHP Version](https://img.shields.io/badge/PHP-8.2%2B-green.svg)](https://php.net/)
 [![License](https://img.shields.io/badge/License-GPLv2%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
 [Official Plugin Download](https://wordpress.org/plugins/eu-vat-guard-for-woocommerce/)
@@ -32,10 +32,11 @@
   - Template helper functions for custom implementations
 
 - **VAT Rate Importer** *(New in v1.2.0)*
-  - Import current EU VAT rates for all 27 member states
+  - Import an EU VAT rate snapshot verified on 12 October 2026 for all 27 member states
   - Support for standard rates and one primary reduced rate per country
   - WooCommerce-style country selection interface
   - Uses WooCommerce's default reduced tax class with translation-safe detection
+  - See [VAT rates and upgrade instructions](VAT-RATES-INFO.md) for official sources, import presets and product/region limits
 
 - **WooCommerce Integration**
   - VAT number is pre-filled for logged-in users at checkout.
@@ -69,8 +70,15 @@
 ### Requirements
 - WordPress 5.0+
 - WooCommerce 4.0+
+- WooCommerce 8.9+ for the Block Checkout VAT field
 - PHP 8.2+
 - SOAP extension (for VIES validation)
+
+Release checks run on WordPress 7.1.3, WooCommerce 10.9.4 and PHP 8.4.25. Older minimum versions are not covered by this release's test run.
+
+### Updating to 1.5.0
+
+The plugin update refreshes the importer's bundled rate snapshot; it does not automatically change your store's tax rows. Export your tax settings, review obsolete country/class rows, then import the updated rates and check product tax classes. A changed percentage creates a new row if no matching percentage exists, so remove obsolete rows deliberately. The first listed reduced rate is an import preset, not a universal rate for every product. See [VAT-RATES-INFO.md](VAT-RATES-INFO.md).
 
 ### File Structure
 ```
@@ -105,9 +113,19 @@ php compile-translations.php
 This plugin uses:
 - **Text Domain**: `eu-vat-guard-for-woocommerce`
 - **Plugin Slug**: `eu-vat-guard-for-woocommerce`
-- **Stable Tag**: `1.4.7`
+- **Stable Tag**: `1.5.0`
 
 ## Changelog
+
+### Version 1.5.0 — 12 October 2026
+- **Updated**: EU VAT rate snapshot verified against official sources, with corrected Czech, Estonian, Finnish, Lithuanian, Romanian and Slovak rates and additional national special tiers
+- **Fixed**: Classic and Block Checkout determine exemption before calculating totals, including address, shipping and final submission changes
+- **Fixed**: Unrelated additional checkout fields preserve customer exemption, order metadata and other plugins' errors
+- **Fixed**: Successful VAT validation clears stale country notices while preserving payment and coupon errors
+- **Fixed**: Clearing optional VAT synchronizes session/customer data and immediately restores tax
+- **Fixed**: Admin order VAT edits validate exemption eligibility rather than always granting exemption
+- **Fixed**: Graceful handling when WooCommerce is missing or inactive
+- **Improved**: Rate import documentation explains presets, territorial/product limitations and obsolete rate rows
 
 ### Version 1.4.7
 - **Fixed**: Prevented the VAT number field from appearing twice on the Account Details page when block checkout support is enabled
