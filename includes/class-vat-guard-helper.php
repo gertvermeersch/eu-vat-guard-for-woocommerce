@@ -146,6 +146,45 @@ class VAT_Guard_Helper
         return $enhanced_result;
     }
 
+	/**
+	 * Check order exemption eligibility after the VAT number has been validated.
+	 *
+	 * Reads only order data and settings; does not change customer or session state.
+	 * An absent shipping country falls back to the billing country.
+	 *
+	 * @param \WC_Order $order      Order being edited.
+	 * @param string    $vat_number Validated VAT number including its country prefix.
+	 * @return bool
+	 */
+	public static function is_order_eligible_for_vat_exemption( $order, $vat_number ) {
+		if ( '' === $vat_number || get_option( EU_VAT_GUARD_OPTION_DISABLE_EXEMPTION, false ) ) {
+			return false;
+		}
+
+		$vat_country      = self::get_vat_woocommerce_country( $vat_number );
+		$billing_country  = strtoupper( $order->get_billing_country() );
+		$shipping_country = strtoupper( $order->get_shipping_country() );
+		$base_location    = wc_get_base_location();
+
+		if ( $vat_country !== $billing_country || $vat_country === $base_location['country'] ) {
+			return false;
+		}
+
+		if ( '' !== $shipping_country && $vat_country !== $shipping_country ) {
+			return false;
+		}
+
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce's local pickup extension point.
+		$pickup_methods = apply_filters( 'woocommerce_local_pickup_methods', array( 'legacy_local_pickup', 'local_pickup', 'pickup_location' ) );
+		foreach ( $order->get_shipping_methods() as $shipping_method ) {
+			if ( in_array( $shipping_method->get_method_id(), $pickup_methods, true ) ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
        /**
      * Get VAT number from existing order, checking both block and classic checkout sources
      * @param \WC_Order $order

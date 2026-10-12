@@ -33,8 +33,8 @@ class VAT_Guard_Admin
             // Add VAT field to admin order billing address editing
             add_action('woocommerce_admin_order_data_after_billing_address', array($this, 'add_vat_field_to_admin_order'));
 
-            // Save VAT field when order is updated in admin
-            add_action('woocommerce_process_shop_order_meta', array($this, 'save_admin_order_vat_field'));
+			// WooCommerce saves order items at priority 10 and addresses at priority 40.
+			add_action( 'woocommerce_process_shop_order_meta', array( $this, 'save_admin_order_vat_field' ), 45 );
 
             // Display admin notices for VAT validation errors
             add_action('admin_notices', array($this, 'display_vat_validation_notices'));
@@ -110,54 +110,63 @@ class VAT_Guard_Admin
     }
 
 
-    /**
-     * Save VAT field when order is updated in admin
-     */
-    public function save_admin_order_vat_field($post_id)
-    {
-        if (isset($_POST[EU_VAT_GUARD_META_ORDER_VAT])) {
-            $vat_number = sanitize_text_field(wp_unslash($_POST[EU_VAT_GUARD_META_ORDER_VAT]));
+	/**
+	 * Save VAT data using the order's addresses and shipping methods.
+	 *
+	 * WooCommerce verifies the order edit nonce before dispatching this hook.
+	 * Order totals are recalculated separately through WooCommerce's admin controls.
+	 *
+	 * @param int $post_id Order ID.
+	 */
+	public function save_admin_order_vat_field( $post_id ) {
+		// phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce registers this capability.
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			return;
+		}
 
-            // Get the order object
-            $order = wc_get_order($post_id);
-            if (!$order) {
-                return;
-            }
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce verifies the order edit nonce before this hook.
+		if ( ! isset( $_POST[ EU_VAT_GUARD_META_ORDER_VAT ] ) || ! is_string( $_POST[ EU_VAT_GUARD_META_ORDER_VAT ] ) ) {
+			return;
+		}
 
-            // Validate VAT number if provided
-            if (!empty($vat_number)) {
-                $error = '';
-                $validation_result = VAT_Guard_Helper::is_valid_eu_vat_number($vat_number, $error);
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce verifies the order edit nonce before this hook.
+		$submitted_vat = trim( sanitize_text_field( wp_unslash( $_POST[ EU_VAT_GUARD_META_ORDER_VAT ] ) ) );
+		$vat_number    = VAT_Guard_Helper::sanitize_vat_field( $submitted_vat );
+		$order         = wc_get_order( $post_id );
+		if ( ! $order instanceof \WC_Order ) {
+			return;
+		}
 
-                if ($validation_result) {
-                    // Save VAT number
-                    $order->update_meta_data(EU_VAT_GUARD_META_ORDER_VAT, $vat_number);
+		if ( '' !== $submitted_vat ) {
+			$error = '';
+			if ( ! VAT_Guard_Helper::is_valid_eu_vat_number( $vat_number, $error ) ) {
+				set_transient( 'eu_vat_guard_admin_error_' . get_current_user_id(), $error, 30 );
+				return;
+			}
 
-                    // Set VAT exempt status if validation passed
-                    $order->update_meta_data(EU_VAT_GUARD_META_ORDER_EXEMPT, 'yes');
+			$order->update_meta_data( EU_VAT_GUARD_META_ORDER_VAT, $vat_number );
+			if ( $order->meta_exists( EU_VAT_GUARD_META_BLOCK_VAT ) ) {
+				$order->update_meta_data( EU_VAT_GUARD_META_BLOCK_VAT, $vat_number );
+			}
+		} else {
+			$order->delete_meta_data( EU_VAT_GUARD_META_ORDER_VAT );
+			$order->delete_meta_data( EU_VAT_GUARD_META_BLOCK_VAT );
+		}
 
-                    // Save the order
-                    $order->save();
+		$is_exempt = VAT_Guard_Helper::is_order_eligible_for_vat_exemption( $order, $vat_number );
+		$order->update_meta_data( EU_VAT_GUARD_META_ORDER_EXEMPT, $is_exempt ? 'yes' : 'no' );
+		$order->update_meta_data( 'is_vat_exempt', $is_exempt ? 'yes' : 'no' );
+		$order->save();
 
-                    // Add order note
-                    $order->add_order_note(
-                        /* translators: %s: VAT number */
-                        sprintf(__('VAT number %s added and validated via admin.', 'eu-vat-guard-for-woocommerce'), $vat_number)
-                    );
-                } else {
-                    // Store error message in transient for display on next page load
-                    set_transient('eu_vat_guard_admin_error_' . get_current_user_id(), $error, 30);
-                }
-            } else {
-                // Remove VAT number and exempt status if field is empty
-                $order->delete_meta_data(EU_VAT_GUARD_META_ORDER_VAT);
-                $order->delete_meta_data(EU_VAT_GUARD_META_ORDER_EXEMPT);
-                $order->save();
-
-                $order->add_order_note(__('VAT number removed via admin.', 'eu-vat-guard-for-woocommerce'));
-            }
-        }
-    }
+		if ( '' !== $vat_number ) {
+			$order->add_order_note(
+				/* translators: %s: VAT number */
+				sprintf( __( 'VAT number %s added and validated via admin.', 'eu-vat-guard-for-woocommerce' ), $vat_number )
+			);
+		} else {
+			$order->add_order_note( __( 'VAT number removed via admin.', 'eu-vat-guard-for-woocommerce' ) );
+		}
+	}
 
     /**
      * Display VAT validation error notices stored in transients
