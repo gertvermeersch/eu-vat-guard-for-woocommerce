@@ -26,6 +26,20 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
      */
     private $main_class;
 
+	/**
+	 * VAT errors from the current Store API update.
+	 *
+	 * @var string[]
+	 */
+	private $store_api_vat_errors = array();
+
+	/**
+	 * Whether VAT and address validation succeeded during this request.
+	 *
+	 * @var bool
+	 */
+	private $store_api_vat_valid = false;
+
     /**
      * Constructor
      * @param VAT_Guard $main_class
@@ -197,41 +211,20 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
         ];
     }
 
-    /**
-     * Extend cart data with VAT information, used by the frontend to show the excemption notice
-     * This method performs real-time validation to ensure accurate exemption status.
-     * gets called on whatever field changes... 
-     */
-    public function extend_cart_data()
-    {
-        // Get current VAT number from various sources
-        $vat = $this->get_current_vat_number();
-
-        // Get current customer countries
-        $billing_country = '';
-        $shipping_country = '';
-
-        if (WC()->customer) {
-            $billing_country = WC()->customer->get_billing_country();
-            $shipping_country = WC()->customer->get_shipping_country();
-        }
-
-        // Perform real-time validation to get accurate exemption status
-        // because this method gets called on fields changes like country/shipping method
-        $error_messages = [];
-        $is_exempt = $this->main_class->validate_and_set_vat_exemption(
-            $vat,
-            $billing_country,
-            $shipping_country,
-            $error_messages
-        );
-
-        return [
-            'vat_exempt' => $is_exempt,
-            'vat_number' => $vat,
-            'vat_exempt_message' => $is_exempt ? VAT_Guard_Helper::get_exemption_message() : '',
-        ];
-    }
+	/**
+	 * Report the VAT state used to calculate totals without changing it.
+	 *
+	 * @return array Cart and checkout extension data.
+	 */
+	public function extend_cart_data() {
+		$is_exempt = WC()->customer ? WC()->customer->get_is_vat_exempt() : false;
+		return array(
+			'vat_exempt'           => $is_exempt,
+			'vat_number'           => $this->get_current_vat_number(),
+			'vat_exempt_message'   => $is_exempt ? VAT_Guard_Helper::get_exemption_message() : '',
+			'vat_validation_valid' => $this->store_api_vat_valid,
+		);
+	}
 
     /**
      * Schema for checkout extension data.
@@ -254,6 +247,11 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
                 'type' => 'string',
                 'readonly' => true,
             ],
+			'vat_validation_valid' => array(
+				'description' => __( 'Whether VAT and address validation succeeded in this response', 'eu-vat-guard-for-woocommerce' ),
+				'type'        => 'boolean',
+				'readonly'    => true,
+			),
         ];
     }
 
@@ -320,14 +318,20 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
             3
         );
 
-        // Hook into Store API customer address updates for block checkout
-        add_action(
-            'woocommerce_store_api_cart_update_customer',
-            array($this, 'handle_customer_address_update_store_api'),
-            10,
-            2
-        );
-
+		// Establish exemption before the Store API calculates totals.
+		add_action(
+			'woocommerce_store_api_cart_update_customer_from_request',
+			array( $this, 'handle_customer_address_update_store_api' ),
+			10,
+			2
+		);
+		add_action(
+			'woocommerce_store_api_checkout_update_customer_from_request',
+			array( $this, 'handle_checkout_customer_update_store_api' ),
+			10,
+			2
+		);
+		add_action( 'woocommerce_store_api_cart_errors', array( $this, 'add_store_api_vat_errors' ), 10, 2 );
 
         // Preload the VAT number field with user meta data if available
         add_filter(
@@ -370,79 +374,47 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
         add_action('woocommerce_blocks_loaded', array($this, 'register_block_checkout_integration'));
     }
 
-    /**
-     * Handle VAT field updates and re-evaluate exemption on any field change
-     * Called on VAT number field update, after initial field validation validate_vat_field
-     * Manual hooked on additional field value, because here we have the Order object
-     * @param string $key
-     * @param string $value
-     * @param string $group
-     * @param \Automattic\WooCommerce\Admin\Overrides\Order $wc_object //or customer
-     */
-    public function handle_vat_field_update($key, $value, $group, $wc_object)
-    {
-        // Handle VAT field specific updates, happens AFTER validation
-        $vat = '';
-        if ('eu-vat-guard/vat_number' === $key) {
-            // Sanitize VAT number
-            $vat = VAT_Guard_Helper::sanitize_vat_field($value);
-            if ($wc_object instanceof \WC_Customer) {
-                // Keep the plugin's canonical user meta synchronized, including when the field is cleared.
-                $wc_object->update_meta_data(EU_VAT_GUARD_META_VAT_NUMBER, $vat);
-            } elseif ($wc_object instanceof \WC_Order) {
-                $wc_object->update_meta_data(EU_VAT_GUARD_META_ORDER_VAT, $vat);
-            }
-            //also save in the session
-            if (WC()->session) {
-                if ($vat === '') {
-                    WC()->session->set(EU_VAT_GUARD_META_ORDER_VAT, '');
-                } else {
-                    WC()->session->set(EU_VAT_GUARD_META_ORDER_VAT, $vat);
-                }
-            }
-            //save customer object
-            if (WC()->customer) {
-                WC()->customer->update_meta_data(EU_VAT_GUARD_META_BLOCK_VAT, $vat);
-                WC()->customer->update_meta_data(EU_VAT_GUARD_META_VAT_NUMBER, $vat);
-                WC()->customer->save();
-            }
-        }
+	/**
+	 * Synchronize a validated VAT field and its exemption decision.
+	 *
+	 * @param string                 $key       Additional field identifier.
+	 * @param string                 $value     Validated field value.
+	 * @param string                 $group     Field group.
+	 * @param \WC_Order|\WC_Customer $wc_object Order or customer receiving the field.
+	 */
+	public function handle_vat_field_update( $key, $value, $group, $wc_object ) {
+		if ( 'eu-vat-guard/vat_number' !== $key ) {
+			return;
+		}
+		$was_exempt = WC()->customer ? WC()->customer->get_is_vat_exempt() : false;
+		$vat        = VAT_Guard_Helper::sanitize_vat_field( $value );
+		if ( $wc_object instanceof \WC_Customer ) {
+			$wc_object->update_meta_data( EU_VAT_GUARD_META_VAT_NUMBER, $vat );
+		} elseif ( $wc_object instanceof \WC_Order ) {
+			$wc_object->update_meta_data( EU_VAT_GUARD_META_ORDER_VAT, $vat );
+		}
+		if ( WC()->session ) {
+			WC()->session->set( EU_VAT_GUARD_META_ORDER_VAT, $vat );
+		}
+		if ( WC()->customer ) {
+			WC()->customer->update_meta_data( EU_VAT_GUARD_META_BLOCK_VAT, $vat );
+			WC()->customer->update_meta_data( EU_VAT_GUARD_META_VAT_NUMBER, $vat );
+		}
 
+		$is_exempt = $this->update_store_api_vat_exemption();
+		if ( WC()->customer ) {
+			WC()->customer->save();
+		}
+		if ( $wc_object instanceof \WC_Order ) {
+			$wc_object->update_meta_data( EU_VAT_GUARD_META_ORDER_EXEMPT, $is_exempt ? 'yes' : 'no' );
+			$wc_object->update_meta_data( 'is_vat_exempt', $is_exempt ? 'yes' : 'no' );
+		}
 
-        // Get shipping and billing countries from customer object
-        $billing_country = '';
-        $shipping_country = '';
-
-        if (WC()->customer) {
-            $billing_country = WC()->customer->get_billing_country();
-            $shipping_country = WC()->customer->get_shipping_country();
-        }
-
-        // Use the centralized validation function
-        $error_messages = [];
-        $is_exempt = $this->main_class->validate_and_set_vat_exemption(
-            $vat,
-            $billing_country,
-            $shipping_country,
-            $error_messages
-        );
-
-        if (function_exists('wc_clear_notices')) {
-            wc_clear_notices();
-        }
-        // Display any error messages
-        foreach ($error_messages as $error_message) {
-            wc_add_notice($error_message, 'error');
-        }
-
-        // Update meta data
-        if ($wc_object) {
-            $wc_object->update_meta_data(EU_VAT_GUARD_META_ORDER_EXEMPT, $is_exempt ? 'yes' : 'no');
-        }
-
-        // Trigger frontend refresh
-        $this->trigger_frontend_refresh();
-    }
+		// Contact fields may be persisted after totals, or without a totals update on PATCH.
+		if ( WC()->cart && $was_exempt !== $is_exempt ) {
+			WC()->cart->calculate_totals();
+		}
+	}
 
     /**
      * Save VAT number from order to customer account after block checkout order is placed.
@@ -478,96 +450,110 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
         }
     }
 
-    /**
-     * Handle shipping method changes for Store API (block checkout)
-     * @param string $package_id
-     * @param string $rate_id
-     * @param array $request_data
-     */
-    public function handle_shipping_method_change_store_api($package_id, $rate_id, $request_data)
-    {
-        // Get current VAT number
-        $vat = $this->get_current_vat_number();
+	/**
+	 * Establish exemption before the shipping route calculates totals.
+	 *
+	 * @param string|null      $package_id   Shipping package identifier.
+	 * @param string           $rate_id      Selected rate identifier.
+	 * @param \WP_REST_Request $request_data Full request data.
+	 */
+	public function handle_shipping_method_change_store_api( $package_id, $rate_id, $request_data ) {
+		$this->update_store_api_vat_exemption();
+		// WooCommerce calculates totals immediately after this hook.
+	}
 
-        if (empty($vat)) {
-            return;
-        }
+	/**
+	 * Establish exemption before the address route calculates totals.
+	 *
+	 * @param \WC_Customer     $customer_data Updated customer.
+	 * @param \WP_REST_Request $request_data  Full request data.
+	 */
+	public function handle_customer_address_update_store_api( $customer_data, $request_data ) {
+		$this->update_store_api_vat_exemption();
+		// WooCommerce saves the customer and calculates totals after this hook.
+	}
 
-        // Get current customer countries
-        $billing_country = '';
-        $shipping_country = '';
+	/**
+	 * Apply final checkout address and VAT input before WooCommerce copies cart totals.
+	 *
+	 * @param \WC_Customer     $customer Updated customer.
+	 * @param \WP_REST_Request $request  Full request data.
+	 * @throws \Automattic\WooCommerce\StoreApi\Exceptions\RouteException Invalid VAT context.
+	 */
+	public function handle_checkout_customer_update_store_api( $customer, $request ) {
+		// Contact fields are persisted later; use the validated submission now.
+		$fields = $request->get_param( 'additional_fields' );
+		if ( is_array( $fields ) && array_key_exists( 'eu-vat-guard/vat_number', $fields ) && WC()->session ) {
+			WC()->session->set( EU_VAT_GUARD_META_ORDER_VAT, VAT_Guard_Helper::sanitize_vat_field( $fields['eu-vat-guard/vat_number'] ) );
+		}
 
-        if (WC()->customer) {
-            $billing_country = WC()->customer->get_billing_country();
-            $shipping_country = WC()->customer->get_shipping_country();
-        }
+		$this->update_store_api_vat_exemption();
+		if ( 'POST' === $request->get_method() && ! empty( $this->store_api_vat_errors ) ) {
+			throw new \Automattic\WooCommerce\StoreApi\Exceptions\RouteException(
+				'eu_vat_guard_vat_validation',
+				esc_html( implode( ' ', $this->store_api_vat_errors ) ),
+				400
+			);
+		}
+	}
 
-        // Use the centralized validation function (no error messages needed here)
-        $error_messages = [];
-        $this->main_class->validate_and_set_vat_exemption(
-            $vat,
-            $billing_country,
-            $shipping_country,
-            $error_messages
-        );
+	/**
+	 * Set exemption from current session inputs, including explicitly cleared VAT.
+	 *
+	 * @return bool Whether the customer is exempt.
+	 */
+	private function update_store_api_vat_exemption() {
+		$this->store_api_vat_errors = array();
+		$is_exempt                  = $this->main_class->validate_and_set_vat_exemption(
+			$this->get_current_vat_number(),
+			WC()->customer ? WC()->customer->get_billing_country() : '',
+			WC()->customer ? WC()->customer->get_shipping_country() : '',
+			$this->store_api_vat_errors
+		);
+		$this->store_api_vat_valid  = empty( $this->store_api_vat_errors );
+		if ( $this->store_api_vat_valid ) {
+			$this->clear_resolved_country_notices();
+		}
+		return $is_exempt;
+	}
 
-        wc_clear_notices();
-        foreach ($error_messages as $error_message) {
-            wc_add_notice($error_message, 'error');
-        }
+	/**
+	 * Remove legacy country mismatch notices after successful validation.
+	 */
+	private function clear_resolved_country_notices() {
+		if ( ! WC()->session ) {
+			return;
+		}
+		$messages = array(
+			__( 'The billing country must match the country of the VAT number.', 'eu-vat-guard-for-woocommerce' ),
+			__( 'The shipping country must match the country of the VAT number.', 'eu-vat-guard-for-woocommerce' ),
+		);
+		$notices  = wc_get_notices();
+		$changed  = false;
+		foreach ( $notices['error'] ?? array() as $index => $notice ) {
+			$message = is_array( $notice ) ? ( $notice['notice'] ?? '' ) : $notice;
+			if ( in_array( trim( wp_strip_all_tags( $message ) ), $messages, true ) ) {
+				unset( $notices['error'][ $index ] );
+				$changed = true;
+			}
+		}
+		if ( $changed ) {
+			$notices['error'] = array_values( $notices['error'] );
+			wc_set_notices( $notices );
+		}
+	}
 
-        // Trigger cart recalculation
-        if (WC()->cart) {
-            WC()->cart->calculate_totals();
-        }
-    }
-
-    /**
-     * Handle customer address updates for Store API (block checkout)
-     * Re-evaluates VAT exemption when customer changes their address
-     * @param array $customer_data Updated customer data
-     * @param array $request_data Full request data
-     */
-    public function handle_customer_address_update_store_api($customer_data, $request_data)
-    {
-        // Get current VAT number
-        $vat = $this->get_current_vat_number();
-
-        if (empty($vat)) {
-            return;
-        }
-
-        // Get updated customer countries (should be already updated in WC()->customer)
-        $billing_country = '';
-        $shipping_country = '';
-
-        if (WC()->customer) {
-            $billing_country = WC()->customer->get_billing_country();
-            $shipping_country = WC()->customer->get_shipping_country();
-        }
-
-        // Use the centralized validation function (no error messages needed here)
-        $error_messages = [];
-        $this->main_class->validate_and_set_vat_exemption(
-            $vat,
-            $billing_country,
-            $shipping_country,
-            $error_messages
-        );
-
-        wc_clear_notices();
-        foreach ($error_messages as $error_message) {
-            wc_add_notice($error_message, 'error');
-        }
-
-        // Trigger cart recalculation to reflect VAT changes
-        if (WC()->cart) {
-            WC()->cart->calculate_totals();
-        }
-
-        // Trigger frontend refresh to update VAT exempt status display
-        $this->trigger_frontend_refresh();
-    }
+	/**
+	 * Return update errors through Store API validation without changing totals or notices.
+	 *
+	 * @param \WP_Error $errors Store API validation errors.
+	 * @param \WC_Cart  $cart   Current cart.
+	 */
+	public function add_store_api_vat_errors( $errors, $cart ) {
+		foreach ( $this->store_api_vat_errors as $message ) {
+			$errors->add( 'eu_vat_guard_vat_validation', $message );
+		}
+	}
 
 
 
@@ -644,8 +630,8 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
         wp_enqueue_script(
             'vat-guard-block-checkout-fallback',
             plugin_dir_url(dirname(__FILE__)) . 'assets/js/vat-guard-block-checkout.js',
-            array('wp-element', 'wp-hooks', 'wp-data'),
-            '1.0.0',
+			array( 'wp-element', 'wp-hooks', 'wp-data', 'wp-i18n', 'wp-notices', 'wc-blocks-data-store' ),
+			filemtime( EU_VAT_GUARD_PLUGIN_DIR . 'assets/js/vat-guard-block-checkout.js' ),
             true
         );
 
@@ -656,8 +642,12 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
                 'validating' => __('Validating VAT number...', 'eu-vat-guard-for-woocommerce'),
                 'valid' => __('VAT number is valid', 'eu-vat-guard-for-woocommerce'),
                 'exempt' => VAT_Guard_Helper::get_exemption_message(),
-                'invalid' => __('Invalid VAT number', 'eu-vat-guard-for-woocommerce')
-            )
+				'invalid'    => __( 'Invalid VAT number', 'eu-vat-guard-for-woocommerce' ),
+			),
+			'countryMismatchMessages' => array(
+				__( 'The billing country must match the country of the VAT number.', 'eu-vat-guard-for-woocommerce' ),
+				__( 'The shipping country must match the country of the VAT number.', 'eu-vat-guard-for-woocommerce' ),
+			),
         ));
     }
 

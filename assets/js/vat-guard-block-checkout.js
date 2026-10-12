@@ -18,7 +18,67 @@
         const { createElement, useState, useEffect, useRef } = window.wp.element;
         const { select, dispatch } = window.wp.data;
 
-       
+        // A cart response and an already displayed notice have separate lifecycles.
+        const normalizeMessage = (message) => typeof message === 'string' ? message.trim().replace(/\s+/g, ' ') : '';
+        const mismatchMessages = (vatGuardBlock.countryMismatchMessages || []).map(normalizeMessage);
+        const isCountryMismatch = (message) => mismatchMessages.includes(normalizeMessage(message));
+        const isUpdatingCustomer = (cartStore) => cartStore.isCustomerDataUpdating?.() || cartStore.isAddressFieldsForShippingRatesUpdating?.();
+        let lastNoticeValidation = null;
+
+        const syncResolvedVatNotices = () => {
+            const cartStore = select('wc/store/cart');
+            if (!cartStore || isUpdatingCustomer(cartStore)) {
+                return;
+            }
+            const validation = cartStore.getCartData?.()?.extensions?.['eu-vat-guard'];
+            if (!validation || validation === lastNoticeValidation) {
+                return;
+            }
+            lastNoticeValidation = validation;
+            if (validation.vat_validation_valid !== true) {
+                return;
+            }
+
+            // Let WooCommerce finish publishing notices for this response first.
+            setTimeout(() => {
+                const currentCartStore = select('wc/store/cart');
+                const cartData = currentCartStore?.getCartData?.();
+                if (cartData?.extensions?.['eu-vat-guard'] !== validation || isUpdatingCustomer(currentCartStore)) {
+                    return;
+                }
+                const errors = [...(cartData.errors || []), ...(currentCartStore.getCartErrors?.() || [])];
+                if (errors.some((error) => error.code === 'eu_vat_guard_vat_validation')) {
+                    return;
+                }
+
+                const noticesStore = select('core/notices');
+                const noticesActions = dispatch('core/notices');
+                const registeredContexts = select('wc/store/store-notices')?.getRegisteredContainers?.() || [];
+                const contexts = new Set(['default', 'wc/cart', 'wc/checkout', ...registeredContexts]);
+                contexts.forEach((context) => {
+                    (noticesStore?.getNotices(context) || []).forEach((notice) => {
+                        if (notice.status === 'error' && (notice.id === 'eu_vat_guard_vat_validation' || isCountryMismatch(notice.content))) {
+                            noticesActions.removeNotice(notice.id, context);
+                        }
+                    });
+                });
+
+                // Older PHP notices are static markup, outside the Blocks notice store.
+                document.querySelectorAll('.wc-block-store-notices .woocommerce-error li, .woocommerce-notices-wrapper .woocommerce-error li').forEach((notice) => {
+                    if (!isCountryMismatch(notice.textContent)) {
+                        return;
+                    }
+                    const list = notice.parentElement;
+                    notice.remove();
+                    if (list && !list.querySelector('li')) {
+                        list.remove();
+                    }
+                });
+            }, 0);
+        };
+        window.wp.data.subscribe(syncResolvedVatNotices);
+        syncResolvedVatNotices();
+
         // Add VAT exempt notice to checkout summary
         const addVatExemptNotice = () => {
             const cartData = select('wc/store/cart')?.getCartData?.() || {};
