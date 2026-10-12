@@ -32,11 +32,11 @@ class VAT_Guard
         require_once('class-vat-guard-helper.php');
         // Load block integration early if enabled (needs to be before woocommerce_init)
         // Only load on frontend or during AJAX calls (but not in admin dashboard)
-        if (!is_admin() || (wp_doing_ajax() && !VAT_Guard_Helper::is_admin_dashboard_ajax())) {
-            if (get_option('eu_vat_guard_enable_block_checkout', 0)) {
-                add_action('plugins_loaded', array($this, 'init_block_checkout_support'), 50);
-            }
-        }
+		if ( class_exists( 'WooCommerce' ) && ( ! is_admin() || ( wp_doing_ajax() && ! VAT_Guard_Helper::is_admin_dashboard_ajax() ) ) ) {
+			if ( get_option( 'eu_vat_guard_enable_block_checkout', 0 ) ) {
+				add_action( 'plugins_loaded', array( $this, 'init_block_checkout_support' ), 50 );
+			}
+		}
 
         // Hook into WordPress init to set up the plugin after all plugins are loaded
         add_action('init', array($this, 'init'), 10);
@@ -201,17 +201,18 @@ class VAT_Guard
      * Initialize block-based checkout support
      * @return void
      */
-    public function init_block_checkout_support()
-    {
-        // Load and initialize the block integration
-        if (!class_exists('VAT_Guard_Block_Integration')) {
-            require_once plugin_dir_path(__FILE__) . 'class-vat-guard-block-integration.php';
-        }
+	public function init_block_checkout_support() {
+		if ( ! class_exists( 'WooCommerce' ) || ! interface_exists( 'Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface' ) ) {
+			return;
+		}
 
-        // Initialize the block integration with access to main class methods
-        $block_integration = new VAT_Guard_Block_Integration($this);
-        $block_integration->init();
-    }
+		if ( ! class_exists( __NAMESPACE__ . '\VAT_Guard_Block_Integration' ) ) {
+			require_once plugin_dir_path( __FILE__ ) . 'class-vat-guard-block-integration.php';
+		}
+
+		$block_integration = new VAT_Guard_Block_Integration( $this );
+		$block_integration->init();
+	}
 
 
 

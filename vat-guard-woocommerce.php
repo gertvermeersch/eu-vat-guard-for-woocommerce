@@ -9,6 +9,7 @@ License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: eu-vat-guard-for-woocommerce
 Domain Path: /languages
+Requires Plugins: woocommerce
 */
 
 namespace Stormlabs\EUVATGuard;
@@ -48,11 +49,6 @@ define('EU_VAT_GUARD_META_BLOCK_VAT', '_wc_other/eu-vat-guard/vat_number'); // B
 // Include main plugin class
 require_once EU_VAT_GUARD_PLUGIN_DIR . 'includes/class-vat-guard.php';
 
-// Include VAT rate importer (admin only)
-if (is_admin()) {
-    require_once EU_VAT_GUARD_PLUGIN_DIR . 'includes/class-vat-guard-rate-importer.php';
-}
-
 /**
  * Plugin activation hook - Initialize default options
  */
@@ -81,12 +77,22 @@ function eu_vat_guard_activate() {
 }
 register_activation_hook(__FILE__, 'Stormlabs\EUVATGuard\eu_vat_guard_activate');
 
-// Initialize the plugin
-add_action('plugins_loaded', function () {
-    if (class_exists('Stormlabs\EUVATGuard\VAT_Guard')) {
-        VAT_Guard::instance();
-    }
-}, 20); // Load after text domain
+// Initialize WooCommerce-dependent features after all plugins are loaded.
+add_action(
+	'plugins_loaded',
+	static function () {
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			return;
+		}
+
+		if ( is_admin() ) {
+			require_once EU_VAT_GUARD_PLUGIN_DIR . 'includes/class-vat-guard-rate-importer.php';
+		}
+
+		VAT_Guard::instance();
+	},
+	20
+);
 
 // Backward compatibility - create alias for old class name
 if (!class_exists('EU_VAT_Guard')) {
