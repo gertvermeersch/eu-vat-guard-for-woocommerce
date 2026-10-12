@@ -185,20 +185,23 @@ class VAT_Guard_Helper
 		return true;
 	}
 
-       /**
-     * Get VAT number from existing order, checking both block and classic checkout sources
-     * @param \WC_Order $order
-     * @return string VAT number or empty string
-     */
-    public static function get_order_vat_number($order)
-    {
-        $vat = $order->get_meta(EU_VAT_GUARD_META_ORDER_VAT);
-        if (empty($vat)) {
-            $vat = get_post_meta($order->get_id(), EU_VAT_GUARD_META_ORDER_VAT, true);
-        }
+	/**
+	 * Get VAT from the authoritative order datastore, including Blocks-only orders.
+	 *
+	 * WooCommerce handles both HPOS and legacy postmeta through the order object.
+	 * Reading postmeta separately can restore a stale VAT number after HPOS clears it.
+	 *
+	 * @param \WC_Order $order Order to read.
+	 * @return string VAT number or an empty string.
+	 */
+	public static function get_order_vat_number( $order ) {
+		$vat = $order->get_meta( EU_VAT_GUARD_META_ORDER_VAT );
+		if ( empty( $vat ) ) {
+			$vat = $order->get_meta( EU_VAT_GUARD_META_BLOCK_VAT );
+		}
 
-        return $vat;
-    }
+		return is_string( $vat ) ? $vat : '';
+	}
 
      /**
      * Get custom company label or default (WPML compatible)

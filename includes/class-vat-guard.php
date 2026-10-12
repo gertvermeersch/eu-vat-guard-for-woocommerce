@@ -19,6 +19,13 @@ class VAT_Guard
 
     private static $instance = null;
 
+	/**
+	 * Validation result for the current classic checkout submission.
+	 *
+	 * @var array|null
+	 */
+	private $classic_checkout_vat_validation = null;
+
     public static function instance()
     {
         if (self::$instance === null) {
@@ -160,6 +167,7 @@ class VAT_Guard
 
             // Validation hooks
             add_action('woocommerce_checkout_update_order_review', array($this, 'ajax_validate_and_exempt_vat'), 999);
+			add_filter( 'woocommerce_checkout_posted_data', array( $this, 'prepare_checkout_vat_exemption' ), 999 );
             add_action('woocommerce_after_checkout_validation', array($this, 'on_checkout_vat_field'), 999, 2);
 
             // VAT exempt notice
@@ -301,12 +309,15 @@ class VAT_Guard
      */
     public function save_checkout_vat_field($order_id)
     {
-        // Try to get VAT number from POST data
-        $vat_number = '';
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce handles nonce verification for checkout process
-        if (isset($_POST[EU_VAT_GUARD_META_ORDER_VAT])) {
-            $vat_number = sanitize_text_field(wp_unslash($_POST[EU_VAT_GUARD_META_ORDER_VAT]));
-        }
+		// Save the VAT input that determined exemption for this submission.
+		$vat_number = '';
+		if ( null !== $this->classic_checkout_vat_validation ) {
+			$vat_number = $this->classic_checkout_vat_validation['input']['vat'];
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce verifies checkout submissions before this hook.
+		} elseif ( isset( $_POST[ EU_VAT_GUARD_META_ORDER_VAT ] ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce verifies checkout submissions before this hook.
+			$vat_number = sanitize_text_field( wp_unslash( $_POST[ EU_VAT_GUARD_META_ORDER_VAT ] ) );
+		}
 
         if (!empty($vat_number)) {
 
@@ -390,50 +401,96 @@ class VAT_Guard
 
 
 
-    /**
-     * Validate VAT number during checkout and set VAT exemption status.
-     * This runs after the default WooCommerce validation.
-     * Uses the centralized validation function for consistency.
-     */
-    public function on_checkout_vat_field($data, $errors)
-    {
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce handles nonce verification for checkout process
-        $vat = isset($_POST[EU_VAT_GUARD_META_ORDER_VAT]) ? sanitize_text_field(wp_unslash($_POST[EU_VAT_GUARD_META_ORDER_VAT])) : '';
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce handles nonce verification for checkout process
-        $ship_to_different_address = isset($_POST['ship_to_different_address']) && sanitize_text_field(wp_unslash($_POST['ship_to_different_address'])) === '1';
+	/**
+	 * Extract VAT inputs from WooCommerce's normalized checkout data.
+	 *
+	 * Merge shipping choices exactly as WooCommerce does when updating the session.
+	 *
+	 * @param array $data Processed checkout data.
+	 * @return array
+	 */
+	private function get_classic_checkout_vat_input( $data ) {
+		$shipping_methods = WC()->session ? (array) WC()->session->get( 'chosen_shipping_methods', array() ) : array();
+		if ( isset( $data['shipping_method'] ) && is_array( $data['shipping_method'] ) ) {
+			foreach ( $data['shipping_method'] as $package_id => $method ) {
+				if ( is_string( $method ) ) {
+					$shipping_methods[ $package_id ] = sanitize_text_field( $method );
+				}
+			}
+		}
+		$shipping_methods = array_values( array_filter( $shipping_methods, 'is_string' ) );
+		sort( $shipping_methods );
 
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce handles nonce verification for checkout process
-        $shipping_country = $ship_to_different_address && isset($_POST['shipping_country']) ?
-            sanitize_text_field(wp_unslash($_POST['shipping_country'])) : '';
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce handles nonce verification for checkout process
-        $billing_country = isset($_POST['billing_country']) ? sanitize_text_field(wp_unslash($_POST['billing_country'])) : '';
+		return array(
+			'vat'              => isset( $data[ EU_VAT_GUARD_META_ORDER_VAT ] ) && is_string( $data[ EU_VAT_GUARD_META_ORDER_VAT ] ) ? sanitize_text_field( $data[ EU_VAT_GUARD_META_ORDER_VAT ] ) : '',
+			'billing_country'  => isset( $data['billing_country'] ) && is_string( $data['billing_country'] ) ? sanitize_text_field( $data['billing_country'] ) : '',
+			'shipping_country' => isset( $data['shipping_country'] ) && is_string( $data['shipping_country'] ) ? sanitize_text_field( $data['shipping_country'] ) : '',
+			'shipping_methods' => $shipping_methods,
+		);
+	}
 
-        // Use the centralized validation function
-        $error_messages = [];
-        $this->validate_and_set_vat_exemption(
-            $vat,
-            $billing_country,
-            $shipping_country,
-            $error_messages
-        );
+	/**
+	 * Set exemption before WooCommerce updates the customer and calculates totals.
+	 *
+	 * @param array $data Processed checkout data.
+	 * @return array Unchanged checkout data.
+	 */
+	public function prepare_checkout_vat_exemption( $data ) {
+		$input = $this->get_classic_checkout_vat_input( $data );
+		if ( null !== $this->classic_checkout_vat_validation && $input === $this->classic_checkout_vat_validation['input'] ) {
+			$this->set_customer_vat_exempt_status( $this->classic_checkout_vat_validation['is_exempt'] );
+			return $data;
+		}
 
-        // Add any error messages to the WooCommerce errors object
-        foreach ($error_messages as $error_message) {
-            $errors->add('vat_number_error', $error_message);
-        }
-    }
-    /**
-     * Comprehensive VAT exemption validation and status setting
-     * This is the centralized function that handles all VAT validation and exemption logic
-     * 
-     * @param string $vat VAT number to validate
-     * @param string $billing_country Billing country code (2 letters)
-     * @param string $shipping_country Shipping country code (2 letters)
-     * @param array &$error_messages Array to collect error messages
-     * @return bool True if VAT exempt, false otherwise
-     */
-    public function validate_and_set_vat_exemption($vat, $billing_country = '', $shipping_country = '', &$error_messages = [])
-    {
+		$error_messages = array();
+		$is_exempt      = $this->validate_and_set_vat_exemption(
+			$input['vat'],
+			$input['billing_country'],
+			$input['shipping_country'],
+			$error_messages,
+			$input['shipping_methods']
+		);
+
+		$this->classic_checkout_vat_validation = array(
+			'input'     => $input,
+			'is_exempt' => $is_exempt,
+			'errors'    => $error_messages,
+		);
+
+		return $data;
+	}
+
+	/**
+	 * Report cached VAT errors after WooCommerce's checkout validation.
+	 *
+	 * @param array     $data   Processed checkout data.
+	 * @param \WP_Error $errors Checkout validation errors.
+	 */
+	public function on_checkout_vat_field( $data, $errors ) {
+		$input = $this->get_classic_checkout_vat_input( $data );
+		if ( null === $this->classic_checkout_vat_validation || $input !== $this->classic_checkout_vat_validation['input'] ) {
+			// Support late data changes or callers that skipped the processed-data hook.
+			$this->prepare_checkout_vat_exemption( $data );
+			if ( WC()->cart ) {
+				WC()->cart->calculate_totals();
+			}
+		}
+
+		foreach ( $this->classic_checkout_vat_validation['errors'] as $error_message ) {
+			$errors->add( 'vat_number_error', $error_message );
+		}
+	}
+	/**
+	 * Validate VAT and set customer exemption using the supplied checkout context.
+	 *
+	 * @param string     $vat              VAT number to validate.
+	 * @param string     $billing_country  Billing country code.
+	 * @param string     $shipping_country Shipping country code.
+	 * @param array      $error_messages   Validation error messages, passed by reference.
+	 * @param array|null $shipping_methods Explicit shipping choices, or null to use the request/session.
+	 * @return bool True if VAT exempt, false otherwise.
+	 */
+	public function validate_and_set_vat_exemption( $vat, $billing_country = '', $shipping_country = '', &$error_messages = array(), $shipping_methods = null ) {
         $require_vat = get_option('eu_vat_guard_require_vat', 1);
 
         // Initialize error messages array if not provided
@@ -496,7 +553,12 @@ class VAT_Guard
         }
 
         // Step 5: Check shipping method - no exemption for local pickup
-        $chosen_methods = $this->get_current_shipping_methods();
+		$chosen_methods = null === $shipping_methods ? $this->get_current_shipping_methods() : $shipping_methods;
+		if ( null !== $shipping_methods ) {
+			foreach ( $shipping_methods as $method ) {
+				$chosen_methods[] = explode( ':', $method, 2 )[0];
+			}
+		}
         $local_pickup_methods = apply_filters('woocommerce_local_pickup_methods', ['local_pickup']);
 
         if (count(array_intersect($chosen_methods, $local_pickup_methods)) > 0) {
