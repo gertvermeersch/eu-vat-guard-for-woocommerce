@@ -322,19 +322,17 @@ class VAT_Guard
         if (!empty($vat_number)) {
 
 
-            // Use both post meta and order meta for compatibility
-            update_post_meta($order_id, EU_VAT_GUARD_META_ORDER_VAT, $vat_number);
-
-            // Also try to update using WC_Order object if available
-            $order = wc_get_order($order_id);
-            if ($order) {
-                $order->update_meta_data(EU_VAT_GUARD_META_ORDER_VAT, $vat_number);
-                $order->save_meta_data();
-            }
+			// WooCommerce selects the authoritative HPOS or legacy order datastore.
+			$order = wc_get_order( $order_id );
+			if ( ! $order ) {
+				return;
+			}
+			$order->update_meta_data( EU_VAT_GUARD_META_ORDER_VAT, $vat_number );
+			$order->save_meta_data();
 
             // Save VAT exemption status as order meta using WC()->customer->get_is_vat_exempt()
             $is_exempt = (WC()->customer && WC()->customer->get_is_vat_exempt());
-            update_post_meta($order_id, 'billing_is_vat_exempt', $is_exempt ? 'yes' : 'no');
+			$order->update_meta_data( 'billing_is_vat_exempt', $is_exempt ? 'yes' : 'no' );
 
             if ($order) {
                 $order->update_meta_data(EU_VAT_GUARD_META_ORDER_EXEMPT, $is_exempt ? 'yes' : 'no');

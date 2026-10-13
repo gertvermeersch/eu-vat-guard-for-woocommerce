@@ -83,6 +83,11 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 
 == Changelog ==
 
+= 1.5.1 =
+* **Fixed** - Missing PHP SOAP support no longer causes a fatal error; VIES failures are logged without printing into checkout or API responses
+* **Fixed** - VAT format validation accepts short Romanian numbers and rejects eleven-digit Belgian numbers while retaining nine-digit Belgian input support
+* **Fixed** - Order VAT and exemption metadata use WooCommerce's order API; PDF helpers no longer restore stale exemption status from legacy postmeta
+
 = 1.5.0 =
 * **Updated** - EU VAT rate snapshot verified on 12 October 2026, with corrected rates for Czechia, Estonia, Finland, Lithuania, Romania and Slovakia and additional national special rates
 * **Fixed** - Classic and Block Checkout apply VAT exemption before totals are calculated, including country and shipping-method changes

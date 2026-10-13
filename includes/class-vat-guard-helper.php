@@ -78,14 +78,14 @@ class VAT_Guard_Helper
             'SK'
         ];
         $country = substr($vat, 0, 2);
-        if (!in_array($country, $eu_countries) || strlen($vat) < 8 || strlen($vat) > 14) {
-            $error_message = __('Please enter a valid EU VAT number.', 'eu-vat-guard-for-woocommerce');
-            return false;
-        }
+		if ( ! in_array( $country, $eu_countries, true ) ) {
+			$error_message = __( 'Please enter a valid EU VAT number.', 'eu-vat-guard-for-woocommerce' );
+			return false;
+		}
         // VAT number regex patterns for all EU countries
         $patterns = [
             'AT' => '/^ATU\d{8}$/',                  // Austria
-            'BE' => '/^BE0?\d{9,10}$/',              // Belgium - 9 or 10 digits, optional leading 0
+			'BE' => '/^BE\d{9,10}$/',                  // Belgium - 9 legacy or 10 digits.
             'BG' => '/^BG\d{9,10}$/',                // Bulgaria - 9 or 10 digits
             'CY' => '/^CY\d{8}[A-Z]$/',              // Cyprus - 8 digits + 1 letter
             'CZ' => '/^CZ\d{8,10}$/',                // Czech Republic - 8, 9, or 10 digits

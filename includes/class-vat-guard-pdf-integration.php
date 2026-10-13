@@ -135,9 +135,6 @@ class VAT_Guard_PDF_Integration
         }
 
         $is_exempt = $order->get_meta(EU_VAT_GUARD_META_ORDER_EXEMPT);
-        if (empty($is_exempt)) {
-            $is_exempt = get_post_meta($order->get_id(), EU_VAT_GUARD_META_ORDER_EXEMPT, true);
-        }
 
         if ($is_exempt === 'yes') {
             echo '<tr class="vat-exempt-status">';
@@ -158,10 +155,6 @@ class VAT_Guard_PDF_Integration
         $vat_guard = VAT_Guard::instance();
         $vat_number = VAT_Guard_Helper::get_order_vat_number($order);
         $is_exempt = $order->get_meta(EU_VAT_GUARD_META_ORDER_EXEMPT);
-
-        if (empty($is_exempt)) {
-            $is_exempt = get_post_meta($order->get_id(), EU_VAT_GUARD_META_ORDER_EXEMPT, true);
-        }
 
         return [
             'vat_number' => $vat_number,
@@ -270,9 +263,6 @@ class VAT_Guard_PDF_Integration
 
             // Add VAT exempt status if applicable
             $is_exempt = $order->get_meta(EU_VAT_GUARD_META_ORDER_EXEMPT);
-            if (empty($is_exempt)) {
-                $is_exempt = get_post_meta($order->get_id(), EU_VAT_GUARD_META_ORDER_EXEMPT, true);
-            }
             if ($is_exempt === 'yes') {
                 $address['vat_status'] = __('VAT exempt', 'eu-vat-guard-for-woocommerce');
             }

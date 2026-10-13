@@ -117,6 +117,12 @@ This plugin uses:
 
 ## Changelog
 
+### Version 1.5.1 — Unreleased
+
+- **Fixed**: Missing PHP SOAP support no longer causes a fatal error; VIES failures are logged without printing into checkout or API responses
+- **Fixed**: VAT format validation accepts short Romanian numbers and rejects eleven-digit Belgian numbers while retaining nine-digit Belgian input support
+- **Fixed**: Order VAT and exemption metadata use WooCommerce's order API; PDF helpers no longer restore stale exemption status from legacy postmeta
+
 ### Version 1.5.0 — 12 October 2026
 - **Updated**: EU VAT rate snapshot verified against official sources, with corrected Czech, Estonian, Finnish, Lithuanian, Romanian and Slovak rates and additional national special tiers
 - **Fixed**: Classic and Block Checkout determine exemption before calculating totals, including address, shipping and final submission changes
