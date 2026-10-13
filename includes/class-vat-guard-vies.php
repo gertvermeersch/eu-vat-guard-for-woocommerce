@@ -8,7 +8,7 @@
 namespace Stormlabs\EUVATGuard;
 
 use SoapClient;
-use Exception;
+use Throwable;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -24,6 +24,10 @@ class VAT_Guard_VIES
      */
     public static function check_vat($country, $vat)
     {
+		if ( ! class_exists( 'SoapClient' ) ) {
+			return null;
+		}
+
         $wsdl = 'https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl';
         try {
             $client = @new SoapClient($wsdl, ['exceptions' => true, 'cache_wsdl' => WSDL_CACHE_NONE]);
@@ -32,11 +36,12 @@ class VAT_Guard_VIES
                 'vatNumber' => $vat
             ]);
             return $result->valid ? true : false;
-        } catch (Exception $e) {
-            if (ini_get('display_errors')) {
-                // Show the actual error if display_errors is enabled
-                echo '<div style="color:red;font-size:small;">VIES error: ' . esc_html($e->getMessage()) . '</div>';
-            }
+        } catch ( Throwable $e ) {
+			wc_get_logger()->error(
+				$e->getMessage(),
+				array( 'source' => 'eu-vat-guard-vies' )
+			);
+
             return null; // VIES unavailable or error
         }
     }

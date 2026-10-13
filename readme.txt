@@ -316,7 +316,7 @@ This plugin optionally uses the European Commission's VIES (VAT Information Exch
 * WooCommerce 4.0 or higher
 * PHP 8.2 or higher
 * WooCommerce 8.9 or higher for the Block Checkout VAT field
-* SOAP extension (for VIES validation)
+* PHP SOAP extension (ext-soap), required only when VIES validation is enabled
 
 == Support ==
 

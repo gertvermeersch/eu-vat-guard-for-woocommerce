@@ -65,6 +65,10 @@ msgstr ""
 msgid "VAT number removed via admin."
 msgstr ""
 
+#: includes/class-vat-guard-admin.php:194
+msgid "EU VAT Guard: VIES validation requires the PHP SOAP extension, which is not enabled on this server. Ask your hosting provider to enable it for the PHP version running WordPress, or disable VIES validation in EU VAT Guard settings to use offline VAT format checks."
+msgstr ""
+
 #: includes/class-vat-guard-admin.php:299
 #: includes/class-vat-guard-admin.php:300
 msgid "EU VAT Guard"

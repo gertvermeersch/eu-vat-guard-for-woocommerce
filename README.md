@@ -72,7 +72,7 @@
 - WooCommerce 4.0+
 - WooCommerce 8.9+ for the Block Checkout VAT field
 - PHP 8.2+
-- SOAP extension (for VIES validation)
+- PHP SOAP extension (`ext-soap`), required only when VIES validation is enabled
 
 Release checks run on WordPress 7.1.3, WooCommerce 10.9.4 and PHP 8.4.25. Older minimum versions are not covered by this release's test run.
 

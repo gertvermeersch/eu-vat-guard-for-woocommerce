@@ -38,6 +38,7 @@ class VAT_Guard_Admin
 
             // Display admin notices for VAT validation errors
             add_action('admin_notices', array($this, 'display_vat_validation_notices'));
+			add_action( 'admin_notices', array( $this, 'display_soap_extension_notice' ) );
         } else if(is_admin() && wp_doing_ajax()) {
               // Initialize PDF integration
             $this->init_pdf_integration();
@@ -179,6 +180,20 @@ class VAT_Guard_Admin
             delete_transient('eu_vat_guard_admin_error_' . get_current_user_id());
         }
     }
+
+	/**
+	 * Explain the PHP dependency when enabled VIES validation cannot run.
+	 */
+	public function display_soap_extension_notice()
+	{
+		if ( ! current_user_can( 'manage_options' ) || ! get_option( 'eu_vat_guard_require_vies', 0 ) || class_exists( 'SoapClient' ) ) {
+			return;
+		}
+
+		echo '<div class="notice notice-warning"><p>';
+		esc_html_e( 'EU VAT Guard: VIES validation requires the PHP SOAP extension, which is not enabled on this server. Ask your hosting provider to enable it for the PHP version running WordPress, or disable VIES validation in EU VAT Guard settings to use offline VAT format checks.', 'eu-vat-guard-for-woocommerce' );
+		echo '</p></div>';
+	}
 
     public function register_settings()
     {
