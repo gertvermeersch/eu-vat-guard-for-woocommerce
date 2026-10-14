@@ -125,6 +125,7 @@ class VAT_Guard
        
         // Checkout hooks - only load when actually needed
         add_action('wp', array($this, 'maybe_setup_checkout_hooks'));
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_checkout_scripts' ) );
 
         // Critical: Override B2B plugin's VAT exemption filter with higher priority
         add_filter('woocommerce_order_is_vat_exempt', array($this, 'override_order_vat_exempt_status'), 999, 2);
@@ -178,18 +179,28 @@ class VAT_Guard
     /**
      * Enqueue checkout scripts only when needed
      */
-    public function enqueue_checkout_scripts()
-    {
-        if (is_checkout()) {
-            wp_enqueue_script(
-                'vat-guard-checkout',
-                plugin_dir_url(dirname(__FILE__)) . '/assets/js/vat-guard-checkout.js',
-                array('jquery'),
-                '1.0',
-                true
-            );
-        }
-    }
+	public function enqueue_checkout_scripts() {
+		if ( has_block( 'woocommerce/checkout' ) ) {
+			return;
+		}
+		if ( is_checkout() && ! is_order_received_page() && get_option( 'eu_vat_guard_hide_vat_without_company', '0' ) ) {
+			wp_enqueue_script(
+				'vat-guard-checkout',
+				EU_VAT_GUARD_PLUGIN_URL . 'assets/js/vat-guard-checkout.js',
+				array( 'jquery', 'wc-checkout' ),
+				EU_VAT_GUARD_VERSION . '-' . filemtime( EU_VAT_GUARD_PLUGIN_DIR . 'assets/js/vat-guard-checkout.js' ),
+				true
+			);
+			wp_localize_script(
+				'vat-guard-checkout',
+				'euVatGuardCheckout',
+				array(
+					'vatField' => EU_VAT_GUARD_META_ORDER_VAT,
+					'required' => __( 'required', 'eu-vat-guard-for-woocommerce' ),
+				)
+			);
+		}
+	}
 
 
 
@@ -273,33 +284,34 @@ class VAT_Guard
      * @param array $fields Current checkout fields
      * @return array Modified checkout fields
      */
-    public function add_checkout_vat_field($fields)
-    {
+	public function add_checkout_vat_field( $fields ) {
+		$require_vat     = get_option( 'eu_vat_guard_require_vat', 1 );
+		$require_company = get_option( 'eu_vat_guard_require_company', 1 );
+		$conditional_vat = get_option( 'eu_vat_guard_hide_vat_without_company', '0' );
 
-        $require_vat = get_option('eu_vat_guard_require_vat', 1);
-        $require_company = get_option('eu_vat_guard_require_company', 1);
+		$fields['billing']['billing_company'] = array(
+			'type'        => 'text',
+			'label'       => VAT_Guard_Helper::get_company_label(),
+			'placeholder' => VAT_Guard_Helper::get_company_placeholder(),
+			'required'    => (bool) $require_company,
+			'class'       => $conditional_vat ? array( 'form-row-wide', 'update_totals_on_change' ) : array( 'form-row-wide' ),
+			'priority'    => 25,
+			'default'     => '',
+		);
 
-        $fields['billing']['billing_company'] = array(
-            'type' => 'text',
-            'label' => VAT_Guard_Helper::get_company_label(),
-            'placeholder' => VAT_Guard_Helper::get_company_label(),
-            'required' => (bool) $require_company,
-            'class' => array('form-row-wide'),
-            'priority' => 25,
-            'default' => '',
-        );
-
-        $fields['billing'][EU_VAT_GUARD_META_ORDER_VAT] = array(
-            'type' => 'text',
-            'label' => VAT_Guard_Helper::get_vat_label(),
-            'placeholder' => VAT_Guard_Helper::get_vat_label(),
-            'required' => (bool) $require_vat,
-            'class' => array('form-row-wide', 'update_totals_on_change'),
-            'priority' => 26,
-            'default' => '',
-        );
-        return $fields;
-    }
+		$fields['billing'][ EU_VAT_GUARD_META_ORDER_VAT ] = array(
+			'type'              => 'text',
+			'label'             => VAT_Guard_Helper::get_vat_label(),
+			'placeholder'       => VAT_Guard_Helper::get_vat_placeholder(),
+			// Conditional requirements are checked against submitted company data below.
+			'required'          => (bool) $require_vat && ! $conditional_vat,
+			'custom_attributes' => array( 'data-vat-guard-required' => $require_vat ? '1' : '0' ),
+			'class'             => array( 'form-row-wide', 'update_totals_on_change' ),
+			'priority'          => 26,
+			'default'           => '',
+		);
+		return $fields;
+	}
 
 
     /**
@@ -408,6 +420,8 @@ class VAT_Guard
 	 * @return array
 	 */
 	private function get_classic_checkout_vat_input( $data ) {
+		$company          = isset( $data['billing_company'] ) && is_string( $data['billing_company'] ) ? trim( sanitize_text_field( $data['billing_company'] ) ) : '';
+		$vat_hidden       = get_option( 'eu_vat_guard_hide_vat_without_company', '0' ) && '' === $company;
 		$shipping_methods = WC()->session ? (array) WC()->session->get( 'chosen_shipping_methods', array() ) : array();
 		if ( isset( $data['shipping_method'] ) && is_array( $data['shipping_method'] ) ) {
 			foreach ( $data['shipping_method'] as $package_id => $method ) {
@@ -420,10 +434,40 @@ class VAT_Guard
 		sort( $shipping_methods );
 
 		return array(
-			'vat'              => isset( $data[ EU_VAT_GUARD_META_ORDER_VAT ] ) && is_string( $data[ EU_VAT_GUARD_META_ORDER_VAT ] ) ? sanitize_text_field( $data[ EU_VAT_GUARD_META_ORDER_VAT ] ) : '',
+			'vat'              => ! $vat_hidden && isset( $data[ EU_VAT_GUARD_META_ORDER_VAT ] ) && is_string( $data[ EU_VAT_GUARD_META_ORDER_VAT ] ) ? sanitize_text_field( $data[ EU_VAT_GUARD_META_ORDER_VAT ] ) : '',
+			'vat_hidden'       => (bool) $vat_hidden,
 			'billing_country'  => isset( $data['billing_country'] ) && is_string( $data['billing_country'] ) ? sanitize_text_field( $data['billing_country'] ) : '',
 			'shipping_country' => isset( $data['shipping_country'] ) && is_string( $data['shipping_country'] ) ? sanitize_text_field( $data['shipping_country'] ) : '',
 			'shipping_methods' => $shipping_methods,
+		);
+	}
+
+	/**
+	 * Validate classic checkout's conditional VAT requirement and exemption.
+	 *
+	 * @param array $input          Normalized checkout input.
+	 * @param array $error_messages Validation errors, passed by reference.
+	 * @return bool Whether VAT exemption applies.
+	 */
+	private function validate_classic_checkout_vat_input( $input, &$error_messages ) {
+		if ( $input['vat_hidden'] ) {
+			$this->set_customer_vat_exempt_status( false );
+			return false;
+		}
+
+		// WooCommerce's unconditional required check is disabled in conditional mode.
+		if ( get_option( 'eu_vat_guard_hide_vat_without_company', '0' ) && get_option( 'eu_vat_guard_require_vat', 1 ) && '' === trim( $input['vat'] ) ) {
+			$error_messages[] = __( 'Please enter your VAT number.', 'eu-vat-guard-for-woocommerce' );
+			$this->set_customer_vat_exempt_status( false );
+			return false;
+		}
+
+		return $this->validate_and_set_vat_exemption(
+			$input['vat'],
+			$input['billing_country'],
+			$input['shipping_country'],
+			$error_messages,
+			$input['shipping_methods']
 		);
 	}
 
@@ -435,19 +479,19 @@ class VAT_Guard
 	 */
 	public function prepare_checkout_vat_exemption( $data ) {
 		$input = $this->get_classic_checkout_vat_input( $data );
+		if ( $input['vat_hidden'] ) {
+			$data[ EU_VAT_GUARD_META_ORDER_VAT ] = '';
+			if ( WC()->session ) {
+				WC()->session->set( EU_VAT_GUARD_META_ORDER_VAT, '' );
+			}
+		}
 		if ( null !== $this->classic_checkout_vat_validation && $input === $this->classic_checkout_vat_validation['input'] ) {
 			$this->set_customer_vat_exempt_status( $this->classic_checkout_vat_validation['is_exempt'] );
 			return $data;
 		}
 
 		$error_messages = array();
-		$is_exempt      = $this->validate_and_set_vat_exemption(
-			$input['vat'],
-			$input['billing_country'],
-			$input['shipping_country'],
-			$error_messages,
-			$input['shipping_methods']
-		);
+		$is_exempt      = $this->validate_classic_checkout_vat_input( $input, $error_messages );
 
 		$this->classic_checkout_vat_validation = array(
 			'input'     => $input,
@@ -634,23 +678,14 @@ class VAT_Guard
     {
         parse_str($post_data, $data);
 
-        $vat = isset($data[EU_VAT_GUARD_META_ORDER_VAT]) ? trim($data[EU_VAT_GUARD_META_ORDER_VAT]) : '';
-        $ship_to_different_address = isset($data['ship_to_different_address']) && $data['ship_to_different_address'] === '1';
-
-        // Get shipping country from the data
-        // If shipping address is different, use that, otherwise use billing country
-        $shipping_country = $ship_to_different_address && isset($data['shipping_country']) ?
-            trim($data['shipping_country']) : '';
-        $billing_country = isset($data['billing_country']) ? trim($data['billing_country']) : '';
+		if ( ! isset( $data['ship_to_different_address'] ) || '1' !== $data['ship_to_different_address'] ) {
+			$data['shipping_country'] = '';
+		}
+		$input = $this->get_classic_checkout_vat_input( $data );
 
         // Use the centralized validation function
         $error_messages = [];
-        $this->validate_and_set_vat_exemption(
-            $vat,
-            $billing_country,
-            $shipping_country,
-            $error_messages
-        );
+		$this->validate_classic_checkout_vat_input( $input, $error_messages );
 
         // Display any error messages
         foreach ($error_messages as $error_message) {
@@ -658,9 +693,9 @@ class VAT_Guard
         }
 
         // Store VAT number in customer session for later retrieval
-        if (!empty($vat) && WC()->customer) {
-            WC()->session->set(EU_VAT_GUARD_META_ORDER_VAT, $vat);
-        }
+		if ( WC()->session ) {
+			WC()->session->set( EU_VAT_GUARD_META_ORDER_VAT, $input['vat'] );
+		}
     }
 
 

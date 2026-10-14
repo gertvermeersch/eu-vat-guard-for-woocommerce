@@ -241,7 +241,42 @@ class VAT_Guard_Admin
             }
         ]);
 
+		register_setting(
+			'eu_vat_guard_basic_options',
+			'eu_vat_guard_hide_vat_without_company',
+			array(
+				'type'              => 'string',
+				'default'           => '0',
+				'sanitize_callback' => static function ( $value ) {
+					return $value ? '1' : '0';
+				},
+			)
+		);
+
         // Advanced settings group
+		register_setting(
+			'eu_vat_guard_advanced_options',
+			'eu_vat_guard_hide_checkout_placeholders',
+			array(
+				'type'              => 'string',
+				'default'           => '0',
+				'sanitize_callback' => static function ( $value ) {
+					return $value ? '1' : '0';
+				},
+			)
+		);
+		foreach ( array( 'eu_vat_guard_company_placeholder', 'eu_vat_guard_vat_placeholder' ) as $option_name ) {
+			register_setting(
+				'eu_vat_guard_advanced_options',
+				$option_name,
+				array(
+					'type'              => 'string',
+					'default'           => '',
+					'sanitize_callback' => 'sanitize_text_field',
+				)
+			);
+			add_action( 'update_option_' . $option_name, array( $this, 'register_wpml_string' ), 10, 3 );
+		}
         register_setting('eu_vat_guard_advanced_options', 'eu_vat_guard_disable_exemption', [
             'type' => 'string',
             'default' => '0',
@@ -299,6 +334,8 @@ class VAT_Guard_Admin
         $string_names = [
             'eu_vat_guard_company_label' => 'Company Label',
             'eu_vat_guard_vat_label' => 'VAT Label',
+			'eu_vat_guard_company_placeholder' => 'Company Placeholder',
+			'eu_vat_guard_vat_placeholder'     => 'VAT Placeholder',
             'eu_vat_guard_exemption_message' => 'Exemption Message'
         ];
 
@@ -459,6 +496,15 @@ class VAT_Guard_Admin
                     </td>
                 </tr>
                 <tr>
+					<th scope="row"><?php esc_html_e( 'Conditional VAT Field', 'eu-vat-guard-for-woocommerce' ); ?></th>
+					<td>
+						<input type="hidden" name="eu_vat_guard_hide_vat_without_company" value="0" />
+						<input type="checkbox" id="eu_vat_guard_hide_vat_without_company" name="eu_vat_guard_hide_vat_without_company" value="1" <?php checked( '1', get_option( 'eu_vat_guard_hide_vat_without_company', '0' ) ); ?> />
+						<label for="eu_vat_guard_hide_vat_without_company"><?php esc_html_e( 'Hide VAT number until a company name is entered', 'eu-vat-guard-for-woocommerce' ); ?></label>
+						<p class="description"><?php esc_html_e( 'Classic checkout only. Without a company name, VAT is not required and VAT exemption is removed. To allow private customers to check out, also disable Require Company Name. If Require VAT Number is enabled, VAT remains required for customers who enter a company name.', 'eu-vat-guard-for-woocommerce' ); ?></p>
+					</td>
+				</tr>
+				<tr>
                     <th scope="row"><?php esc_html_e('Validate VAT Number with VIES', 'eu-vat-guard-for-woocommerce'); ?></th>
                     <td>
                         <input type="checkbox" name="eu_vat_guard_require_vies" value="1" <?php checked(1, get_option('eu_vat_guard_require_vies', 0)); ?> />
@@ -534,7 +580,7 @@ class VAT_Guard_Admin
                 </tr>
             </table>
 
-            <?php VAT_Guard_Admin_UI::section_header(__('Custom Labels & Messages', 'eu-vat-guard-for-woocommerce')); ?>
+			<?php VAT_Guard_Admin_UI::section_header( __( 'Custom Labels, Placeholders & Messages', 'eu-vat-guard-for-woocommerce' ) ); ?>
             <p><?php esc_html_e('These labels and messages will be displayed on the checkout page. Can be translated (e.g. WPML String Translations)', 'eu-vat-guard-for-woocommerce'); ?>
             </p>
             <table class="form-table" role="presentation">
@@ -575,7 +621,32 @@ class VAT_Guard_Admin
                 <tr>
                     <th scope="row">
                         <label
-                            for="eu_vat_guard_exemption_message"><?php esc_html_e('VAT Exemption Message', 'eu-vat-guard-for-woocommerce'); ?></label>
+							for="eu_vat_guard_company_placeholder"><?php esc_html_e( 'Company Name Placeholder', 'eu-vat-guard-for-woocommerce' ); ?></label>
+					</th>
+					<td>
+						<input type="text" id="eu_vat_guard_company_placeholder" name="eu_vat_guard_company_placeholder" value="<?php echo esc_attr( get_option( 'eu_vat_guard_company_placeholder', '' ) ); ?>" class="regular-text" />
+						<p class="description"><?php esc_html_e( 'Classic checkout only. Leave empty to use the company label. Custom placeholder text can be translated with WPML.', 'eu-vat-guard-for-woocommerce' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="eu_vat_guard_vat_placeholder"><?php esc_html_e( 'VAT Number Placeholder', 'eu-vat-guard-for-woocommerce' ); ?></label></th>
+					<td>
+						<input type="text" id="eu_vat_guard_vat_placeholder" name="eu_vat_guard_vat_placeholder" value="<?php echo esc_attr( get_option( 'eu_vat_guard_vat_placeholder', '' ) ); ?>" class="regular-text" />
+						<p class="description"><?php esc_html_e( 'Classic checkout only. Leave empty to use the VAT label. Custom placeholder text can be translated with WPML.', 'eu-vat-guard-for-woocommerce' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><?php esc_html_e( 'Hide Checkout Placeholders', 'eu-vat-guard-for-woocommerce' ); ?></th>
+					<td>
+						<input type="hidden" name="eu_vat_guard_hide_checkout_placeholders" value="0" />
+						<input type="checkbox" id="eu_vat_guard_hide_checkout_placeholders" name="eu_vat_guard_hide_checkout_placeholders" value="1" <?php checked( '1', get_option( 'eu_vat_guard_hide_checkout_placeholders', '0' ) ); ?> />
+						<label for="eu_vat_guard_hide_checkout_placeholders"><?php esc_html_e( 'Remove placeholder text from the company and VAT fields', 'eu-vat-guard-for-woocommerce' ); ?></label>
+						<p class="description"><?php esc_html_e( 'Classic checkout only. Labels remain visible. This takes priority over custom placeholder text.', 'eu-vat-guard-for-woocommerce' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label for="eu_vat_guard_exemption_message"><?php esc_html_e( 'VAT Exemption Message', 'eu-vat-guard-for-woocommerce' ); ?></label>
                     </th>
                     <td>
                         <input type="text" id="eu_vat_guard_exemption_message" name="eu_vat_guard_exemption_message"

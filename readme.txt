@@ -5,7 +5,7 @@ Requires: woocommerce
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,8 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 == Changelog ==
 
 = 1.5.1 =
+* **Added** - Optional company-based VAT field visibility in classic checkout, with matching required-field validation and exemption removal when company is empty
+* **Added** - Custom company/VAT placeholders with WPML support and an option to remove both placeholders in classic checkout
 * **Fixed** - Missing PHP SOAP support no longer causes a fatal error; VIES failures are logged without printing into checkout or API responses
 * **Fixed** - VAT format validation accepts short Romanian numbers and rejects eleven-digit Belgian numbers while retaining nine-digit Belgian input support
 * **Fixed** - Order VAT and exemption metadata use WooCommerce's order API; PDF helpers no longer restore stale exemption status from legacy postmeta
@@ -237,6 +239,9 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 * Admin settings interface
 
 == Upgrade Notice ==
+
+= 1.5.1 =
+Adds optional company-based VAT field visibility and custom placeholders in classic checkout. Fixes VIES error handling, Romanian and Belgian VAT formats, and order metadata access through WooCommerce's order API.
 
 = 1.5.0 =
 Updates EU VAT rates and fixes exemption, checkout totals, clearing and error handling. Existing WooCommerce tax rates are not changed automatically. Review obsolete rows before importing updated rates; reduced-rate presets must match your products.

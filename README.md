@@ -76,6 +76,12 @@
 
 Release checks run on WordPress 7.1.3, WooCommerce 10.9.4 and PHP 8.4.25. Older minimum versions are not covered by this release's test run.
 
+### Classic checkout field customization
+
+In **EU VAT Guard → Settings**, enable **Hide VAT number until a company name is entered** to show the VAT field only for customers with a billing company name. Disable **Require Company Name** if private customers should also be able to check out. **Require VAT Number** then applies only when a company name is present. Clearing the company removes VAT exemption and excludes the VAT value from the order; the browser keeps the typed VAT value so it can be restored when the company is entered again.
+
+In **Advanced**, set **Company Name Placeholder** and **VAT Number Placeholder** independently of their labels. Empty settings retain the existing label-based placeholders. Enable **Remove placeholder text from the company and VAT fields** to remove both placeholders. Custom placeholders support WPML translation. These options apply to classic checkout.
+
 ### Updating to 1.5.0
 
 The plugin update refreshes the importer's bundled rate snapshot; it does not automatically change your store's tax rows. Export your tax settings, review obsolete country/class rows, then import the updated rates and check product tax classes. A changed percentage creates a new row if no matching percentage exists, so remove obsolete rows deliberately. The first listed reduced rate is an import preset, not a universal rate for every product. See [VAT-RATES-INFO.md](VAT-RATES-INFO.md).
@@ -113,12 +119,14 @@ php compile-translations.php
 This plugin uses:
 - **Text Domain**: `eu-vat-guard-for-woocommerce`
 - **Plugin Slug**: `eu-vat-guard-for-woocommerce`
-- **Stable Tag**: `1.5.0`
+- **Stable Tag**: `1.5.1`
 
 ## Changelog
 
-### Version 1.5.1 — Unreleased
+### Version 1.5.1 — 14 October 2026
 
+- **Added**: Optional company-based VAT field visibility in classic checkout, with matching required-field validation and exemption removal when company is empty
+- **Added**: Custom company/VAT placeholders with WPML support and an option to remove both placeholders in classic checkout
 - **Fixed**: Missing PHP SOAP support no longer causes a fatal error; VIES failures are logged without printing into checkout or API responses
 - **Fixed**: VAT format validation accepts short Romanian numbers and rejects eleven-digit Belgian numbers while retaining nine-digit Belgian input support
 - **Fixed**: Order VAT and exemption metadata use WooCommerce's order API; PDF helpers no longer restore stale exemption status from legacy postmeta

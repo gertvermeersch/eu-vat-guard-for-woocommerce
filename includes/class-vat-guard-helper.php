@@ -229,6 +229,32 @@ class VAT_Guard_Helper
         return __('VAT Number', 'eu-vat-guard-for-woocommerce');
     }
 
+	/**
+	 * Get the classic checkout company placeholder (WPML compatible).
+	 *
+	 * @return string
+	 */
+	public static function get_company_placeholder() {
+		if ( get_option( 'eu_vat_guard_hide_checkout_placeholders', '0' ) ) {
+			return '';
+		}
+		$placeholder = get_option( 'eu_vat_guard_company_placeholder', '' );
+		return '' !== $placeholder ? self::translate_custom_string( $placeholder, 'Company Placeholder' ) : self::get_company_label();
+	}
+
+	/**
+	 * Get the classic checkout VAT placeholder (WPML compatible).
+	 *
+	 * @return string
+	 */
+	public static function get_vat_placeholder() {
+		if ( get_option( 'eu_vat_guard_hide_checkout_placeholders', '0' ) ) {
+			return '';
+		}
+		$placeholder = get_option( 'eu_vat_guard_vat_placeholder', '' );
+		return '' !== $placeholder ? self::translate_custom_string( $placeholder, 'VAT Placeholder' ) : self::get_vat_label();
+	}
+
     /**
      * Get custom exemption message or default (WPML compatible)
      */
