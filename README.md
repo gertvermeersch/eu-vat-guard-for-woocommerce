@@ -39,7 +39,7 @@
   - See [VAT rates and upgrade instructions](VAT-RATES-INFO.md) for official sources, import presets and product/region limits
 
 - **WooCommerce Integration**
-  - VAT number is pre-filled for logged-in users at checkout.
+  - Classic checkout restores VAT from the current WooCommerce session for guests and logged-in users, with saved account VAT data as a fallback.
   - VAT number is saved to the order and displayed in the WooCommerce admin order screen and order emails.
 
 - **Admin Settings Page**
@@ -119,9 +119,15 @@ php compile-translations.php
 This plugin uses:
 - **Text Domain**: `eu-vat-guard-for-woocommerce`
 - **Plugin Slug**: `eu-vat-guard-for-woocommerce`
-- **Stable Tag**: `1.5.1`
+- **Stable Tag**: `1.5.2`
 
 ## Changelog
+
+### Version 1.5.2 — 4 November 2026
+
+- **Fixed**: Guest VAT numbers are restored from the WooCommerce session when returning to classic checkout
+- **Fixed**: Current session VAT edits, including a deliberately cleared field, take precedence over saved account VAT data
+- **Improved**: VAT prefill preserves values supplied by earlier checkout filters
 
 ### Version 1.5.1 — 14 October 2026
 

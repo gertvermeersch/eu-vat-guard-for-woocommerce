@@ -5,7 +5,7 @@ Requires: woocommerce
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,11 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 4. VAT information displayed in order admin
 
 == Changelog ==
+
+= 1.5.2 =
+* **Fixed** - Guest VAT numbers are restored from the WooCommerce session when returning to classic checkout
+* **Fixed** - Current session VAT edits, including a deliberately cleared field, take precedence over saved account VAT data
+* **Improved** - VAT prefill preserves values supplied by earlier checkout filters
 
 = 1.5.1 =
 * **Added** - Optional company-based VAT field visibility in classic checkout, with matching required-field validation and exemption removal when company is empty
@@ -239,6 +244,9 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 * Admin settings interface
 
 == Upgrade Notice ==
+
+= 1.5.2 =
+Fixes empty VAT fields when guests return to classic checkout. Restores session VAT values and preserves cleared fields instead of replacing them with saved account data.
 
 = 1.5.1 =
 Adds optional company-based VAT field visibility and custom placeholders in classic checkout. Fixes VIES error handling, Romanian and Belgian VAT formats, and order metadata access through WooCommerce's order API.

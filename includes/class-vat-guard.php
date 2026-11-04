@@ -236,13 +236,25 @@ class VAT_Guard
 
 
     /**
-     * Preload checkout fields with user meta data if available
+     * Preload checkout fields with session VAT or user meta data if available
      * @param mixed $value Current value of the field
      * @param string $input Name of the input field
      * @return mixed
      */
     public function preload_checkout_fields($value, $input)
     {
+        if ( EU_VAT_GUARD_META_ORDER_VAT === $input ) {
+            if ( null !== $value ) {
+                return $value;
+            }
+
+            // Checkout edits take precedence over account data, including a cleared field.
+            $session_vat = WC()->session ? WC()->session->get( EU_VAT_GUARD_META_ORDER_VAT ) : null;
+            if ( is_string( $session_vat ) ) {
+                return $session_vat;
+            }
+        }
+
         if ($input == EU_VAT_GUARD_META_ORDER_VAT && is_user_logged_in()) {
             $vat = get_user_meta(get_current_user_id(), EU_VAT_GUARD_META_VAT_NUMBER, true);
             if (!empty($vat)) {
