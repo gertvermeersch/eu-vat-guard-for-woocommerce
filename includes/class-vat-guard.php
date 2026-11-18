@@ -89,6 +89,14 @@ class VAT_Guard
             VAT_Guard_Admin::instance();
         }
 
+        // PDF invoices can be generated in any request context (admin download,
+        // AJAX, or attached to emails sent during checkout, cron or REST), so
+        // the PDF hooks must be registered regardless of is_admin().
+        if ( class_exists( 'WPO_WCPDF' ) ) {
+            require_once plugin_dir_path( __FILE__ ) . 'class-vat-guard-pdf-integration.php';
+            VAT_Guard_PDF_Integration::instance();
+        }
+
         // Block integration is loaded earlier in maybe_init_block_support()
     }
 

@@ -119,9 +119,13 @@ php compile-translations.php
 This plugin uses:
 - **Text Domain**: `eu-vat-guard-for-woocommerce`
 - **Plugin Slug**: `eu-vat-guard-for-woocommerce`
-- **Stable Tag**: `1.5.2`
+- **Stable Tag**: `1.5.3`
 
 ## Changelog
+
+### Version 1.5.3 — 18 November 2026
+
+- **Fixed**: VAT number and exemption status now appear on PDF invoices attached to order emails (WooCommerce PDF Invoices & Packing Slips), not only on invoices generated from the order screen
 
 ### Version 1.5.2 — 4 November 2026
 

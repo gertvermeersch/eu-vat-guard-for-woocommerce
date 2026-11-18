@@ -5,7 +5,7 @@ Requires: woocommerce
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,9 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 4. VAT information displayed in order admin
 
 == Changelog ==
+
+= 1.5.3 =
+* **Fixed** - VAT number and exemption status now appear on PDF invoices attached to order emails (WooCommerce PDF Invoices & Packing Slips), not only on invoices generated from the order screen
 
 = 1.5.2 =
 * **Fixed** - Guest VAT numbers are restored from the WooCommerce session when returning to classic checkout
@@ -244,6 +247,9 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 * Admin settings interface
 
 == Upgrade Notice ==
+
+= 1.5.3 =
+Fixes missing VAT number and exemption status on PDF invoices attached to order emails.
 
 = 1.5.2 =
 Fixes empty VAT fields when guests return to classic checkout. Restores session VAT values and preserves cleared fields instead of replacing them with saved account data.
