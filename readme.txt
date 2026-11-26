@@ -3,9 +3,9 @@ Contributors: stormlabs, bytefarmer
 Tags: reverse charge, vat, eu, tax, b2b
 Requires: woocommerce
 Requires at least: 5.0
-Tested up to: 7.1
+Tested up to: 7.2
 Requires PHP: 8.2
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,12 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 4. VAT information displayed in order admin
 
 == Changelog ==
+
+= 1.5.4 =
+* **Fixed** - VAT exemption notice is visible again in the block-based checkout order summary (WooCommerce 11.3+)
+* **Improved** - Exemption notice is rendered through the WooCommerce order summary slot instead of DOM injection, and shown as a subtle text line
+* **Removed** - Debug logging from block checkout VAT validation
+* **Tested** - Compatibility with WordPress 7.2 and WooCommerce 11.3
 
 = 1.5.3 =
 * **Fixed** - VAT number and exemption status now appear on PDF invoices attached to order emails (WooCommerce PDF Invoices & Packing Slips), not only on invoices generated from the order screen
@@ -247,6 +253,9 @@ Yes, the plugin automatically applies VAT exemptions for valid B2B transactions 
 * Admin settings interface
 
 == Upgrade Notice ==
+
+= 1.5.4 =
+Restores the VAT exemption notice in the block-based checkout on WooCommerce 11.3+ and adds WordPress 7.2 compatibility.
 
 = 1.5.3 =
 Fixes missing VAT number and exemption status on PDF invoices attached to order emails.

@@ -74,7 +74,7 @@
 - PHP 8.2+
 - PHP SOAP extension (`ext-soap`), required only when VIES validation is enabled
 
-Release checks run on WordPress 7.1.3, WooCommerce 10.9.4 and PHP 8.4.25. Older minimum versions are not covered by this release's test run.
+Release checks run on WordPress 7.2 RC3, WooCommerce 11.3.1 and PHP 8.4.27. Older minimum versions are not covered by this release's test run.
 
 ### Classic checkout field customization
 
@@ -119,9 +119,16 @@ php compile-translations.php
 This plugin uses:
 - **Text Domain**: `eu-vat-guard-for-woocommerce`
 - **Plugin Slug**: `eu-vat-guard-for-woocommerce`
-- **Stable Tag**: `1.5.3`
+- **Stable Tag**: `1.5.4`
 
 ## Changelog
+
+### Version 1.5.4 — 26 November 2026
+
+- **Fixed**: VAT exemption notice is visible again in the block-based checkout order summary (WooCommerce 11.3+)
+- **Improved**: Exemption notice is rendered through the WooCommerce order summary slot instead of DOM injection, and shown as a subtle text line
+- **Removed**: Debug logging from block checkout VAT validation
+- **Tested**: Compatibility with WordPress 7.2 and WooCommerce 11.3
 
 ### Version 1.5.3 — 18 November 2026
 

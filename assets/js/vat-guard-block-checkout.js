@@ -79,52 +79,27 @@
         window.wp.data.subscribe(syncResolvedVatNotices);
         syncResolvedVatNotices();
 
-        // Add VAT exempt notice to checkout summary
-        const addVatExemptNotice = () => {
-            const cartData = select('wc/store/cart')?.getCartData?.() || {};
-            const isVatExempt = cartData?.extensions?.['eu-vat-guard']?.vat_exempt;
-
-            // Remove existing notice
-            const existingNotice = document.querySelector('.vat-guard-exempt-notice');
-            if (existingNotice) {
-                existingNotice.remove();
-            }
-
-            if (isVatExempt) {
-                // Find the checkout totals area
-                const totalsArea = document.querySelector('.wc-block-components-totals-wrapper, .wp-block-woocommerce-checkout-order-summary-block');
-                if (totalsArea) {
-                    const notice = document.createElement('div');
-                    notice.className = 'vat-guard-exempt-notice';
-                    notice.style.cssText = `
-                        background: #f0f9ff;
-                        border: 1px solid #00a32a;
-                        border-radius: 4px;
-                        padding: 10px;
-                        margin: 10px 0;
-                        color: #00a32a;
-                        font-weight: bold;
-                        text-align: center;
-                    `;
-                    notice.innerHTML = '✓ ' + vatGuardBlock.messages.exempt;
-                    totalsArea.insertBefore(notice, totalsArea.firstChild);
+        // Render the exemption notice through the order summary slot. WooCommerce
+        // moves the summary between layouts, so manual DOM insertion is unreliable.
+        const { ExperimentalOrderMeta } = window.wc.blocksCheckout;
+        const { registerPlugin } = window.wp.plugins || {};
+        if (ExperimentalOrderMeta && registerPlugin) {
+            const VatExemptNotice = ({ extensions }) => {
+                const data = extensions?.['eu-vat-guard'];
+                if (!data?.vat_exempt) {
+                    return null;
                 }
-            }
-        };
-
-        // Monitor for cart changes
-        let lastCartData = null;
-        const monitorCartChanges = () => {
-            const cartData = select('wc/store/cart')?.getCartData?.() || {};
-            const currentVatExempt = cartData?.extensions?.['eu-vat-guard']?.vat_exempt;
-            if (lastCartData !== currentVatExempt) {
-                lastCartData = currentVatExempt;
-                setTimeout(addVatExemptNotice, 100); // Small delay to ensure DOM is updated
-            }
-        };
-
-        // Check for changes periodically
-        setInterval(monitorCartChanges, 500);
+                return createElement(
+                    'div',
+                    { className: 'vat-guard-exempt-notice', role: 'status' },
+                    data.vat_exempt_message || vatGuardBlock.messages.exempt
+                );
+            };
+            registerPlugin('eu-vat-guard-exempt-notice', {
+                render: () => createElement(ExperimentalOrderMeta, null, createElement(VatExemptNotice)),
+                scope: 'woocommerce-checkout',
+            });
+        }
 
         // Add CSS for validation messages
         const style = document.createElement('style');
@@ -148,14 +123,10 @@
                 font-weight: bold;
             }
             .vat-guard-exempt-notice {
-                background: #f0f9ff;
-                border: 1px solid #00a32a;
-                border-radius: 4px;
-                padding: 10px;
-                margin: 10px 0;
-                color: #00a32a;
-                font-weight: bold;
-                text-align: center;
+                margin: 0 16px 16px;
+                color: #00692b;
+                font-size: 0.875em;
+                line-height: 1.4;
             }
         `;
         document.head.appendChild(style);

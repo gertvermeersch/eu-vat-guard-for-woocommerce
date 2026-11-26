@@ -603,17 +603,6 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
             WC()->session->set(EU_VAT_GUARD_META_ORDER_VAT, $sanitized);
         }
 
-        if (defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
-            $session_vat = (WC()->session) ? WC()->session->get(EU_VAT_GUARD_META_ORDER_VAT) : '';
-            error_log(
-                sprintf(
-                    '[VAT Guard] validate_vat_field value=%s sanitized=%s session=%s',
-                    is_scalar($value) ? (string) $value : '[non-scalar]',
-                    isset($sanitized) ? $sanitized : '',
-                    is_scalar($session_vat) ? (string) $session_vat : '[non-scalar]'
-                )
-            );
-        }
         return true; // No errors - exemption status will be determined later with complete address info
     }
 
@@ -630,7 +619,7 @@ class VAT_Guard_Block_Integration implements IntegrationInterface
         wp_enqueue_script(
             'vat-guard-block-checkout-fallback',
             plugin_dir_url(dirname(__FILE__)) . 'assets/js/vat-guard-block-checkout.js',
-			array( 'wp-element', 'wp-hooks', 'wp-data', 'wp-i18n', 'wp-notices', 'wc-blocks-data-store' ),
+			array( 'wp-element', 'wp-hooks', 'wp-data', 'wp-i18n', 'wp-notices', 'wp-plugins', 'wc-blocks-data-store', 'wc-blocks-checkout' ),
 			filemtime( EU_VAT_GUARD_PLUGIN_DIR . 'assets/js/vat-guard-block-checkout.js' ),
             true
         );
